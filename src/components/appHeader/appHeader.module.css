@@ -1,0 +1,40 @@
+.header {
+	position: relative;
+	background-color: #1C1C21;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.text {
+	margin-left: 10px;
+
+}
+
+.link {
+	text-decoration: none;
+	color: #8585AD;
+	margin-right: 50px;
+	display: flex;
+	text-align: center;
+}
+
+.link:last-child {
+	justify-self: flex-end;
+	margin-right: 0;
+}
+
+.link_active {
+	color: #F2F2F3;
+}
+
+.logo {
+	justify-self: center;
+}
+
+.menu {
+	display: flex;
+	justify-content: end;
+}
