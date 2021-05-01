@@ -14,12 +14,11 @@
 }
 
 .menu {
-	display: flex;
-	justify-content: space-around;		
+	display: flex;		
 	}
 
 	.container {
-		height: 560px;
+		max-height: 560px;
 		flex: 1;
 		overflow-y: scroll;
 	}
