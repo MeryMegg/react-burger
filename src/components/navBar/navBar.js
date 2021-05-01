@@ -1,10 +1,11 @@
 import React from 'react';
-import navBarStyles from './navBar.module.css';
+import cn from 'classnames';
+import styles from './navBar.module.css';
 
 
 function NavBar(props) {
 	return (
-		<div className={navBarStyles['nav-bar']}>
+		<div className={cn(styles['nav-bar'])}>
 			{props.children}
 		</div>
 	);

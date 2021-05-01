@@ -8,11 +8,11 @@ function BurgerIngredients({ bread, fillings, sauces }) {
 	const [current, setCurrent] = useState('Булки')
 	return (
 		<section>
-			<h1 className={cn('text', 'text_type_main-large', 'mb-3')}>Соберите бургер</h1>
-			<div className={cn('text', 'text_type_main-default', 'mb-5', styles.menu)}>
+			<h1 className={cn('text', 'text_type_main-large', 'mb-5')}>Соберите бургер</h1>
+			<div className={cn('text', 'text_type_main-default', 'mb-10', styles.menu)}>
 				<Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
 					Булки
-          </Tab>
+        </Tab>
 				<Tab value="Соусы" active={current === 'Соусы'} onClick={setCurrent}>
 					Соусы
           </Tab>

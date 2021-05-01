@@ -4,4 +4,5 @@
 	grid-template-columns: repeat( 3, minmax(200px, 413px) );
 	column-gap: 50px;
 	align-items: center;	
+	box-sizing: border-box;
 } 

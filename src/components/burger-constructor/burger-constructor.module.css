@@ -3,6 +3,7 @@
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-end;
+	box-sizing: border-box;
 }
 
 .list {
@@ -12,7 +13,7 @@
 	flex-direction: column;
 	gap: 10px;
 	overflow-y: auto;
-	height: 440px;
+	max-height: 350px;
 }
 
 ::-webkit-scrollbar {
@@ -40,4 +41,9 @@
 
 .item_without-icon {
 	justify-content: flex-end;
+}
+
+.order {
+	display: flex;	
+	align-items: center;
 }

@@ -3,30 +3,30 @@ import cn from 'classnames';
 import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useLocation } from 'react-router-dom';
 import NavBar from '../navBar/navBar';
-import style from './appHeader.module.css';
+import styles from './appHeader.module.css';
 
 function AppHeader() {
 	const { pathname } = useLocation()
 	return (
-		<header className={cn('pl-10', 'pr-10', 'pt-4', 'pb-4', 'text', 'text_type_main-default', style.header)}>
+		<header className={cn('pl-10', 'pr-10', 'pt-4', 'pb-4', 'text', 'text_type_main-default', styles.header)}>
 			<NavBar>
 				<>
-					<div className={cn(style.menu)}>
-						<NavLink exact to="/" className={cn(style.link)} activeClassName={style.link_active} >
+					<div className={cn(styles.menu)}>
+						<NavLink exact to="/" className={cn(styles.link, 'pt-4', 'pb-4', 'pr-5', 'mr-2')} activeClassName={styles.link_active} >
 							<BurgerIcon type={pathname === '/' ? "primary" : "secondary"} />
-							<span className={cn(style.text)}>Конструктор</span>
+							<span className={cn('ml-2')}>Конструктор</span>
 						</NavLink>
-						<NavLink to="/lenta" activeClassName={style.link_active} className={cn(style.link)}>
+						<NavLink to="/lenta" activeClassName={styles.link_active} className={cn(styles.link, 'pt-4', 'pb-4', 'pr-5', 'pl-5')}>
 							<ListIcon type={pathname === '/lenta' ? "primary" : "secondary"} />
-							<span className={cn(style.text)}>Лента заказов</span>
+							<span className={cn('ml-2')}>Лента заказов</span>
 						</NavLink>
 					</div>
-					<NavLink exact to="/" activeClassName={style.link_active} className={cn(style.logo)}>
+					<NavLink exact to="/" activeClassName={styles.link_active} className={cn(styles.logo)}>
 						<Logo />
 					</NavLink>
-					<NavLink to="/account" activeClassName={style.link_active} className={cn(style.link)}>
+					<NavLink to="/account" activeClassName={styles.link_active} className={cn(styles.link)}>
 						<ProfileIcon type={pathname === '/account' ? "primary" : "secondary"} />
-						<span className={cn(style.text)}>Личный кабинет</span>
+						<span className={cn(styles.link, 'pt-4', 'pb-4', 'pl-5')}>Личный кабинет</span>
 					</NavLink>
 				</>
 			</NavBar>

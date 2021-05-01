@@ -17,7 +17,7 @@ function Main() {
 	const ingredientsObj = filterArray(data);
 
 	return (
-		<main className={cn(styles.main, 'pt-5', 'pb-5')}>
+		<main className={cn(styles.main, 'p-10')}>
 			<div className={styles.columns}>
 				<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
 				<BurgerConstructor />
