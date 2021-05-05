@@ -5,7 +5,6 @@ import PriceItem from '../price-item/price-item';
 import styles from './burger-item.module.css';
 
 function BurgerItem({ item }) {
-	console.log(item)
 	return (
 		<li className={cn(styles.card)}>
 			<img className={cn(styles.image, 'mb-1')} src={item.image_large} alt={item.name} />

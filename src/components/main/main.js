@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import styles from './main.module.css';
-import { data } from '../../utils/data'
+import { ServerConfig } from '../../constants/config';
 
 function Main() {
+	const [state, setState] = useState({
+		isLoading: false,
+		hasError: false,
+		data: [],
+	});
+
+	React.useEffect(() => {
+		getIngredients();
+	}, [])
+
+	const getIngredients = async () => {
+		setState({ ...state, hasError: false, isLoading: true });
+		try {
+			const res = await fetch(ServerConfig.baseUrl)
+			const data = await res.json()
+			setState({ ...state, data: data.data, isLoading: false })
+		}
+		catch {
+			setState({ ...state, hasError: true, isLoading: false });
+		}
+	}
 
 	const filterArray = (arr) => {
+		console.log(state.i)
 		return arr.reduce((acc, curr) =>
 		({
 			...acc, [curr.type]: [...acc[curr.type] || [], curr]
 		}), {})
 	}
 
-	const ingredientsObj = filterArray(data);
+	const ingredientsObj = filterArray(state.data);
 
 	return (
 		<main className={cn(styles.main, 'p-10')}>
-			<div className={styles.columns}>
-				<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
-				<BurgerConstructor />
-			</div>
-
+			{state.isLoading && 'Загрузка...'}
+			{state.hasError && 'Произошла ошибка'}
+			{!state.isLoading &&
+				!state.hasError &&
+				!!state.data.length &&
+				<div className={styles.columns}>
+					<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
+					<BurgerConstructor />
+				</div>
+			}
 		</main>
 	);
 }
