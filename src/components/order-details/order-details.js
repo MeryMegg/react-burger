@@ -1,6 +1,5 @@
 import React from 'react';
 import cn from 'classnames';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import styles from './order-details.module.css';
 import checkIcon from '../../images/check.svg'

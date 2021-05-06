@@ -3,6 +3,7 @@ import cn from 'classnames';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './main.module.css';
 import { ServerConfig } from '../../constants/config';
 
@@ -54,6 +55,7 @@ function Main() {
 				}
 			</main>
 			<OrderDetails />
+			{/* <IngredientDetails /> */}
 		</>
 	);
 }
