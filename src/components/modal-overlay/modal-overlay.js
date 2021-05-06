@@ -4,7 +4,7 @@ import styles from './modal-overlay.module.css'
 
 function ModalOverlay({ children }) {
 	return (
-		<div className={cn(styles.overlay, 'pr-10', 'pl-10')}>
+		<div className={cn(styles.overlay)}>
 			{children}
 		</div>
 	)

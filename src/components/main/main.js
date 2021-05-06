@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 import styles from './main.module.css';
 import { ServerConfig } from '../../constants/config';
 
@@ -53,7 +53,7 @@ function Main() {
 					</div>
 				}
 			</main>
-			<Modal />
+			<OrderDetails />
 		</>
 	);
 }
