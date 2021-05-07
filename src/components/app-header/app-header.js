@@ -2,8 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useLocation } from 'react-router-dom';
-import NavBar from '../navBar/navBar';
-import styles from './appHeader.module.css';
+import NavBar from '../nav-bar/nav-bar';
+import styles from './app-header.module.css';
 
 function AppHeader() {
 	const { pathname } = useLocation()
@@ -26,7 +26,7 @@ function AppHeader() {
 					</NavLink>
 					<NavLink to="/account" activeClassName={styles.link_active} className={cn(styles.link)}>
 						<ProfileIcon type={pathname === '/account' ? "primary" : "secondary"} />
-						<span className={cn(styles.link, 'pt-4', 'pb-4', 'pl-5')}>Личный кабинет</span>
+						<span className={cn('pt-4', 'pb-4', 'pl-5')}>Личный кабинет</span>
 					</NavLink>
 				</>
 			</NavBar>

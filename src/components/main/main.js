@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 import styles from './main.module.css';
 import { ServerConfig } from '../../constants/config';
 
@@ -14,10 +13,10 @@ function Main() {
 		hasError: false,
 		data: [],
 	});
-
-	useEffect(() => {
-		getIngredients();
-	}, [])
+	const [modal, setModal] = React.useState({
+		visible: false,
+		content: null
+	});
 
 	const getIngredients = async () => {
 		setState({ ...state, hasError: false, isLoading: true });
@@ -31,6 +30,12 @@ function Main() {
 		}
 	}
 
+	useEffect(() => {
+		getIngredients()
+	}, [])
+
+
+
 	const filterArray = (arr) => {
 		return arr.reduce((acc, curr) =>
 		({
@@ -39,24 +44,22 @@ function Main() {
 	}
 
 	const ingredientsObj = filterArray(state.data);
+	const { visible, content } = modal;
 
 	return (
-		<>
-			<main className={cn(styles.main, 'p-10')}>
-				{state.isLoading && 'Загрузка...'}
-				{state.hasError && 'Произошла ошибка'}
-				{!state.isLoading &&
-					!state.hasError &&
-					!!state.data.length &&
-					<div className={styles.columns}>
-						<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
-						<BurgerConstructor />
-					</div>
-				}
-			</main>
-			<OrderDetails />
-			{/* <IngredientDetails /> */}
-		</>
+		<main className={cn(styles.main, 'p-10')}>
+			{state.isLoading && 'Загрузка...'}
+			{state.hasError && 'Произошла ошибка'}
+			{!state.isLoading &&
+				!state.hasError &&
+				!!state.data.length &&
+				<div className={styles.columns}>
+					<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} setModal={setModal} />
+					<BurgerConstructor setModal={setModal} />
+				</div>
+			}
+			{visible && <Modal setModal={setModal}>{content}</Modal>}
+		</main>
 	);
 }
 

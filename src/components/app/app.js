@@ -1,5 +1,5 @@
 import React from 'react';
-import AppHeader from '../appHeader/appHeader';
+import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 
 function App() {
