@@ -10,11 +10,7 @@ function Modal({ children, setModal }) {
 
 	const closeEsc = (evn) => {
 		if (evn.keyCode === 27)
-			setModal({
-				isShow: false,
-				content: null,
-			})
-
+			close();
 	}
 
 	const close = () => {

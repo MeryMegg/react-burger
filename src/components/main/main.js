@@ -22,6 +22,9 @@ function Main() {
 		setState({ ...state, hasError: false, isLoading: true });
 		try {
 			const res = await fetch(ServerConfig.baseUrl)
+			if (!res.ok) {
+				throw new Error('Ответ сети был не ok.');
+			}
 			const data = await res.json()
 			setState({ ...state, data: data.data, isLoading: false })
 		}
