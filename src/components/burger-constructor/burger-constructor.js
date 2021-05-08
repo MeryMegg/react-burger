@@ -1,11 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor() {
+function BurgerConstructor({ setModal }) {
 	const img = "https://code.s3.yandex.net/react/code/bun-02.png"
+
+	const handleClick = () => {
+		setModal({
+			visible: true,
+			content: <OrderDetails />
+		})
+	}
 
 	return (
 		<section className={cn(styles.container, 'pl-4')}>
@@ -88,8 +97,8 @@ function BurgerConstructor() {
 			</div>
 
 			<div className={cn(styles.order, 'mt-10')}>
-				<PriceItem price={'610'} classMarg='mr-10' classText='text_type_digits-medium' />
-				<Button type="primary" size="large">
+				<PriceItem price={610} classMarg='mr-10' classText='text_type_digits-medium' />
+				<Button type="primary" size="large" onClick={handleClick}>
 					Оформить заказ
 				</Button>
 			</div>
@@ -97,6 +106,10 @@ function BurgerConstructor() {
 		</section>
 	)
 
+}
+
+BurgerConstructor.propTypes = {
+	setModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;
