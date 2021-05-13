@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -20,7 +20,7 @@ function Modal({ children, setModal }) {
 		})
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		window.addEventListener('keydown', closeEsc)
 		return () => {
 			window.removeEventListener('keydown', closeEsc)
