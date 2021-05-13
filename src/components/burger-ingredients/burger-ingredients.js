@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredients.module.css'
 import { ModalContext } from '../../services/modalContext';
+import { IngredientsContext } from '../../services/ingredientsContext';
 
-function BurgerIngredients({ bread, fillings, sauces }) {
+function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread')
 	const { setModal } = useContext(ModalContext);
+	const { state } = useContext(IngredientsContext);
+	const { bun, sauce, main } = state.allIngredients;
+
+
 	const renderModal = (item) => {
 		setModal({
 			visible: true,
@@ -45,60 +49,12 @@ function BurgerIngredients({ bread, fillings, sauces }) {
 			</div>
 
 			<section className={cn(styles.container)}>
-				<Ingredients title='Булки' array={bread} id="bread" renderModal={renderModal} />
-				<Ingredients title='Соусы' array={sauces} id='sauces' renderModal={renderModal} />
-				<Ingredients title='Начинки' array={fillings} id='fillings' renderModal={renderModal} />
+				<Ingredients title='Булки' array={bun} id="bread" renderModal={renderModal} />
+				<Ingredients title='Соусы' array={sauce} id='sauces' renderModal={renderModal} />
+				<Ingredients title='Начинки' array={main} id='fillings' renderModal={renderModal} />
 			</section>
 		</section>
 	)
-}
-
-BurgerIngredients.propTypes = {
-	bread: PropTypes.arrayOf(PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-		image_mobile: PropTypes.string.isRequired,
-		image_large: PropTypes.string.isRequired,
-		__v: PropTypes.number,
-	})).isRequired,
-
-	fillings: PropTypes.arrayOf(PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-		image_mobile: PropTypes.string.isRequired,
-		image_large: PropTypes.string.isRequired,
-		__v: PropTypes.number,
-	})).isRequired,
-
-	sauces: PropTypes.arrayOf(PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-		image_mobile: PropTypes.string.isRequired,
-		image_large: PropTypes.string.isRequired,
-		__v: PropTypes.number,
-	})).isRequired,
-	setModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

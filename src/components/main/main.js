@@ -4,35 +4,46 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import styles from './main.module.css';
-import { ServerConfig } from '../../constants/config';
+import { getProducts } from '../../utils/api';
 import { IngredientsContext } from '../../services/ingredientsContext';
 import { ModalContext } from '../../services/modalContext';
+import { filterArray } from '../../utils/functions';
 
 
 function Main() {
 	const [state, setState] = useState({
 		isLoading: false,
 		hasError: false,
-		data: [],
+		loaded: false,
+		allIngredients: {},
+		burgerIngredients: {}
 	});
 	const [modal, setModal] = useState({
 		visible: false,
 		content: null
 	});
 
-	const getIngredients = async () => {
+	const getIngredients = () => {
 		setState({ ...state, hasError: false, isLoading: true });
-		try {
-			const res = await fetch(ServerConfig.baseUrl)
-			if (!res.ok) {
-				throw new Error('Ответ сети был не ok.');
-			}
-			const data = await res.json()
-			setState({ ...state, data: data.data, isLoading: false })
-		}
-		catch {
-			setState({ ...state, hasError: true, isLoading: false });
-		}
+		getProducts()
+			.then((data) => {
+				const ingredientsObj = filterArray(data.data);
+				const burgerIngredients = {
+					bun: ingredientsObj.bun[0],
+					otherIngredients: [ingredientsObj.sauce[1],
+					ingredientsObj.main[0],
+					ingredientsObj.sauce[2],
+					ingredientsObj.main[1],
+					ingredientsObj.sauce[3],
+					ingredientsObj.main[2],
+					ingredientsObj.sauce[1]
+					]
+				}
+				setState({ ...state, allIngredients: ingredientsObj, burgerIngredients: burgerIngredients, isLoading: false, loaded: true })
+			})
+			.catch((err) => {
+				setState({ ...state, hasError: true, isLoading: false });
+			})
 	}
 
 	useEffect(() => {
@@ -40,37 +51,27 @@ function Main() {
 	}, [])
 
 
-
-	const filterArray = (arr) => {
-		return arr.reduce((acc, curr) =>
-		({
-			...acc, [curr.type]: [...acc[curr.type] || [], curr]
-		}), {})
-	}
-
-	const ingredientsObj = filterArray(state.data);
 	const { visible, content } = modal;
 
 	return (
 		<main className={cn(styles.main, 'p-10')}>
-			{state.isLoading && 'Загрузка...'}
-			{state.hasError && 'Произошла ошибка'}
-			{!state.isLoading &&
-				!state.hasError &&
-				!!state.data.length &&
-				<div className={styles.columns}>
-					<IngredientsContext.Provider value={{ state, setState }}>
-						<ModalContext.Provider value={{ modal, setModal }}>
-							<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
-							<BurgerConstructor bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
-						</ModalContext.Provider>
-					</IngredientsContext.Provider>
-				</div>
-			}
-			{visible && <Modal setModal={setModal}>{content}</Modal>}
-		</main>
+			<ModalContext.Provider value={{ modal, setModal }}>
+				<IngredientsContext.Provider value={{ state, setState }}>
+					{state.isLoading && 'Загрузка...'}
+					{state.hasError && 'Произошла ошибка'}
+					{!state.isLoading &&
+						!state.hasError &&
+						!!state.loaded &&
+						<div className={styles.columns}>
+							<BurgerIngredients />
+							<BurgerConstructor />
+						</div>
+					}
+					{visible && <Modal >{content}</Modal>}
+				</IngredientsContext.Provider>
+			</ModalContext.Provider >
+		</main >
 	);
 }
-
 
 export default Main;
