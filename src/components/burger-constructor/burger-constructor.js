@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
+import { ModalContext } from '../../services/modalContext';
 
-function BurgerConstructor({ setModal }) {
+
+function BurgerConstructor({ bread, fillings, sauces }) {
 	const img = "https://code.s3.yandex.net/react/code/bun-02.png"
+	const { setModal } = useContext(ModalContext);
 
 	const handleClick = () => {
 		setModal({

@@ -5,6 +5,8 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import styles from './main.module.css';
 import { ServerConfig } from '../../constants/config';
+import { IngredientsContext } from '../../services/ingredientsContext';
+import { ModalContext } from '../../services/modalContext';
 
 
 function Main() {
@@ -13,7 +15,7 @@ function Main() {
 		hasError: false,
 		data: [],
 	});
-	const [modal, setModal] = React.useState({
+	const [modal, setModal] = useState({
 		visible: false,
 		content: null
 	});
@@ -57,8 +59,12 @@ function Main() {
 				!state.hasError &&
 				!!state.data.length &&
 				<div className={styles.columns}>
-					<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} setModal={setModal} />
-					<BurgerConstructor setModal={setModal} />
+					<IngredientsContext.Provider value={{ state, setState }}>
+						<ModalContext.Provider value={{ modal, setModal }}>
+							<BurgerIngredients bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
+							<BurgerConstructor bread={ingredientsObj.bun} sauces={ingredientsObj.sauce} fillings={ingredientsObj.main} />
+						</ModalContext.Provider>
+					</IngredientsContext.Provider>
 				</div>
 			}
 			{visible && <Modal setModal={setModal}>{content}</Modal>}

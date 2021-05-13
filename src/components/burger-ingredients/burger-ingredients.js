@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredients.module.css'
+import { ModalContext } from '../../services/modalContext';
 
-function BurgerIngredients({ bread, fillings, sauces, setModal }) {
+function BurgerIngredients({ bread, fillings, sauces }) {
 	const [current, setCurrent] = useState('bread')
-
+	const { setModal } = useContext(ModalContext);
 	const renderModal = (item) => {
 		setModal({
 			visible: true,
