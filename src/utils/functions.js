@@ -6,5 +6,5 @@ export const filterArray = (arr) => {
 }
 
 export const calculationCost = (bun, arrOtherIngredients) => {
-	return bun.price + arrOtherIngredients.reduce((acc, curr) => acc += curr.price, 0)
+	return bun.price * 2 + arrOtherIngredients.reduce((acc, curr) => acc += curr.price, 0)
 }

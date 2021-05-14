@@ -76,8 +76,4 @@ function BurgerConstructor() {
 
 }
 
-// BurgerConstructor.propTypes = {
-// 	setModal: PropTypes.func.isRequired
-// }
-
 export default BurgerConstructor;
