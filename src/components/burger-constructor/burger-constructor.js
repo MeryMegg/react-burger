@@ -14,7 +14,7 @@ import { createOrders } from '../../utils/api';
 
 function BurgerConstructor() {
 	const { setModal } = useContext(ModalContext);
-	const { state } = useContext(IngredientsContext);
+	const { state, setState } = useContext(IngredientsContext);
 	const { bun, otherIngredients } = state.burgerIngredients;
 
 	const handleClick = () => {
@@ -28,6 +28,18 @@ function BurgerConstructor() {
 			.catch((err) => {
 				(console.log(err))
 			})
+	}
+
+	const deleteIngredient = (item) => {
+		console.log(item)
+		setState({
+			...state,
+			burgerIngredients: {
+				...state.burgerIngredients,
+				otherIngredients: [state.burgerIngredients.otherIngredients.filter(el => el._id !== item._id)]
+			}
+		})
+		console.log(state)
 	}
 
 	return (
@@ -44,7 +56,7 @@ function BurgerConstructor() {
 
 			<ul className={cn(styles.list, 'pr-4')}>
 				{otherIngredients.map(el => (
-					<li className={styles.item} key={uuidv4()}>
+					<li className={styles.item} key={uuidv4()} >
 						<DragIcon type="primary" />
 						<ConstructorElement
 							text={el.name}

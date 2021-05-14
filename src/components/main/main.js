@@ -16,7 +16,10 @@ function Main() {
 		hasError: false,
 		loaded: false,
 		allIngredients: {},
-		burgerIngredients: {}
+		burgerIngredients: {
+			bun: null,
+			otherIngredients: []
+		}
 	});
 	const [modal, setModal] = useState({
 		visible: false,
@@ -28,18 +31,7 @@ function Main() {
 		getProducts()
 			.then((data) => {
 				const ingredientsObj = filterArray(data.data);
-				const burgerIngredients = {
-					bun: ingredientsObj.bun[0],
-					otherIngredients: [ingredientsObj.sauce[1],
-					ingredientsObj.main[0],
-					ingredientsObj.sauce[2],
-					ingredientsObj.main[1],
-					ingredientsObj.sauce[3],
-					ingredientsObj.main[2],
-					ingredientsObj.sauce[1]
-					]
-				}
-				setState({ ...state, allIngredients: ingredientsObj, burgerIngredients: burgerIngredients, isLoading: false, loaded: true })
+				setState({ ...state, allIngredients: ingredientsObj, isLoading: false, loaded: true })
 			})
 			.catch((err) => {
 				setState({ ...state, hasError: true, isLoading: false });
@@ -64,7 +56,7 @@ function Main() {
 						!!state.loaded &&
 						<div className={styles.columns}>
 							<BurgerIngredients />
-							<BurgerConstructor />
+							{state.burgerIngredients.bun && <BurgerConstructor />}
 						</div>
 					}
 					{visible && <Modal >{content}</Modal>}

@@ -23,5 +23,5 @@ const requestHandler = (res) => {
 	if (res.ok) {
 		return res.json();
 	}
-	return res.json().then(Promise.reject.bind(Promise))
+	Promise.reject(res.status)
 }
