@@ -14,6 +14,7 @@
 	gap: 10px;
 	overflow-y: auto;
 	max-height: 350px;
+	flex-grow: 1;
 }
 
 ::-webkit-scrollbar {
@@ -36,7 +37,7 @@
 	list-style-type: none;
 	display: flex;	
 	align-items: center;
-	justify-content: space-between;
+	gap: 10px;
 }
 
 .item_without-icon {

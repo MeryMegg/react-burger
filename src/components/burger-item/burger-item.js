@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-item.module.css';
+import { IngredientsContext } from '../../services/ingredientsContext';
+
 
 function BurgerItem({ item, renderModal }) {
+
+	const { state, setState } = useContext(IngredientsContext);
 
 	const card = {
 		image: item.image_large,
@@ -19,6 +23,21 @@ function BurgerItem({ item, renderModal }) {
 	}
 
 	const handleClick = () => {
+		item.type === 'bun' ?
+			setState({
+				...state,
+				burgerIngredients: {
+					...state.burgerIngredients,
+					bun: item
+				}
+			}) :
+			setState({
+				...state,
+				burgerIngredients: {
+					...state.burgerIngredients,
+					otherIngredients: [...state.burgerIngredients.otherIngredients, item]
+				}
+			})
 		renderModal(card)
 	}
 
