@@ -5,7 +5,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-item.module.css';
 import { IngredientsContext } from '../../services/ingredientsContext';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+
 
 function BurgerItem({ item, renderModal }) {
 

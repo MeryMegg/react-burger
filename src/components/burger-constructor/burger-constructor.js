@@ -36,7 +36,7 @@ function BurgerConstructor() {
 			...state,
 			burgerIngredients: {
 				...state.burgerIngredients,
-				otherIngredients: [state.burgerIngredients.otherIngredients.filter(el => el._id !== item._id)]
+				otherIngredients: [...state.burgerIngredients.otherIngredients.filter(el => el._id !== item._id)]
 			}
 		})
 		console.log(state)
@@ -62,6 +62,7 @@ function BurgerConstructor() {
 							text={el.name}
 							price={el.price}
 							thumbnail={el.image}
+							handleClose={deleteIngredient}
 						/>
 					</li>
 				))}
