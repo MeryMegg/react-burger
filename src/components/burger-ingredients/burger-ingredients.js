@@ -5,13 +5,13 @@ import Ingredients from '../ingredients/ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredients.module.css'
 import { ModalContext } from '../../services/modalContext';
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { useSelector } from 'react-redux';
 
 function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread')
 	const { setModal } = useContext(ModalContext);
-	const { state } = useContext(IngredientsContext);
-	const { bun, sauce, main } = state.allIngredients;
+	const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
+	console.log(bun)
 
 
 	const renderModal = (item) => {

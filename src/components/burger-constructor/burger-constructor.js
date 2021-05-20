@@ -5,17 +5,19 @@ import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-develo
 import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
-import { IngredientsContext } from '../../services/ingredientsContext';
 import { ModalContext } from '../../services/modalContext';
 import { calculationCost } from '../../utils/functions';
 import { createOrders } from '../../utils/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { DELETE_INGREDIENT } from '../../services/actions/ingredients'
+
 
 
 
 function BurgerConstructor() {
 	const { setModal } = useContext(ModalContext);
-	const { state, setState } = useContext(IngredientsContext);
-	const { bun, otherIngredients } = state.burgerIngredients;
+	const { bun, otherIngredients } = useSelector(store => store.ingredients.burgerIngredients);
+	const dispatch = useDispatch();
 
 	const handleClick = () => {
 		createOrders(otherIngredients.map(el => el._id))
@@ -31,15 +33,10 @@ function BurgerConstructor() {
 	}
 
 	const deleteIngredient = (item) => {
-		console.log(item)
-		setState({
-			...state,
-			burgerIngredients: {
-				...state.burgerIngredients,
-				otherIngredients: [...state.burgerIngredients.otherIngredients.filter(el => el._id !== item._id)]
-			}
+		dispatch({
+			type: DELETE_INGREDIENT,
+			id: item._id
 		})
-		console.log(state)
 	}
 
 	return (

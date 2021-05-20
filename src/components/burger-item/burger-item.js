@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-item.module.css';
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { useDispatch } from 'react-redux';
+import { ADD_BUN, ADD_FILLINGS } from '../../services/actions/ingredients';
 
 
 function BurgerItem({ item, renderModal }) {
 
-	const { state, setState } = useContext(IngredientsContext);
+	//const state = useSelector(store => store.ingredients);
+	const dispatch = useDispatch();
 
 	const card = {
 		image: item.image_large,
@@ -23,21 +25,11 @@ function BurgerItem({ item, renderModal }) {
 	}
 
 	const handleClick = () => {
-		item.type === 'bun' ?
-			setState({
-				...state,
-				burgerIngredients: {
-					...state.burgerIngredients,
-					bun: item
-				}
-			}) :
-			setState({
-				...state,
-				burgerIngredients: {
-					...state.burgerIngredients,
-					otherIngredients: [...state.burgerIngredients.otherIngredients, item]
-				}
-			})
+		const type = item.type === 'bun' ? ADD_BUN : ADD_FILLINGS
+		dispatch({
+			type,
+			item
+		})
 		renderModal(card)
 	}
 
