@@ -6,8 +6,7 @@ import { useSelector } from 'react-redux';
 
 function IngredientDetails() {
 	const { currentBurger } = useSelector(store => store.ingredients)
-	const { image, name, calories, proteins, fat, carbohydrates } = currentBurger
-	console.log(currentBurger)
+	const { image, name, calories, proteins, fat, carbohydrates } = currentBurger;
 
 	return (
 		<div className={cn(styles.content)}>

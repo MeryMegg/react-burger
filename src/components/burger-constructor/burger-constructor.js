@@ -6,7 +6,6 @@ import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
 import { calculationCost } from '../../utils/functions';
-import { addOrders } from '../../utils/api';
 import { createOrder } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_INGREDIENT } from '../../services/actions/ingredients'
