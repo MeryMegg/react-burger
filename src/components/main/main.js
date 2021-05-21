@@ -4,10 +4,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import styles from './main.module.css';
-//import { getProducts } from '../../utils/api';
-import { getIngredients } from '../../services/actions/ingredients'
-//import { ModalContext } from '../../services/modalContext';
-//import { filterArray } from '../../utils/functions';
+import { getIngredients } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 
 

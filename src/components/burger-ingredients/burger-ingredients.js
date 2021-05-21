@@ -7,11 +7,20 @@ import styles from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { CURRENT_BURGER } from '../../services/actions/ingredients';
 import { OPEN_MODAL } from '../../services/actions/modal';
+import { useInView } from 'react-intersection-observer';
 
 function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread');
 	const dispatch = useDispatch();
 	const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
+	const { ref, inView, entry } = useInView({
+		/* Optional options */
+		threshold: 1,
+	});
+
+	console.log(ref)
+	console.log(inView)
+	console.log(entry)
 
 	const renderModal = (item) => {
 		dispatch({
@@ -43,8 +52,8 @@ function BurgerIngredients() {
           </Tab>
 			</div>
 
-			<section className={cn(styles.container)}>
-				<Ingredients title='Булки' array={bun} id="bread" renderModal={renderModal} />
+			<section className={cn(styles.container)} inView={inView}>
+				<Ingredients title='Булки' array={bun} id="bread" renderModal={renderModal} ref={ref} />
 				<Ingredients title='Соусы' array={sauce} id='sauces' renderModal={renderModal} />
 				<Ingredients title='Начинки' array={main} id='fillings' renderModal={renderModal} />
 			</section>
