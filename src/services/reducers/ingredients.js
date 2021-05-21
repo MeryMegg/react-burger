@@ -1,4 +1,4 @@
-
+import { v4 as uuidv4 } from 'uuid';
 import {
 	GET_PRODUCTS_REQUEST,
 	GET_PRODUCTS_SUCCESS,
@@ -8,10 +8,13 @@ import {
 	ADD_FILLINGS,
 	DELETE_INGREDIENT,
 	CURRENT_BURGER,
+	INCREASE_INGREDIENT,
+	DECREASE_INGREDIENT,
 
 	CREATE_ORDER_REQUEST,
 	CREATE_ORDER_SUCCESS,
 	CREATE_ORDER_FAILED,
+
 } from '../actions/ingredients';
 
 
@@ -22,7 +25,8 @@ const initialState = {
 	allIngredients: {},
 	burgerIngredients: {
 		bun: null,
-		otherIngredients: []
+		otherIngredients: [],
+		counts: {}
 	},
 	currentOrder: null,
 	currentBurger: null,
@@ -68,11 +72,12 @@ export const ingredientsReducer = (state = initialState, action) => {
 			}
 		}
 		case ADD_FILLINGS: {
+			const newItem = { ...action.item, productId: uuidv4() }
 			return {
 				...state,
 				burgerIngredients: {
 					...state.burgerIngredients,
-					otherIngredients: [...state.burgerIngredients.otherIngredients, action.item]
+					otherIngredients: [...state.burgerIngredients.otherIngredients, newItem]
 				}
 			}
 		}
@@ -81,14 +86,41 @@ export const ingredientsReducer = (state = initialState, action) => {
 				...state,
 				burgerIngredients: {
 					...state.burgerIngredients,
-					otherIngredients: [...state.burgerIngredients.otherIngredients].filter(el => el._id !== action._id)
+					otherIngredients: [...state.burgerIngredients.otherIngredients].filter(el => el.productId !== action.id)
 				}
 			}
 		}
+
 		case CURRENT_BURGER: {
 			return {
 				...state,
 				currentBurger: action.item
+			}
+		}
+		case INCREASE_INGREDIENT: {
+			return {
+				...state,
+				burgerIngredients: {
+					...state.burgerIngredients,
+					counts: {
+						...state.burgerIngredients.counts,
+						[action.key]: (state.burgerIngredients.counts[action.key] || 0) + 1
+
+					}
+				}
+			}
+		}
+		case DECREASE_INGREDIENT: {
+			return {
+				...state,
+				burgerIngredients: {
+					...state.burgerIngredients,
+					counts: {
+						...state.burgerIngredients.counts,
+						[action.key]: state.burgerIngredients.counts[action.key] - 1
+
+					}
+				}
 			}
 		}
 		// case TAB_SWITCH: {
@@ -114,22 +146,7 @@ export const ingredientsReducer = (state = initialState, action) => {
 		// case GET_RECOMMENDED_ITEMS_FAILED: {
 		// 	return { ...state, recommendedItemsFailed: true, recommendedItemsRequest: false };
 		// }
-		// case INCREASE_ITEM: {
-		// 	return {
-		// 		...state,
-		// 		items: [...state.items].map(item =>
-		// 			item.id === action.id ? { ...item, qty: ++item.qty } : item
-		// 		)
-		// 	};
-		// }
-		// case DECREASE_ITEM: {
-		// 	return {
-		// 		...state,
-		// 		items: [...state.items].map(item =>
-		// 			item.id === action.id ? { ...item, qty: --item.qty } : item
-		// 		)
-		// 	};
-		// }
+		// 
 		// 
 		// case APPLY_PROMO_FAILED: {
 		// 	return {
