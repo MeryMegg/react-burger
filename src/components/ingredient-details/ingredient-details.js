@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './ingredient-details.module.css';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({ image, name, description, calories, proteins, fat, carbohydrates }) {
+function IngredientDetails() {
+	const { currentBurger } = useSelector(store => store.ingredients)
+	const { image, name, calories, proteins, fat, carbohydrates } = currentBurger
+	console.log(currentBurger)
 
 	return (
 		<div className={cn(styles.content)}>
@@ -11,7 +15,7 @@ function IngredientDetails({ image, name, description, calories, proteins, fat, 
 			<div className={cn(styles.content__product, 'pr-15', 'pl-15')}>
 				<img src={image} alt='иконка' className={cn(styles.content__image)} />
 				<h2 className={cn(styles.content__text, 'text', 'text_type_main-medium', 'mt-4')} > {name}</h2>
-				<p className={cn(styles.content__text, 'text', 'text_type_main-default', 'mt-8', 'mb-8')} >{description}</p>
+				<p className={cn(styles.content__text, 'text', 'text_type_main-default', 'mt-8', 'mb-8')} >Здесь будет описание</p>
 				<ul className={cn(styles.list)}>
 					<li className={cn(styles.list__item, 'text', 'text_type_main-default', 'text_color_inactive')}>
 						<p className={cn(styles['list__item-text'])}>Калории, ккал</p>

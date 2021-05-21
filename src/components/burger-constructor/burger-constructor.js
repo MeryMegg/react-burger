@@ -1,35 +1,31 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import cn from 'classnames';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
-import { ModalContext } from '../../services/modalContext';
 import { calculationCost } from '../../utils/functions';
-import { createOrders } from '../../utils/api';
+import { addOrders } from '../../utils/api';
+import { createOrder } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_INGREDIENT } from '../../services/actions/ingredients'
+import { OPEN_MODAL } from '../../services/actions/modal';
 
 
 
 
 function BurgerConstructor() {
-	const { setModal } = useContext(ModalContext);
 	const { bun, otherIngredients } = useSelector(store => store.ingredients.burgerIngredients);
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
-		createOrders(otherIngredients.map(el => el._id))
-			.then((data) => {
-				setModal({
-					visible: true,
-					content: <OrderDetails number={data.order.number} />
-				})
-			})
-			.catch((err) => {
-				(console.log(err))
-			})
+		const ingredientsId = otherIngredients.map(el => el._id)
+		dispatch(createOrder([bun._id, ...ingredientsId]));
+		dispatch({
+			type: OPEN_MODAL,
+			content: <OrderDetails />
+		})
 	}
 
 	const deleteIngredient = (item) => {

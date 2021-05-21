@@ -4,29 +4,38 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredients.module.css'
-import { ModalContext } from '../../services/modalContext';
-import { useSelector } from 'react-redux';
+//import { ModalContext } from '../../services/modalContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { CURRENT_BURGER } from '../../services/actions/ingredients';
+import { OPEN_MODAL } from '../../services/actions/modal';
 
 function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread')
-	const { setModal } = useContext(ModalContext);
+	//const { setModal } = useContext(ModalContext);
+	const dispatch = useDispatch();
 	const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
-	console.log(bun)
-
 
 	const renderModal = (item) => {
-		setModal({
-			visible: true,
-			content: <IngredientDetails
-				image={item.image}
-				name={item.name}
-				description={'Превосходные котлеты из марсианской Магнолии для фирменных космических бургеров, набирающих популярность по всей вселенной.'}
-				calories={item.calories}
-				proteins={item.proteins}
-				fat={item.fat}
-				carbohydrates={item.carbohydrates}
-			/>
+		dispatch({
+			type: CURRENT_BURGER,
+			item
 		})
+		dispatch({
+			type: OPEN_MODAL,
+			content: <IngredientDetails />
+		})
+		// setModal({
+		// 	visible: true,
+		// 	content: <IngredientDetails
+		// 		image={item.image}
+		// 		name={item.name}
+		// 		description={'Превосходные котлеты из марсианской Магнолии для фирменных космических бургеров, набирающих популярность по всей вселенной.'}
+		// 		calories={item.calories}
+		// 		proteins={item.proteins}
+		// 		fat={item.fat}
+		// 		carbohydrates={item.carbohydrates}
+		// 	/>
+		// })
 	}
 
 	useEffect(() => {

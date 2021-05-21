@@ -7,6 +7,11 @@ import {
 	ADD_BUN,
 	ADD_FILLINGS,
 	DELETE_INGREDIENT,
+	CURRENT_BURGER,
+
+	CREATE_ORDER_REQUEST,
+	CREATE_ORDER_SUCCESS,
+	CREATE_ORDER_FAILED,
 } from '../actions/ingredients';
 
 
@@ -19,8 +24,10 @@ const initialState = {
 		bun: null,
 		otherIngredients: []
 	},
-	currentOrder: {},
-	currentBurger: {}
+	currentOrder: null,
+	currentBurger: null,
+	orderRequest: false,
+	orderFailed: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -29,7 +36,7 @@ export const ingredientsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-				feedFailed: false,
+				hasError: false,
 			};
 		}
 		case GET_PRODUCTS_SUCCESS: {
@@ -37,6 +44,19 @@ export const ingredientsReducer = (state = initialState, action) => {
 		}
 		case GET_PRODUCTS_FAILED: {
 			return { ...state, hasError: true, isLoading: false };
+		}
+		case CREATE_ORDER_REQUEST: {
+			return {
+				...state,
+				orderRequest: true,
+				orderFailed: false,
+			};
+		}
+		case CREATE_ORDER_SUCCESS: {
+			return { ...state, orderFailed: false, currentOrder: action.order, orderRequest: false };
+		}
+		case CREATE_ORDER_FAILED: {
+			return { ...state, orderFailed: true, orderRequest: false };
 		}
 		case ADD_BUN: {
 			return {
@@ -63,6 +83,12 @@ export const ingredientsReducer = (state = initialState, action) => {
 					...state.burgerIngredients,
 					otherIngredients: [...state.burgerIngredients.otherIngredients].filter(el => el._id !== action._id)
 				}
+			}
+		}
+		case CURRENT_BURGER: {
+			return {
+				...state,
+				currentBurger: action.item
 			}
 		}
 		// case TAB_SWITCH: {
