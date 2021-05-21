@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import cn from 'classnames';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
@@ -16,7 +15,6 @@ import { OPEN_MODAL } from '../../services/actions/modal';
 
 function BurgerConstructor() {
 	const { bun, otherIngredients } = useSelector(store => store.ingredients.burgerIngredients);
-	console.log(bun)
 	const dispatch = useDispatch();
 
 	const handleClick = () => {

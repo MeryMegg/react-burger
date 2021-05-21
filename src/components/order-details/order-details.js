@@ -5,8 +5,7 @@ import checkIcon from '../../images/check.svg';
 import { useSelector } from 'react-redux';
 
 function OrderDetails() {
-	const { orderRequest, orderFailed, currentOrder } = useSelector(store => store.ingredients)
-	//const number = currentOrder.order.number
+	const { orderRequest, orderFailed, currentOrder } = useSelector(store => store.ingredients);
 
 	return (
 		<div className={cn(styles.order, 'p-15')}>

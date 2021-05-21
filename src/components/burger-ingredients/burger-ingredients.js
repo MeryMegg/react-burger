@@ -5,7 +5,7 @@ import Ingredients from '../ingredients/ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { CURRENT_BURGER, INCREASE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients';
+import { CURRENT_BURGER } from '../../services/actions/ingredients';
 import { OPEN_MODAL } from '../../services/actions/modal';
 
 function BurgerIngredients() {
