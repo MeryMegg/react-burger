@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid'
 import cn from 'classnames';
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
@@ -8,7 +7,7 @@ import styles from './burger-constructor.module.css';
 import { calculationCost } from '../../utils/functions';
 import { createOrder } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
-import { DELETE_INGREDIENT } from '../../services/actions/ingredients'
+import { DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients'
 import { OPEN_MODAL } from '../../services/actions/modal';
 
 
@@ -27,16 +26,9 @@ function BurgerConstructor() {
 		})
 	}
 
-	const deleteIngredient = (item) => {
-		dispatch({
-			type: DELETE_INGREDIENT,
-			id: item._id
-		})
-	}
-
 	return (
 		<section className={cn(styles.container, 'pl-4')}>
-			<div className={'mr-8'}>
+			{bun && <div className={'mr-8'}>
 				<ConstructorElement
 					type="top"
 					isLocked={true}
@@ -44,22 +36,36 @@ function BurgerConstructor() {
 					price={bun.price}
 					thumbnail={bun.image}
 				/>
-			</div>
+			</div>}
 
 			<ul className={cn(styles.list, 'pr-4')}>
-				{otherIngredients.map(el => (
-					<li className={styles.item} key={uuidv4()} >
-						<DragIcon type="primary" />
-						<ConstructorElement
-							text={el.name}
-							price={el.price}
-							thumbnail={el.image}
-							handleClose={deleteIngredient}
-						/>
-					</li>
-				))}
+				{otherIngredients.map(el => {
+					const deleteIngredient = () => {
+						console.log(el)
+						dispatch({
+							type: DELETE_INGREDIENT,
+							id: el.productId
+						})
+						el.type !== 'bun' &&
+							dispatch({
+								type: DECREASE_INGREDIENT,
+								key: el._id
+							})
+					}
+					return (
+						<li className={styles.item} key={el.productId}>
+							<DragIcon type="primary" />
+							<ConstructorElement
+								text={el.name}
+								price={el.price}
+								thumbnail={el.image}
+								handleClose={deleteIngredient}
+							/>
+						</li>
+					)
+				})}
 			</ul>
-			<div className={'mr-8'}>
+			{bun && <div className={'mr-8'}>
 				<ConstructorElement
 					type="bottom"
 					isLocked={true}
@@ -67,13 +73,13 @@ function BurgerConstructor() {
 					price={bun.price}
 					thumbnail={bun.image}
 				/>
-			</div>
+			</div>}
 
 			<div className={cn(styles.order, 'mt-10')}>
-				<PriceItem price={calculationCost(bun, otherIngredients)} classMarg='mr-10' classText='text_type_digits-medium' />
-				<Button type="primary" size="large" onClick={handleClick}>
+				{otherIngredients.length || bun ? <PriceItem price={calculationCost(bun, otherIngredients)} classMarg='mr-10' classText='text_type_digits-medium' /> : null}
+				{bun && <Button type="primary" size="large" onClick={handleClick}>
 					Оформить заказ
-				</Button>
+				</Button>}
 			</div>
 
 		</section >

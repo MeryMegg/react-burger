@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 function Main() {
 	const { visible, content } = useSelector(store => store.modal)
 
-	const { burgerIngredients, isLoading, hasError, loaded } = useSelector(store => store.ingredients);
+	const { isLoading, hasError, loaded } = useSelector(store => store.ingredients);
 
 	const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function Main() {
 				loaded &&
 				<div className={styles.columns}>
 					<BurgerIngredients />
-					{burgerIngredients.bun && <BurgerConstructor />}
+					<BurgerConstructor />
 				</div>
 			}
 			{visible && <Modal >{content}</Modal>}

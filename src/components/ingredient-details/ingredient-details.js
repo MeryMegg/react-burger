@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
@@ -36,16 +35,6 @@ function IngredientDetails() {
 			</div>
 		</div>
 	);
-}
-
-IngredientDetails.propTypes = {
-	image: PropTypes.string,
-	name: PropTypes.string,
-	description: PropTypes.string,
-	calories: PropTypes.number,
-	proteins: PropTypes.number,
-	fat: PropTypes.number,
-	carbohydrates: PropTypes.number
 }
 
 export default IngredientDetails;

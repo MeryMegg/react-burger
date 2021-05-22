@@ -4,14 +4,18 @@ import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-item.module.css';
-import { useDispatch } from 'react-redux';
-import { ADD_BUN, ADD_FILLINGS } from '../../services/actions/ingredients';
+import { useSelector, useDispatch } from 'react-redux';
+import { ADD_BUN, ADD_FILLINGS, INCREASE_INGREDIENT } from '../../services/actions/ingredients';
 
 
 function BurgerItem({ item, renderModal }) {
 
-	//const state = useSelector(store => store.ingredients);
+	const { counts, bun } = useSelector(store => store.ingredients.burgerIngredients);
 	const dispatch = useDispatch();
+	const isBun = item.type === 'bun'
+	const type = isBun ? ADD_BUN : ADD_FILLINGS
+	const count = isBun && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id]
+
 
 	const card = {
 		image: item.image_large,
@@ -25,18 +29,24 @@ function BurgerItem({ item, renderModal }) {
 	}
 
 	const handleClick = () => {
-		const type = item.type === 'bun' ? ADD_BUN : ADD_FILLINGS
 		dispatch({
 			type,
 			item
 		})
+		!isBun &&
+			dispatch({
+				type: INCREASE_INGREDIENT,
+				key: item._id
+			})
+
 		renderModal(card)
 	}
 
 	return (
 		<li className={cn(styles.card)} onClick={handleClick}>
 			<img className={cn(styles.image, 'mb-1')} src={item.image_large} alt={item.name} />
-			<Counter count={1} size='small' />
+			{	count &&
+				<Counter count={count} size='small' />}
 			<PriceItem price={item.price} classMarg='mr-1' />
 			<p className={cn('text text_type_main-default', styles.container__description)}>{item.name}</p>
 		</li>
