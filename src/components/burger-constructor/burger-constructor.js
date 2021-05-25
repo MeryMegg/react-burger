@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients'
 import { OPEN_MODAL } from '../../services/actions/modal';
 import { useDrag, useDrop } from 'react-dnd';
-import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+import BurgerItem from '../burger-item/burger-item';
 
 
 
@@ -69,7 +69,7 @@ function BurgerConstructor({ onDropHandler }) {
 								})
 						}
 						return (
-							<BurgerIngredient item={el} key={el.productId} deleteIngredient={deleteIngredient} />
+							<BurgerItem item={el} key={el.productId} deleteIngredient={deleteIngredient} />
 							// <li className={styles.item} key={el.productId}>
 							// 	<DragIcon type="primary" />
 							// 	<ConstructorElement

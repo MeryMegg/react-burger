@@ -1,11 +1,15 @@
-.item {
-	width: 100%;
+.card {
+	position: relative;
 	list-style-type: none;
-	display: flex;	
+	width: 272px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+
 	align-items: center;
-	gap: 10px;
 }
 
-.item_without-icon {
-	justify-content: flex-end;
+.image {
+	position: relative;
+	max-width: 240px;
 }
