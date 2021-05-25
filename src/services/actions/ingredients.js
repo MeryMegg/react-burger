@@ -7,8 +7,7 @@ export const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED';
 export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
 export const DECREASE_INGREDIENT = 'DECREASE_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT'
-export const ADD_BUN = 'ADD_BUN';
-export const ADD_FILLINGS = 'ADD_FILLINGS';
+export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
 export const CURRENT_BURGER = 'CURRENT_BURGER';
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
@@ -69,14 +68,3 @@ export const createOrder = (ingredientsId) => {
 }
 
 
-// setState({ ...state, hasError: false, isLoading: true });
-// 	getProducts()
-// 		.then((data) => {
-// 			const lengthArray = data.data.length()
-// 			const ingredientsObj = filterArray(data.data);
-// 			setState({ ...state, allIngredients: ingredientsObj, isLoading: false, loaded: !!lengthArray })
-// 		})
-// 		.catch((err) => {
-// 			setState({ ...state, hasError: true, isLoading: false });
-// 		})
-// }

@@ -4,8 +4,7 @@ import {
 	GET_PRODUCTS_SUCCESS,
 	GET_PRODUCTS_FAILED,
 
-	ADD_BUN,
-	ADD_FILLINGS,
+	ADD_INGREDIENTS,
 	DELETE_INGREDIENT,
 	CURRENT_BURGER,
 	INCREASE_INGREDIENT,
@@ -62,16 +61,18 @@ export const ingredientsReducer = (state = initialState, action) => {
 		case CREATE_ORDER_FAILED: {
 			return { ...state, orderFailed: true, orderRequest: false };
 		}
-		case ADD_BUN: {
-			return {
-				...state,
-				burgerIngredients: {
-					...state.burgerIngredients,
-					bun: action.item
+		case ADD_INGREDIENTS: {
+			const { type } = action.item
+			console.log(type)
+			if (type === 'bun') {
+				return {
+					...state,
+					burgerIngredients: {
+						...state.burgerIngredients,
+						bun: action.item
+					}
 				}
 			}
-		}
-		case ADD_FILLINGS: {
 			const newItem = { ...action.item, productId: uuidv4() }
 			return {
 				...state,
@@ -79,8 +80,11 @@ export const ingredientsReducer = (state = initialState, action) => {
 					...state.burgerIngredients,
 					otherIngredients: [...state.burgerIngredients.otherIngredients, newItem]
 				}
+
 			}
 		}
+
+
 		case DELETE_INGREDIENT: {
 			return {
 				...state,
@@ -98,17 +102,21 @@ export const ingredientsReducer = (state = initialState, action) => {
 			}
 		}
 		case INCREASE_INGREDIENT: {
-			return {
-				...state,
-				burgerIngredients: {
-					...state.burgerIngredients,
-					counts: {
-						...state.burgerIngredients.counts,
-						[action.key]: (state.burgerIngredients.counts[action.key] || 0) + 1
+			const { typeItem } = action
+			if (typeItem !== 'bun') {
+				return {
+					...state,
+					burgerIngredients: {
+						...state.burgerIngredients,
+						counts: {
+							...state.burgerIngredients.counts,
+							[action.key]: (state.burgerIngredients.counts[action.key] || 0) + 1
 
+						}
 					}
 				}
 			}
+
 		}
 		case DECREASE_INGREDIENT: {
 			return {
