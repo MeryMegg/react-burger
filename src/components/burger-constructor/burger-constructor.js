@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
@@ -49,12 +50,6 @@ function BurgerConstructor({ onDropHandler }) {
 			toIndex: hoverIndex,
 			fromIndex: dragIndex
 		})
-		// setCards(update(cards, {
-		// 	$splice: [
-		// 		[dragIndex, 1],
-		// 		[hoverIndex, 0, dragCard],
-		// 	],
-		// }));		
 	}, [dispatch]);
 
 	return (
@@ -112,6 +107,10 @@ function BurgerConstructor({ onDropHandler }) {
 		</section >
 	)
 
+}
+
+BurgerConstructor.propTypes = {
+	onDropHandler: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

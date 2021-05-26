@@ -10,7 +10,6 @@ import { OPEN_MODAL } from '../../services/actions/modal';
 
 function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread');
-	//const [activeHeader, setActiveHeader] = useState('bread');
 	const dispatch = useDispatch();
 	const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
 	const rootRef = useRef(null);
