@@ -4,8 +4,5 @@
 	display: flex;	
 	align-items: center;
 	gap: 10px;
-}
-
-.item_without-icon {
-	justify-content: flex-end;
+	cursor: move;
 }

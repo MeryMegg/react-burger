@@ -9,6 +9,7 @@ import {
 	CURRENT_BURGER,
 	INCREASE_INGREDIENT,
 	DECREASE_INGREDIENT,
+	UPDATE_CONSTRUCTOR,
 
 	CREATE_ORDER_REQUEST,
 	CREATE_ORDER_SUCCESS,
@@ -63,7 +64,6 @@ export const ingredientsReducer = (state = initialState, action) => {
 		}
 		case ADD_INGREDIENTS: {
 			const { type } = action.item
-			console.log(type)
 			if (type === 'bun') {
 				return {
 					...state,
@@ -80,11 +80,8 @@ export const ingredientsReducer = (state = initialState, action) => {
 					...state.burgerIngredients,
 					otherIngredients: [...state.burgerIngredients.otherIngredients, newItem]
 				}
-
 			}
 		}
-
-
 		case DELETE_INGREDIENT: {
 			return {
 				...state,
@@ -94,7 +91,6 @@ export const ingredientsReducer = (state = initialState, action) => {
 				}
 			}
 		}
-
 		case CURRENT_BURGER: {
 			return {
 				...state,
@@ -111,82 +107,37 @@ export const ingredientsReducer = (state = initialState, action) => {
 						counts: {
 							...state.burgerIngredients.counts,
 							[action.key]: (state.burgerIngredients.counts[action.key] || 0) + 1
-
 						}
 					}
 				}
-			}
-
+			} else return state;
 		}
 		case DECREASE_INGREDIENT: {
+			const { typeItem } = action
+			if (typeItem !== 'bun') {
+				return {
+					...state,
+					burgerIngredients: {
+						...state.burgerIngredients,
+						counts: {
+							...state.burgerIngredients.counts,
+							[action.key]: state.burgerIngredients.counts[action.key] - 1
+						}
+					}
+				}
+			} else return state;
+		}
+		case UPDATE_CONSTRUCTOR: {
+			const otherIngredients = [...state.burgerIngredients.otherIngredients];
+			otherIngredients.splice(action.toIndex, 0, otherIngredients.splice(action.fromIndex, 1)[0]);
 			return {
 				...state,
 				burgerIngredients: {
 					...state.burgerIngredients,
-					counts: {
-						...state.burgerIngredients.counts,
-						[action.key]: state.burgerIngredients.counts[action.key] - 1
-
-					}
+					otherIngredients: otherIngredients
 				}
 			}
 		}
-		// case TAB_SWITCH: {
-		// 	return {
-		// 		...state,
-		// 		currentTab: state.currentTab === 'items' ? 'postponed' : 'items'
-		// 	};
-		// }
-		// case GET_RECOMMENDED_ITEMS_REQUEST: {
-		// 	return {
-		// 		...state,
-		// 		recommendedItemsRequest: true
-		// 	};
-		// }
-		// case GET_RECOMMENDED_ITEMS_SUCCESS: {
-		// 	return {
-		// 		...state,
-		// 		recommendedItemsFailed: false,
-		// 		recommendedItems: action.items,
-		// 		recommendedItemsRequest: false
-		// 	};
-		// }
-		// case GET_RECOMMENDED_ITEMS_FAILED: {
-		// 	return { ...state, recommendedItemsFailed: true, recommendedItemsRequest: false };
-		// }
-		// 
-		// 
-		// case APPLY_PROMO_FAILED: {
-		// 	return {
-		// 		...state,
-		// 		promoRequest: false,
-		// 		promoFailed: true,
-		// 		promoDiscount: null,
-		// 		promoCode: ''
-		// 	};
-		// }
-		// case APPLY_PROMO_REQUEST: {
-		// 	return {
-		// 		...state,
-		// 		promoFailed: false,
-		// 		promoRequest: true
-		// 	};
-		// }
-		// case APPLY_PROMO_SUCCESS: {
-		// 	return {
-		// 		...state,
-		// 		promoRequest: false,
-		// 		promoCode: action.value.code,
-		// 		promoDiscount: action.value.discount
-		// 	};
-		// }
-		// case CANCEL_PROMO: {
-		// 	return {
-		// 		...state,
-		// 		promoCode: '',
-		// 		promoDiscount: null
-		// 	};
-		// }
 		default: {
 			return state;
 		}

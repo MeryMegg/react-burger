@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import cn from 'classnames';
-import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
 import PriceItem from '../price-item/price-item';
 import styles from './burger-constructor.module.css';
@@ -9,8 +9,9 @@ import { createOrder } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { DELETE_INGREDIENT, DECREASE_INGREDIENT } from '../../services/actions/ingredients'
 import { OPEN_MODAL } from '../../services/actions/modal';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 import BurgerItem from '../burger-item/burger-item';
+import { UPDATE_CONSTRUCTOR } from '../../services/actions/ingredients'
 
 
 
@@ -42,6 +43,20 @@ function BurgerConstructor({ onDropHandler }) {
 	const isActive = canDrop && isHover;
 	let classModificator = isActive ? 'burger-container_active' : canDrop ? 'burger-container_candrop' : ''
 
+	const moveItem = useCallback((dragIndex, hoverIndex) => {
+		dispatch({
+			type: UPDATE_CONSTRUCTOR,
+			toIndex: hoverIndex,
+			fromIndex: dragIndex
+		})
+		// setCards(update(cards, {
+		// 	$splice: [
+		// 		[dragIndex, 1],
+		// 		[hoverIndex, 0, dragCard],
+		// 	],
+		// }));		
+	}, [dispatch]);
+
 	return (
 		<section className={cn(styles.container, 'pl-4')} >
 			<div className={cn(styles['burger-container'], styles[classModificator])} ref={dropTarget} >
@@ -55,30 +70,22 @@ function BurgerConstructor({ onDropHandler }) {
 					/>
 				</div>}
 
-				<ul className={cn(styles.list, 'pr-4')}>
-					{otherIngredients.map(el => {
+				<ul className={cn(styles.list, 'pr-4')} >
+					{otherIngredients.map((el, i) => {
 						const deleteIngredient = () => {
 							dispatch({
 								type: DELETE_INGREDIENT,
 								id: el.productId
 							})
-							el.type !== 'bun' &&
-								dispatch({
-									type: DECREASE_INGREDIENT,
-									key: el._id
-								})
+							//el.type !== 'bun' &&
+							dispatch({
+								type: DECREASE_INGREDIENT,
+								key: el._id,
+								typeItem: el.type
+							})
 						}
 						return (
-							<BurgerItem item={el} key={el.productId} deleteIngredient={deleteIngredient} />
-							// <li className={styles.item} key={el.productId}>
-							// 	<DragIcon type="primary" />
-							// 	<ConstructorElement
-							// 		text={el.name}
-							// 		price={el.price}
-							// 		thumbnail={el.image}
-							// 		handleClose={deleteIngredient}
-							// 	/>
-							// </li>
+							<BurgerItem item={el} index={i} key={el.productId} deleteIngredient={deleteIngredient} moveItem={moveItem} />
 						)
 					})}
 				</ul>
