@@ -6,6 +6,9 @@ import Modal from '../modal/modal';
 import styles from './main.module.css';
 import { getIngredients } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { ADD_INGREDIENTS, INCREASE_INGREDIENT } from '../../services/actions/ingredients';
 
 
 function Main() {
@@ -19,6 +22,18 @@ function Main() {
 		dispatch(getIngredients())
 	}, [dispatch])
 
+	const handleDrop = (item) => {
+		dispatch({
+			type: ADD_INGREDIENTS,
+			item
+		})
+		dispatch({
+			type: INCREASE_INGREDIENT,
+			key: item._id,
+			typeItem: item.type
+		})
+	};
+
 
 
 
@@ -29,10 +44,13 @@ function Main() {
 			{!isLoading &&
 				!hasError &&
 				loaded &&
-				<div className={styles.columns}>
-					<BurgerIngredients />
-					<BurgerConstructor />
-				</div>
+				<DndProvider backend={HTML5Backend}>
+					<div className={styles.columns}>
+						<BurgerIngredients />
+						<BurgerConstructor onDropHandler={handleDrop} />
+					</div>
+				</DndProvider>
+
 			}
 			{visible && <Modal >{content}</Modal>}
 		</main >

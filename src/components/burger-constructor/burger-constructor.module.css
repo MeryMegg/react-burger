@@ -1,9 +1,28 @@
 .container {
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
+	flex-direction: column;	
 	align-items: flex-end;
 	box-sizing: border-box;
+}
+
+.burger-container{
+	display: flex;
+	width: 100%;
+	flex-direction: column;	
+	box-sizing: border-box;
+	justify-content: flex-end;
+	align-items: flex-end;
+	flex-grow: 1;
+	margin-top: 60px;
+	border-radius: 30px;
+}
+
+.burger-container_active {
+	background-color: #1C1C21;
+}
+
+.burger-container_candrop {
+	border: 10px solid #1C1C21;
 }
 
 .list {
@@ -32,13 +51,13 @@
 	border-radius: 6px;			
 }
 
-.item {
+/* .item {
 	width: 100%;
 	list-style-type: none;
 	display: flex;	
 	align-items: center;
 	gap: 10px;
-}
+} */
 
 .item_without-icon {
 	justify-content: flex-end;

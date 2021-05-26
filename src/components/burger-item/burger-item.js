@@ -1,74 +1,76 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import PriceItem from '../price-item/price-item';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { ADD_BUN, ADD_FILLINGS, INCREASE_INGREDIENT } from '../../services/actions/ingredients';
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
+function BurgerItem({ item, index, deleteIngredient, moveItem }) {
+	const id = item._id
+	const ref = useRef(null);
+	const [, drop] = useDrop({
+		accept: 'item',
+		collect(monitor) {
+			return {
+				handlerId: monitor.getHandlerId(),
+			};
+		},
+		hover(el, monitor) {
+			if (!ref.current) {
+				return;
+			}
+			const dragIndex = el.index;
+			const hoverIndex = index;
 
-function BurgerItem({ item, renderModal }) {
+			if (dragIndex === hoverIndex) {
+				return;
+			}
 
-	const { counts, bun } = useSelector(store => store.ingredients.burgerIngredients);
-	const dispatch = useDispatch();
-	const isBun = item.type === 'bun'
-	const type = isBun ? ADD_BUN : ADD_FILLINGS
-	const count = isBun && bun && bun._id === item._id ? 2 : counts[item._id] && counts[item._id]
+			const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
+			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
-	const card = {
-		image: item.image_large,
-		name: item.name,
-		calories: item.calories,
-		fat: item.fat,
-		carbohydrates: item.carbohydrates,
-		proteins: item.proteins,
-		price: item.price,
-		_id: item._id,
-	}
+			const clientOffset = monitor.getClientOffset();
 
-	const handleClick = () => {
-		dispatch({
-			type,
-			item
-		})
-		!isBun &&
-			dispatch({
-				type: INCREASE_INGREDIENT,
-				key: item._id
-			})
+			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-		renderModal(card)
-	}
+			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+				return;
+			}
+
+			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+				return;
+			}
+
+			moveItem(dragIndex, hoverIndex);
+
+			el.index = hoverIndex;
+		},
+	});
+	const [{ isDrag }, drag] = useDrag({
+		type: 'item',
+		item: () => {
+			return { id, index };
+		},
+		collect: (monitor) => ({
+			isDrag: monitor.isDragging(),
+		}),
+	});
+
+	const opacity = isDrag ? 0 : 1;
+	drag(drop(ref));
 
 	return (
-		<li className={cn(styles.card)} onClick={handleClick}>
-			<img className={cn(styles.image, 'mb-1')} src={item.image_large} alt={item.name} />
-			{	count &&
-				<Counter count={count} size='small' />}
-			<PriceItem price={item.price} classMarg='mr-1' />
-			<p className={cn('text text_type_main-default', styles.container__description)}>{item.name}</p>
+		<li className={styles.item} ref={ref} style={{ opacity }}>
+			<DragIcon type="primary" />
+			<ConstructorElement
+				text={item.name}
+				price={item.price}
+				thumbnail={item.image}
+				handleClose={deleteIngredient}
+			/>
 		</li>
 	)
 }
 
-BurgerItem.propTypes = {
-	item: PropTypes.shape({
-		_id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-		image_mobile: PropTypes.string.isRequired,
-		image_large: PropTypes.string.isRequired,
-		__v: PropTypes.number,
-	}).isRequired,
-	renderModal: PropTypes.func.isRequired
-}
-
 export default BurgerItem;
+
