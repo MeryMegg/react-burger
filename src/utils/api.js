@@ -8,7 +8,7 @@ export const getProducts = () => {
 		.then((res) => requestHandler(res))
 }
 
-export const createOrders = (ingredients) => {
+export const addOrders = (ingredients) => {
 	return fetch(`${ServerConfig.baseUrl}/orders`, {
 		method: 'POST',
 		headers: ServerConfig.headers,

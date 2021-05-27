@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
-import { ModalContext } from '../../services/modalContext';
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from '../../services/actions/modal';
 
 function Modal({ children }) {
-	const { setModal } = useContext(ModalContext);
+	const dispatch = useDispatch();
 
 	const closeEsc = (evn) => {
 		if (evn.keyCode === 27)
@@ -16,9 +17,8 @@ function Modal({ children }) {
 	}
 
 	const close = () => {
-		setModal({
-			isShow: false,
-			content: null,
+		dispatch({
+			type: CLOSE_MODAL
 		})
 	}
 

@@ -1,67 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import styles from './main.module.css';
-import { getProducts } from '../../utils/api';
-import { IngredientsContext } from '../../services/ingredientsContext';
-import { ModalContext } from '../../services/modalContext';
-import { filterArray } from '../../utils/functions';
+import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { ADD_INGREDIENTS, INCREASE_INGREDIENT } from '../../services/actions/ingredients';
 
 
 function Main() {
-	const [state, setState] = useState({
-		isLoading: false,
-		hasError: false,
-		loaded: false,
-		allIngredients: {},
-		burgerIngredients: {
-			bun: null,
-			otherIngredients: []
-		}
-	});
-	const [modal, setModal] = useState({
-		visible: false,
-		content: null
-	});
+	const { visible, content } = useSelector(store => store.modal)
 
-	const getIngredients = () => {
-		setState({ ...state, hasError: false, isLoading: true });
-		getProducts()
-			.then((data) => {
-				const ingredientsObj = filterArray(data.data);
-				setState({ ...state, allIngredients: ingredientsObj, isLoading: false, loaded: true })
-			})
-			.catch((err) => {
-				setState({ ...state, hasError: true, isLoading: false });
-			})
-	}
+	const { isLoading, hasError, loaded } = useSelector(store => store.ingredients);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		getIngredients()
-	}, [])
+		dispatch(getIngredients())
+	}, [dispatch])
+
+	const handleDrop = (item) => {
+		dispatch({
+			type: ADD_INGREDIENTS,
+			item
+		})
+		dispatch({
+			type: INCREASE_INGREDIENT,
+			key: item._id,
+			typeItem: item.type
+		})
+	};
 
 
-	const { visible, content } = modal;
+
 
 	return (
 		<main className={cn(styles.main, 'p-10')}>
-			<ModalContext.Provider value={{ modal, setModal }}>
-				<IngredientsContext.Provider value={{ state, setState }}>
-					{state.isLoading && 'Загрузка...'}
-					{state.hasError && 'Произошла ошибка'}
-					{!state.isLoading &&
-						!state.hasError &&
-						!!state.loaded &&
-						<div className={styles.columns}>
-							<BurgerIngredients />
-							{state.burgerIngredients.bun && <BurgerConstructor />}
-						</div>
-					}
-					{visible && <Modal >{content}</Modal>}
-				</IngredientsContext.Provider>
-			</ModalContext.Provider >
+			{isLoading && 'Загрузка...'}
+			{hasError && 'Произошла ошибка'}
+			{!isLoading &&
+				!hasError &&
+				loaded &&
+				<DndProvider backend={HTML5Backend}>
+					<div className={styles.columns}>
+						<BurgerIngredients />
+						<BurgerConstructor onDropHandler={handleDrop} />
+					</div>
+				</DndProvider>
+
+			}
+			{visible && <Modal >{content}</Modal>}
 		</main >
 	);
 }
