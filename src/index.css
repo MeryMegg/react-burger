@@ -19,3 +19,9 @@ code {
   flex-direction: column;
 }
 
+.constructor-element {
+  width: 100% !important;
+}
+.constructor-element__price {
+  margin-left: auto !important;
+}

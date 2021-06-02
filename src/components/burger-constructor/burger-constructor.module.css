@@ -51,14 +51,6 @@
 	border-radius: 6px;			
 }
 
-/* .item {
-	width: 100%;
-	list-style-type: none;
-	display: flex;	
-	align-items: center;
-	gap: 10px;
-} */
-
 .item_without-icon {
 	justify-content: flex-end;
 }
