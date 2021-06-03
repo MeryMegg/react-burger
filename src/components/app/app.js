@@ -1,13 +1,51 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
-import Main from '../main/main';
+import { Main, Login, Register, ForgotPassword, ResetPassword, Feed } from '../../pages';
 
 function App() {
 	return (
-		<>
+		<Router>
 			<AppHeader />
-			<Main />
-		</>
+			<Switch>
+				<Route path="/" exact={true}>
+					<Main />
+				</Route>
+				<Route path="/login" exact={true}>
+					<Login />
+				</Route>
+				<Route path="/register" exact={true}>
+					<Register />
+				</Route>
+				<Route path="/forgot-password" exact={true}>
+					<ForgotPassword />
+				</Route>
+				<Route path="/reset-password" exact={true}>
+					<ResetPassword />
+				</Route>
+				<Route path="/feed" exact={true}>
+					<Feed />
+				</Route>
+				<Route path="/feed/:id" exact={true}>
+					<h1>Здесь будет страница заказа в ленте</h1>
+				</Route>
+				<Route path="/profile" exact={true}>
+					<h1>Здесь будет страница с настройками профиля пользователя</h1>
+				</Route>
+				<Route path="/profile/orders" exact={true}>
+					<h1>Здесь будет страница истории заказов пользователя</h1>
+				</Route>
+				<Route path="/profile/orders/:id" exact={true}>
+					<h1>Здесь будет страница заказа в истории заказов</h1>
+				</Route>
+				<Route path="/ingredients/:id" exact={true}>
+					<h1>Здесь будет страница ингредиента. Ей займёмся в следующей проектной работе</h1>
+				</Route>
+				<Route>
+					<h1>Здесь ничего нет</h1>
+				</Route>
+			</Switch>
+		</Router>
 	);
 }
 

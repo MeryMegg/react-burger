@@ -16,16 +16,16 @@ function AppHeader() {
 							<BurgerIcon type={pathname === '/' ? "primary" : "secondary"} />
 							<span className={cn('ml-2')}>Конструктор</span>
 						</NavLink>
-						<NavLink to="/lenta" activeClassName={styles.link_active} className={cn(styles.link, 'pt-4', 'pb-4', 'pr-5', 'pl-5')}>
-							<ListIcon type={pathname === '/lenta' ? "primary" : "secondary"} />
+						<NavLink to="/feed" activeClassName={styles.link_active} className={cn(styles.link, 'pt-4', 'pb-4', 'pr-5', 'pl-5')}>
+							<ListIcon type={pathname === '/feeda' ? "primary" : "secondary"} />
 							<span className={cn('ml-2')}>Лента заказов</span>
 						</NavLink>
 					</div>
 					<NavLink exact to="/" activeClassName={styles.link_active} className={cn(styles.logo)}>
 						<Logo />
 					</NavLink>
-					<NavLink to="/account" activeClassName={styles.link_active} className={cn(styles.link)}>
-						<ProfileIcon type={pathname === '/account' ? "primary" : "secondary"} />
+					<NavLink to="/profile" activeClassName={styles.link_active} className={cn(styles.link)}>
+						<ProfileIcon type={pathname === '/profile' ? "primary" : "secondary"} />
 						<span className={cn('pt-4', 'pb-4', 'pl-5')}>Личный кабинет</span>
 					</NavLink>
 				</>

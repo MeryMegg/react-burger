@@ -25,3 +25,7 @@ code {
 .constructor-element__price {
   margin-left: auto !important;
 }
+
+.input__container .input_size_default {
+  width: 480px;
+}
