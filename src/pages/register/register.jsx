@@ -1,32 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { signUp } from '../../utils/api';
 import styles from './register.module.css';
 
 function Register() {
-	const [value, setValue] = React.useState('')
-	const inputRef = React.useRef(null)
+	const [state, setState] = useState({
+		name: '',
+		email: '',
+		password: '',
+	})
+
+	const handleInputChange = (event) => {
+		console.log(state)
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+		setState({
+			...state,
+			[name]: value
+		});
+	}
+
 	const onIconClick = () => {
-		setTimeout(() => inputRef.current.focus(), 0)
 		alert('Icon Click Callback')
 	}
-	const [passwordValue, setPasswordValue] = React.useState('')
-	const onChange = e => {
-		setPasswordValue(e.target.value)
-	}
+
+	const submit = e => {
+		e.preventDefault();
+
+		console.log(state);
+		signUp(state).then((res) => {
+			console.log(res)
+		}).catch(err => {
+			console.log(err)
+		})
+	};
 
 	return (
 		<div className={styles.container}>
-			<form className={cn(styles.form, 'mb-20')}>
+			<form onSubmit={submit} className={cn(styles.form, 'mb-20')}>
 				<h1 className={cn(styles.title, "text text_type_main-medium")}>Регистрация</h1>
 				<Input
 					type={'text'}
 					placeholder={'Имя'}
-					onChange={e => setValue(e.target.value)}
-					value={value}
+					onChange={handleInputChange}
+					value={state.name}
 					name={'name'}
 					error={false}
-					ref={inputRef}
 					onIconClick={onIconClick}
 					errorText={'Ошибка'}
 					size={'default'}
@@ -34,30 +56,27 @@ function Register() {
 				<Input
 					type={'text'}
 					placeholder={'E-mail'}
-					onChange={e => setValue(e.target.value)}
-					value={value}
-					name={'name'}
+					onChange={handleInputChange}
+					value={state.email}
+					name={'email'}
 					error={false}
-					ref={inputRef}
 					onIconClick={onIconClick}
 					errorText={'Ошибка'}
 					size={'default'}
 				/>
 				<PasswordInput
-					value={passwordValue}
+					value={state.password}
 					name={'password'}
-					onChange={onChange}
+					onChange={handleInputChange}
 				/>
 				<Button type="primary" size="medium">
 					Зарегистрироваться
 				</Button>
 
 			</form>
-			<div>
+			<div className={cn('mb-4')}>
 				<span className={'text text_type_main-default text_color_inactive'}>Уже зарегистрированы?</span>
-				<Button type="secondary" size="medium">
-					Войти
-				</Button>
+				<Link to='/login' className={cn('text text_type_main-default', styles.link, 'pl-2')}>Войти</Link>
 			</div>
 		</div >
 

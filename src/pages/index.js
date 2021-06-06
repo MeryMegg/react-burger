@@ -4,7 +4,8 @@ import ForgotPassword from './forgot-password/forgot-password';
 import ResetPassword from './reset-password/reset-password';
 import Main from './main/main';
 import Feed from './feed/feed';
+import Order from './order/order';
+import Profile from './profile/profile';
 
 
-
-export { Main, Login, Register, ForgotPassword, ResetPassword, Feed };
+export { Main, Login, Register, ForgotPassword, ResetPassword, Feed, Order, Profile };

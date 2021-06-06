@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import PriceItem from '../price-item/price-item';
+import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-ingredient.module.css';
 import { useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
-import { Main, Login, Register, ForgotPassword, ResetPassword, Feed } from '../../pages';
+import { Main, Login, Register, ForgotPassword, ResetPassword, Feed, Order, Profile } from '../../pages';
 
 function App() {
 	return (
@@ -27,16 +27,13 @@ function App() {
 					<Feed />
 				</Route>
 				<Route path="/feed/:id" exact={true}>
-					<h1>Здесь будет страница заказа в ленте</h1>
-				</Route>
-				<Route path="/profile" exact={true}>
-					<h1>Здесь будет страница с настройками профиля пользователя</h1>
-				</Route>
-				<Route path="/profile/orders" exact={true}>
-					<h1>Здесь будет страница истории заказов пользователя</h1>
+					<Order />
 				</Route>
 				<Route path="/profile/orders/:id" exact={true}>
-					<h1>Здесь будет страница заказа в истории заказов</h1>
+					<Order />
+				</Route>
+				<Route path="/profile">
+					<Profile />
 				</Route>
 				<Route path="/ingredients/:id" exact={true}>
 					<h1>Здесь будет страница ингредиента. Ей займёмся в следующей проектной работе</h1>

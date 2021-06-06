@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import PriceItem from '../price-item/price-item';
+import PriceItem from '../../ui/price-item/price-item';
 import styles from './orders-item.module.css';
 import bun01 from '../../images/bun-01.png';
 //import bun02 from '../../images/bun-02.png';
