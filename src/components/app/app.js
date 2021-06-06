@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import { Main, Login, Register, ForgotPassword, ResetPassword, Feed, Order, Profile } from '../../pages';
+import styles from './app.module.css'
 
 function App() {
 	return (
@@ -39,7 +40,7 @@ function App() {
 					<h1>Здесь будет страница ингредиента. Ей займёмся в следующей проектной работе</h1>
 				</Route>
 				<Route>
-					<h1>Здесь ничего нет</h1>
+					<div className={styles.container}><h1> 404 Здесь ничего нет</h1></div>
 				</Route>
 			</Switch>
 		</Router>

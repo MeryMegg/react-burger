@@ -3,30 +3,27 @@ import cn from 'classnames';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './orders-item.module.css';
 import bun01 from '../../images/bun-01.png';
-//import bun02 from '../../images/bun-02.png';
 import cheese from '../../images/cheese.png';
 import core from '../../images/core.png';
-//import meat01 from '../../images/meat-01.png';
-//import meat02 from '../../images/meat-02.png';
 import meat03 from '../../images/meat-03.png';
-//import meat04 from '../../images/meat-04.png';
-//import salad from '../../images/salad.png';
-// import sp01 from '../../images/sp-01.png';
-// import sauce01 from '../../images/sauce-01.png';
-// import sauce02 from '../../images/sauce-02.png';
 import sauce03 from '../../images/sauce-03.png';
-// import sauce04 from '../../images/sauce-04.png';
 import mineralRings from '../../images/mineral-rings.png';
 
 
-function OrdersItem() {
+function OrdersItem({ number, name, status }) {
+	const st = status === 'completed' ? { text: 'Выполнен', textColor: 'green' } :
+		status === 'canceled' ? { text: 'Отменен', textColor: 'red' } : { text: 'Готовится', textColor: 'white' };
+
 	return (
 		<div className={cn(styles['orders-item'], 'p-6')}>
 			<div className={cn(styles['orders-info'])}>
-				<span className="text text_type_digits-default">#034535</span>
+				<span className="text text_type_digits-default">#{number}</span>
 				<span className={"text text_type_main-default text_color_inactive"}>Сегодня, 16:20 i-GMT+3</span>
 			</div>
-			<h2 className="text text_type_main-medium">Название бургера</h2>
+			<div>
+				<h2 className={cn("text text_type_main-medium", 'mb-2')}>{name}</h2>
+				{status ? <span className={cn("text text_type_main-default", styles[`status_color_${st.textColor}`])}>{st.text}</span> : null}
+			</div>
 			<div className={cn(styles['orders-info'])}>
 				<ul className={cn(styles.list)}>
 					<li className={styles['list-item']}

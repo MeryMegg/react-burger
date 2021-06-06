@@ -9,37 +9,6 @@
 	gap: 60px;
 }
 
-.link {
-	text-decoration: none;	
-	display: flex;
-	text-align: center;
-	align-items: center;
-}
-
-.link_active {
-	color: #F2F2F3;
-}
-
-.list {
-	list-style-type: none;
-	padding-left: 0;
-}
-
-.nav {
-	max-width: 320px;
-}
-
-.forms {
-	display: flex;
-	flex-direction: column;
-	gap: 24px;
-}
-
-.list-nav {	
-	list-style-type: none;
-	padding-left: 0;	
-}
-
 .list {
 	display: flex;
 	flex-direction: column;
@@ -73,4 +42,13 @@
 .burger-link {
 	text-decoration: none;
 	color: #F2F2F3;
+}
+
+.container{
+	display: flex;
+	align-self: flex-start;
+	justify-content: center;
+	flex-grow: 1;
+	flex-direction: column;
+	text-align: center;
 }

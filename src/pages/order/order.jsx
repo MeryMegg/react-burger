@@ -1,31 +1,30 @@
 import React from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
+import { useParams } from 'react-router-dom';
 import PriceItem from '../../ui/price-item/price-item';
+import { ordersData } from '../../utils/data';
 
 import bun01 from '../../images/bun-01.png';
-//import bun02 from '../../images/bun-02.png';
 import cheese from '../../images/cheese.png';
 import core from '../../images/core.png';
-//import meat01 from '../../images/meat-01.png';
-//import meat02 from '../../images/meat-02.png';
 import meat03 from '../../images/meat-03.png';
-//import meat04 from '../../images/meat-04.png';
-//import salad from '../../images/salad.png';
-// import sp01 from '../../images/sp-01.png';
-// import sauce01 from '../../images/sauce-01.png';
-// import sauce02 from '../../images/sauce-02.png';
 import sauce03 from '../../images/sauce-03.png';
-// import sauce04 from '../../images/sauce-04.png';
 import mineralRings from '../../images/mineral-rings.png';
 
 function Order() {
+	const { id } = useParams();
+	const order = ordersData.filter(el => el.order.number === Number(id))
+	const name = order[0].name;
+	const status = order[0].order.status === 'completed' ? { text: 'Выполнен', textColor: 'green' } :
+		order[0].order.status === 'canceled' ? { text: 'Отменен', textColor: 'red' } : { text: 'Готовится', textColor: 'white' };
+
 	return (
 		<div className={styles.container}>
 			<div>
-				<span className={cn("text text_type_digits-default")}>#034533</span>
-				<h1 className={cn("text text_type_main-medium", 'mb-3', 'mt-10', styles.title)}>Название бургера</h1>
-				<p className={cn("text text_type_main-default", 'mb-15', styles.status)}>Выполнен</p>
+				<span className={cn("text text_type_digits-default")}>#{id}</span>
+				<h1 className={cn("text text_type_main-medium", 'mb-3', 'mt-10', styles.title)}>{name}</h1>
+				<p className={cn("text text_type_main-default", 'mb-15', styles.status, styles[`status_color_${status.textColor}`])}>{status.text}</p>
 				<p className={cn("text text_type_main-medium", 'mb-6', styles.title)}>Состав:</p>
 				<ul className={cn(styles.list, 'mb-10')}>
 					<li className={cn(styles['list-item'], 'mr-6')}>

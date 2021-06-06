@@ -212,140 +212,11 @@ export const data = [
 ]
 export const ordersData = [
 	{
-		client: 1,
-		name: "Space антарианский флюоресцентный бургер",
+		name: "Space флюоресцентный бургер",
 		order: {
-			number: 5474,
-			status: 'canceled',
-		},
-		ingredients: [
-			{
-				"_id": "60666c42cc7b410027a1a9b1",
-				"name": "Краторная булка N-200i",
-				"type": "bun",
-				"proteins": 80,
-				"fat": 24,
-				"carbohydrates": 53,
-				"calories": 420,
-				"price": 1255,
-				"image": "https://code.s3.yandex.net/react/code/bun-02.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/bun-02-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9b6",
-				"name": "Биокотлета из марсианской Магнолии",
-				"type": "main",
-				"proteins": 420,
-				"fat": 142,
-				"carbohydrates": 242,
-				"calories": 4242,
-				"price": 424,
-				"image": "https://code.s3.yandex.net/react/code/meat-01.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/meat-01-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/meat-01-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9b7",
-				"name": "Соус Spicy-X",
-				"type": "sauce",
-				"proteins": 30,
-				"fat": 20,
-				"carbohydrates": 40,
-				"calories": 30,
-				"price": 90,
-				"image": "https://code.s3.yandex.net/react/code/sauce-02.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9bc",
-				"name": "Плоды Фалленианского дерева",
-				"type": "main",
-				"proteins": 20,
-				"fat": 5,
-				"carbohydrates": 55,
-				"calories": 77,
-				"price": 874,
-				"image": "https://code.s3.yandex.net/react/code/sp_1.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/sp_1-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/sp_1-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9ba",
-				"name": "Соус с шипами Антарианского плоскоходца",
-				"type": "sauce",
-				"proteins": 101,
-				"fat": 99,
-				"carbohydrates": 100,
-				"calories": 100,
-				"price": 88,
-				"image": "https://code.s3.yandex.net/react/code/sauce-01.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/sauce-01-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/sauce-01-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9b3",
-				"name": "Филе Люминесцентного тетраодонтимформа",
-				"type": "main",
-				"proteins": 44,
-				"fat": 26,
-				"carbohydrates": 85,
-				"calories": 643,
-				"price": 988,
-				"image": "https://code.s3.yandex.net/react/code/meat-03.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/meat-03-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/meat-03-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9bb",
-				"name": "Хрустящие минеральные кольца",
-				"type": "main",
-				"proteins": 808,
-				"fat": 689,
-				"carbohydrates": 609,
-				"calories": 986,
-				"price": 300,
-				"image": "https://code.s3.yandex.net/react/code/mineral_rings.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/mineral_rings-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/mineral_rings-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9ba",
-				"name": "Соус с шипами Антарианского плоскоходца",
-				"type": "sauce",
-				"proteins": 101,
-				"fat": 99,
-				"carbohydrates": 100,
-				"calories": 100,
-				"price": 88,
-				"image": "https://code.s3.yandex.net/react/code/sauce-01.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/sauce-01-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/sauce-01-large.png",
-				"__v": 0
-			},
-			{
-				"_id": "60666c42cc7b410027a1a9b4",
-				"name": "Мясо бессмертных моллюсков Protostomia",
-				"type": "main",
-				"proteins": 433,
-				"fat": 244,
-				"carbohydrates": 33,
-				"calories": 420,
-				"price": 1337,
-				"image": "https://code.s3.yandex.net/react/code/meat-02.png",
-				"image_mobile": "https://code.s3.yandex.net/react/code/meat-02-mobile.png",
-				"image_large": "https://code.s3.yandex.net/react/code/meat-02-large.png",
-				"__v": 0
-			},
-		]
+			number: 9599,
+			status: 'completed',
+		}
 	},
 	{
 		name: "Space антарианский флюоресцентный бургер",
@@ -353,12 +224,33 @@ export const ordersData = [
 			number: 5474,
 			status: 'completed',
 		}
-	}
+	},
 	{
-		name: "Space антарианский флюоресцентный бургер",
+		name: "Space люминесцентный флюоресцентный бургер",
 		order: {
-			number: 5474,
+			number: 6490,
 			status: 'inProgress',
+		}
+	},
+	{
+		name: "Бессмертный space люминесцентный флюоресцентный бургер",
+		order: {
+			number: 3022,
+			status: 'completed',
+		}
+	},
+	{
+		name: "Space люминесцентный минеральный флюоресцентный бессмертный бургер",
+		order: {
+			number: 6926,
+			status: 'completed',
+		}
+	},
+	{
+		name: "Space люминесцентный минеральный бессмертный краторный бургер",
+		order: {
+			number: 8533,
+			status: 'canceled',
 		}
 	}
 ]
