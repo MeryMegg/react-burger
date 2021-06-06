@@ -8,6 +8,7 @@ import core from '../../images/core.png';
 import meat03 from '../../images/meat-03.png';
 import sauce03 from '../../images/sauce-03.png';
 import mineralRings from '../../images/mineral-rings.png';
+import PropTypes from 'prop-types';
 
 
 function OrdersItem({ number, name, status }) {
@@ -66,6 +67,12 @@ function OrdersItem({ number, name, status }) {
 			</div>
 		</div>
 	)
+}
+
+OrdersItem.propTypes = {
+	number: PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
+	status: PropTypes.string,
 }
 
 export default OrdersItem;
