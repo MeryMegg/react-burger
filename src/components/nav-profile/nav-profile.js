@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import styles from './nav-profile.module.css';
 import { NavLink } from 'react-router-dom';
@@ -26,6 +26,6 @@ const NewProfile = () => {
 	</div>)
 }
 
-export default NewProfile;
+export default memo(NewProfile);
 
 

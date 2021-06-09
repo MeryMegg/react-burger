@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import styles from './profile.module.css';
 import { Switch, Route, Link } from 'react-router-dom';
@@ -36,4 +36,4 @@ function Profile() {
 	);
 }
 
-export default Profile;
+export default memo(Profile);

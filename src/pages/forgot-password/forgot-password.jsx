@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,8 +15,6 @@ function ForgotPassword() {
 
 	const submit = e => {
 		e.preventDefault();
-		//console.log(value);
-
 		forgotPassword(value).then((res) => {
 			console.log(res)
 		}).catch(err => {
@@ -56,4 +54,4 @@ function ForgotPassword() {
 }
 
 
-export default ForgotPassword;
+export default memo(ForgotPassword);

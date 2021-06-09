@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import cn from 'classnames';
 import styles from './forms-profile.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -73,4 +73,4 @@ function FormsProfile() {
 	);
 }
 
-export default FormsProfile;
+export default memo(FormsProfile);

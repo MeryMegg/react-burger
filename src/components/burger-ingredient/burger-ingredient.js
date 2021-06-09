@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import styles from './burger-ingredient.module.css';
 import { useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
 
-const BurgerIngredient = React.memo(({ item, renderModal }) => {
+const BurgerIngredient = ({ item, renderModal }) => {
 
 	const [{ isDrag }, dragRef] = useDrag({
 		type: "ingredient",
@@ -48,7 +48,7 @@ const BurgerIngredient = React.memo(({ item, renderModal }) => {
 			<p className={cn('text text_type_main-default', styles.container__description)}>{item.name}</p>
 		</li>
 	)
-})
+}
 
 BurgerIngredient.propTypes = {
 	item: PropTypes.shape({
@@ -68,4 +68,4 @@ BurgerIngredient.propTypes = {
 	renderModal: PropTypes.func.isRequired
 }
 
-export default BurgerIngredient;
+export default memo(BurgerIngredient);

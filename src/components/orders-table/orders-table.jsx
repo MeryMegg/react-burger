@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import styles from './orders-table.module.css';
 
@@ -39,4 +39,4 @@ function OrdersTable() {
 
 }
 
-export default OrdersTable;
+export default memo(OrdersTable);

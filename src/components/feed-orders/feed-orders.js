@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import OrdersItem from '../orders-item/orders-item';
@@ -22,4 +22,4 @@ function FeedOrders() {
 	)
 }
 
-export default FeedOrders;
+export default memo(FeedOrders);

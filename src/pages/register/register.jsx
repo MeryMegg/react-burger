@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -23,9 +23,9 @@ function Register() {
 		});
 	}
 
-	const onIconClick = () => {
+	const onIconClick = useCallback(() => {
 		alert('Icon Click Callback')
-	}
+	}, [])
 
 	const submit = e => {
 		e.preventDefault();
@@ -85,4 +85,4 @@ function Register() {
 }
 
 
-export default Register;
+export default memo(Register);

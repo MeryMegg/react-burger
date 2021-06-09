@@ -33,6 +33,9 @@ function App() {
 				<Route path="/profile/orders/:id" exact={true}>
 					<Order />
 				</Route>
+				{/* <Route path="/profile/orders" >
+					<Order />
+				</Route> */}
 				<Route path="/profile">
 					<Profile />
 				</Route>

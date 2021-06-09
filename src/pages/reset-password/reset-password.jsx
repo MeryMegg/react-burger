@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -22,10 +22,10 @@ function ResetPassword() {
 		});
 	}
 	const inputRef = React.useRef(null)
-	const onIconClick = () => {
+	const onIconClick = useCallback(() => {
 		setTimeout(() => inputRef.current.focus(), 0)
 		alert('Icon Click Callback')
-	}
+	}, [])
 
 	const submit = e => {
 		e.preventDefault();
@@ -76,4 +76,4 @@ function ResetPassword() {
 }
 
 
-export default ResetPassword;
+export default memo(ResetPassword);

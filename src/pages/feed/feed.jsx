@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import styles from './feed.module.css';
 import FeedOrders from '../../components/feed-orders/feed-orders';
@@ -13,4 +13,4 @@ function Feed() {
 	);
 }
 
-export default Feed;
+export default memo(Feed);

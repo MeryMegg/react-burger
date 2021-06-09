@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -23,11 +23,11 @@ function Login() {
 		});
 	}
 
-	const onIconClick = () => {
+	const onIconClick = useCallback(() => {
 		setTimeout(() => inputRef.current.focus(), 0)
 		console.log(inputRef.current)
 		alert('Icon Click Callback')
-	}
+	}, [])
 
 	const submit = e => {
 		e.preventDefault();
@@ -79,4 +79,4 @@ function Login() {
 }
 
 
-export default Login;
+export default memo(Login);

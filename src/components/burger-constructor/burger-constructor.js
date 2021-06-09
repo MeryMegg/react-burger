@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -113,4 +113,4 @@ BurgerConstructor.propTypes = {
 	onDropHandler: PropTypes.func.isRequired
 }
 
-export default BurgerConstructor;
+export default memo(BurgerConstructor);

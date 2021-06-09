@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
@@ -58,4 +58,4 @@ function Main() {
 	);
 }
 
-export default Main;
+export default memo(Main);

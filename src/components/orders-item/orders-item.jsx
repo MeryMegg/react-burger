@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './orders-item.module.css';
@@ -75,4 +75,4 @@ OrdersItem.propTypes = {
 	status: PropTypes.string,
 }
 
-export default OrdersItem;
+export default memo(OrdersItem);
