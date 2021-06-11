@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details';
-import PriceItem from '../price-item/price-item';
+import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-constructor.module.css';
 import { calculationCost } from '../../utils/functions';
 import { createOrder } from '../../services/actions/ingredients';
@@ -113,4 +113,4 @@ BurgerConstructor.propTypes = {
 	onDropHandler: PropTypes.func.isRequired
 }
 
-export default BurgerConstructor;
+export default memo(BurgerConstructor);

@@ -1,4 +1,9 @@
-.App {
-  text-align: center;
+.container{
+	display: flex;
+	align-self: center;
+	justify-content: center;
+	flex-grow: 1;
+	flex-direction: column;
+	text-align: center;
 }
 

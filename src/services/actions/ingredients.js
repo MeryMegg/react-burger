@@ -52,6 +52,7 @@ export const createOrder = (ingredientsId) => {
 		})
 		addOrders(ingredientsId).then((res) => {
 			if (res && res.success) {
+				console.log(res)
 				dispatch({
 					type: CREATE_ORDER_SUCCESS,
 					order: res

@@ -16,11 +16,12 @@ function Modal({ children }) {
 			close();
 	}
 
-	const close = () => {
+	const close = (() => {
 		dispatch({
 			type: CLOSE_MODAL
 		})
 	}
+	)
 
 	useEffect(() => {
 		window.addEventListener('keydown', closeEsc)

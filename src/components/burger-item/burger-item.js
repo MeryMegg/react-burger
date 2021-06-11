@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';
@@ -94,5 +94,5 @@ BurgerItem.propTypes = {
 	moveItem: PropTypes.func.isRequired,
 }
 
-export default BurgerItem;
+export default memo(BurgerItem);
 
