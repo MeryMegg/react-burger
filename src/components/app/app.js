@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import { Main, Login, Register, ForgotPassword, ResetPassword, Feed, Order, Profile } from '../../pages';
+import { ProtectedRoute } from '../protected-route';
 import styles from './app.module.css'
 
 function App() {
@@ -33,9 +34,6 @@ function App() {
 				<Route path="/profile/orders/:id" exact={true}>
 					<Order />
 				</Route>
-				{/* <Route path="/profile/orders" >
-					<Order />
-				</Route> */}
 				<Route path="/profile">
 					<Profile />
 				</Route>

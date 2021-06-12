@@ -2,14 +2,17 @@ import React, { useState, useRef, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { signIn } from '../../utils/api';
+import { login } from '../../services/actions/auth';
 import styles from './login.module.css';
+import { useDispatch } from 'react-redux';
 
 function Login() {
 	const [state, setState] = useState({
 		login: '',
 		password: ''
 	})
+
+	const dispatch = useDispatch();
 
 	const inputRef = useRef(null)
 
@@ -31,13 +34,8 @@ function Login() {
 
 	const submit = e => {
 		e.preventDefault();
-		console.log(state);
+		dispatch(login(state))
 
-		signIn(state).then((res) => {
-			console.log(res)
-		}).catch(err => {
-			console.log(err)
-		})
 	};
 
 	return (

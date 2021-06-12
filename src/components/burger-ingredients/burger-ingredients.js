@@ -11,7 +11,6 @@ import { OPEN_MODAL } from '../../services/actions/modal';
 function BurgerIngredients() {
 	const [current, setCurrent] = useState('bread');
 	const dispatch = useDispatch();
-	console.log(dispatch);
 	const { bun, sauce, main } = useSelector(store => store.ingredients.allIngredients);
 	const rootRef = useRef(null);
 	const bunRef = useRef(null);

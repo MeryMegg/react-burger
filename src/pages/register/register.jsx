@@ -2,7 +2,8 @@ import React, { useState, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { signUp } from '../../utils/api';
+import { useDispatch } from 'react-redux';
+import { register } from '../../services/actions/auth'
 import styles from './register.module.css';
 
 function Register() {
@@ -12,8 +13,9 @@ function Register() {
 		password: '',
 	})
 
+	const dispatch = useDispatch();
+
 	const handleInputChange = (event) => {
-		console.log(state)
 		const target = event.target;
 		const value = target.value;
 		const name = target.name;
@@ -29,13 +31,7 @@ function Register() {
 
 	const submit = e => {
 		e.preventDefault();
-
-		console.log(state);
-		signUp(state).then((res) => {
-			console.log(res)
-		}).catch(err => {
-			console.log(err)
-		})
+		dispatch(register(state))
 	};
 
 	return (

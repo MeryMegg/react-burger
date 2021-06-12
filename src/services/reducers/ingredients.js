@@ -145,14 +145,3 @@ export const ingredientsReducer = (state = initialState, action) => {
 };
 
 
-// setState({ ...state, hasError: false, isLoading: true });
-// 	getProducts()
-// 		.then((data) => {
-// 			const lengthArray = data.data.length()
-// 			const ingredientsObj = filterArray(data.data);
-// 			setState({ ...state, allIngredients: ingredientsObj, isLoading: false, loaded: !!lengthArray })
-// 		})
-// 		.catch((err) => {
-// 			setState({ ...state, hasError: true, isLoading: false });
-// 		})
-// }

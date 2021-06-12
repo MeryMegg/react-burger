@@ -1,4 +1,4 @@
-import { getProducts, addOrders } from '../../utils/api';
+import { getProductsRequest, addOrdersRequest } from '../../utils/api';
 import { filterArray } from '../../utils/functions';
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
@@ -15,16 +15,12 @@ export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 
-
-
-export const TAB_SWITCH = 'TAB_SWITCH';
-
 export const getIngredients = () => {
 	return function (dispatch) {
 		dispatch({
 			type: GET_PRODUCTS_REQUEST
 		})
-		getProducts().then((res) => {
+		getProductsRequest().then((res) => {
 			const ingredientsObj = filterArray(res.data);
 			if (res && res.success) {
 				dispatch({
@@ -50,9 +46,8 @@ export const createOrder = (ingredientsId) => {
 		dispatch({
 			type: CREATE_ORDER_REQUEST
 		})
-		addOrders(ingredientsId).then((res) => {
+		addOrdersRequest(ingredientsId).then((res) => {
 			if (res && res.success) {
-				console.log(res)
 				dispatch({
 					type: CREATE_ORDER_SUCCESS,
 					order: res

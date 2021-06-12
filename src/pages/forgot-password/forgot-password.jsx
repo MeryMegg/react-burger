@@ -1,21 +1,22 @@
-import React, { useState, useRef, memo } from 'react';
+import React, { useState, useRef, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { forgotPassword } from '../../utils/api';
+import { forgotPasswordRequest } from '../../utils/api';
 import styles from './forgot-password.module.css';
 
 function ForgotPassword() {
 	const [value, setValue] = useState('')
 	const inputRef = useRef(null)
-	const onIconClick = () => {
+
+	const onIconClick = useCallback(() => {
 		setTimeout(() => inputRef.current.focus(), 0)
 		alert('Icon Click Callback')
-	}
+	}, [])
 
 	const submit = e => {
 		e.preventDefault();
-		forgotPassword(value).then((res) => {
+		forgotPasswordRequest(value).then((res) => {
 			console.log(res)
 		}).catch(err => {
 			console.log(err)

@@ -2,7 +2,7 @@ import React, { useState, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../utils/api';
+import { resetPasswordRequest } from '../../utils/api';
 import styles from './reset-password.module.css';
 
 function ResetPassword() {
@@ -12,7 +12,6 @@ function ResetPassword() {
 	})
 
 	const handleInputChange = (event) => {
-		console.log(state)
 		const target = event.target;
 		const value = target.value;
 		const name = target.name;
@@ -31,7 +30,7 @@ function ResetPassword() {
 		e.preventDefault();
 		console.log(state);
 
-		resetPassword(state).then((res) => {
+		resetPasswordRequest(state).then((res) => {
 			console.log(res)
 		}).catch(err => {
 			console.log(err)

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './profile.module.css';
 import { Switch, Route, Link } from 'react-router-dom';
@@ -6,9 +6,18 @@ import OrdersItem from '../../components/orders-item/orders-item';
 import { ordersData } from '../../utils/data';
 import NavProfile from '../../components/nav-profile/nav-profile';
 import FormsProfile from '../../components/forms-profile/forms-profile';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../services/actions/auth'
 
 
 function Profile() {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getUser())
+	}, [dispatch])
+
+
 	return (
 		<div className={cn(styles.main, 'pt-10', 'pl-10', 'pr-10', 'mt-10')}>
 			<NavProfile />

@@ -16,7 +16,6 @@ function Order() {
 	const { id } = useParams();
 	const order = ordersData.filter(el => el.order.number === Number(id))
 	if (order.length === 0) return <Redirect to="/" />
-	console.log(order)
 	const name = order[0].name;
 	const status = order[0].order.status === 'completed' ? { text: 'Выполнен', textColor: 'green' } :
 		order[0].order.status === 'canceled' ? { text: 'Отменен', textColor: 'red' } : { text: 'Готовится', textColor: 'white' };
