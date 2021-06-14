@@ -7,5 +7,13 @@ import Feed from './feed/feed';
 import Order from './order/order';
 import Profile from './profile/profile';
 
-
-export { Main, Login, Register, ForgotPassword, ResetPassword, Feed, Order, Profile };
+export {
+  Main,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Feed,
+  Order,
+  Profile,
+};

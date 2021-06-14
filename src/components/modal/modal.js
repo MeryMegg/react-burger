@@ -9,47 +9,41 @@ import { useDispatch } from 'react-redux';
 import { CLOSE_MODAL } from '../../services/actions/modal';
 
 function Modal({ children }) {
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const closeEsc = (evn) => {
-		if (evn.keyCode === 27)
-			close();
-	}
+  const closeEsc = (evn) => {
+    if (evn.keyCode === 27) close();
+  };
 
-	const close = (() => {
-		dispatch({
-			type: CLOSE_MODAL
-		})
-	}
-	)
+  const close = () => {
+    dispatch({
+      type: CLOSE_MODAL,
+    });
+  };
 
-	useEffect(() => {
-		window.addEventListener('keydown', closeEsc)
-		return () => {
-			window.removeEventListener('keydown', closeEsc)
-		}
-	})
+  useEffect(() => {
+    window.addEventListener('keydown', closeEsc);
+    return () => {
+      window.removeEventListener('keydown', closeEsc);
+    };
+  });
 
-	return ReactDOM.createPortal((
-		<>
-			<div className={cn(styles.popup, 'pr-10', 'pl-10', 'pt-15', 'pb-15')}>
-				<span className={cn(styles.popup__close)} onClick={close}>
-					<CloseIcon type="primary" />
-				</span>
-				<div>
-					{children}
-				</div>
-
-			</div>
-			<ModalOverlay close={close} />
-		</>
-	),
-		document.querySelector('#react-modals')
-	)
+  return ReactDOM.createPortal(
+    <>
+      <div className={cn(styles.popup, 'pr-10', 'pl-10', 'pt-15', 'pb-15')}>
+        <span className={cn(styles.popup__close)} onClick={close}>
+          <CloseIcon type='primary' />
+        </span>
+        <div>{children}</div>
+      </div>
+      <ModalOverlay close={close} />
+    </>,
+    document.querySelector('#react-modals')
+  );
 }
 
 Modal.propTypes = {
-	children: PropTypes.element
-}
+  children: PropTypes.element,
+};
 
 export default Modal;

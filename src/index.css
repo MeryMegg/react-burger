@@ -4,8 +4,8 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;   
-  height: 100vh; 
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
 
 code {
@@ -14,7 +14,7 @@ code {
 }
 
 #root {
-  height: 100vh;  
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
