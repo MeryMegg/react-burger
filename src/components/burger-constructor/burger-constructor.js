@@ -5,7 +5,6 @@ import {
   ConstructorElement,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import OrderDetails from '../order-details/order-details';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-constructor.module.css';
 import { calculationCost } from '../../utils/functions';
@@ -15,15 +14,20 @@ import {
   DELETE_INGREDIENT,
   DECREASE_INGREDIENT,
 } from '../../services/actions/ingredients';
-import { OPEN_MODAL } from '../../services/actions/modal';
 import { useDrop } from 'react-dnd';
 import BurgerItem from '../burger-item/burger-item';
+import { push } from 'connected-react-router';
+import { useLocation, useHistory } from 'react-router-dom';
 import { UPDATE_CONSTRUCTOR } from '../../services/actions/ingredients';
 
 function BurgerConstructor({ onDropHandler }) {
   const { bun, otherIngredients } = useSelector(
     (store) => store.ingredients.burgerIngredients
   );
+
+  const location = useLocation();
+  const history = useHistory();
+  const hasToken = localStorage.getItem('refreshToken')
   const dispatch = useDispatch();
 
   const [{ canDrop, isHover }, dropTarget] = useDrop({
@@ -38,20 +42,26 @@ function BurgerConstructor({ onDropHandler }) {
   });
 
   const handleClick = () => {
-    const ingredientsId = otherIngredients.map((el) => el._id);
-    dispatch(createOrder([bun._id, ...ingredientsId]));
-    dispatch({
-      type: OPEN_MODAL,
-      content: <OrderDetails />,
-    });
+    if (hasToken) {
+      const ingredientsId = otherIngredients.map((el) => el._id);
+      dispatch(createOrder([bun._id, ...ingredientsId]));
+      history.push({
+        pathname: '/order',
+        state: {
+          background: location
+        }
+      });
+    } else {
+      dispatch(push('/login'));
+    }
   };
 
   const isActive = canDrop && isHover;
   let classModificator = isActive
     ? 'burger-container_active'
     : canDrop
-    ? 'burger-container_candrop'
-    : '';
+      ? 'burger-container_candrop'
+      : '';
 
   const moveItem = useCallback(
     (dragIndex, hoverIndex) => {
@@ -89,7 +99,6 @@ function BurgerConstructor({ onDropHandler }) {
                 type: DELETE_INGREDIENT,
                 id: el.productId,
               });
-              //el.type !== 'bun' &&
               dispatch({
                 type: DECREASE_INGREDIENT,
                 key: el._id,

@@ -5,20 +5,24 @@ import cn from 'classnames';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
-import { useDispatch } from 'react-redux';
-import { CLOSE_MODAL } from '../../services/actions/modal';
+import { getProductsRequest } from '../../utils/api';
+import { useHistory } from "react-router-dom";
 
 function Modal({ children }) {
-  const dispatch = useDispatch();
+  let history = useHistory();
+
+
+  useEffect(() => {
+    getProductsRequest().then(res =>
+      console.log(res))
+  }, []);
 
   const closeEsc = (evn) => {
     if (evn.keyCode === 27) close();
   };
 
-  const close = () => {
-    dispatch({
-      type: CLOSE_MODAL,
-    });
+  const close = (e) => {
+    history.goBack();
   };
 
   useEffect(() => {

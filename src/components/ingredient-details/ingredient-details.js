@@ -1,11 +1,38 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cn from 'classnames';
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
+import { getProductsRequest } from '../../utils/api';
+import { useParams } from "react-router-dom";
 
 function IngredientDetails() {
-  const { currentBurger } = useSelector((store) => store.ingredients);
-  const { image, name, calories, proteins, fat, carbohydrates } = currentBurger;
+  const [state, setCurrentBurger] = useState({
+    image: '',
+    name: '',
+    calories: '',
+    proteins: '',
+    fat: '',
+    carbohydrates: '',
+  }
+  )
+
+  let { id } = useParams();
+  console.log(id);
+  useEffect(() => {
+    getProductsRequest().then(res => {
+      console.log(res);
+      const currentBurger = res.data.find((el) => el._id === id)
+      setCurrentBurger({
+        image: currentBurger.image,
+        name: currentBurger.name,
+        calories: currentBurger.calories,
+        proteins: currentBurger.proteins,
+        fat: currentBurger.fat,
+        carbohydrates: currentBurger.carbohydrates,
+      })
+    })
+  }, [id]);
+
+  const { image, name, calories, proteins, fat, carbohydrates } = state;
 
   return (
     <div className={cn(styles.content)}>

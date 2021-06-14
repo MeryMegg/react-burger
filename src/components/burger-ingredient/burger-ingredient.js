@@ -7,7 +7,7 @@ import styles from './burger-ingredient.module.css';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
-const BurgerIngredient = ({ item, renderModal }) => {
+const BurgerIngredient = ({ item }) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item,
@@ -25,27 +25,11 @@ const BurgerIngredient = ({ item, renderModal }) => {
       ? 2
       : counts[item._id] && counts[item._id];
 
-  const card = {
-    image: item.image_large,
-    name: item.name,
-    calories: item.calories,
-    fat: item.fat,
-    carbohydrates: item.carbohydrates,
-    proteins: item.proteins,
-    price: item.price,
-    _id: item._id,
-  };
-
-  const handleClick = () => {
-    renderModal(card);
-  };
-
   const opacity = isDrag ? 0.3 : 1;
 
   return (
     <li
       className={cn(styles.card)}
-      onClick={handleClick}
       ref={dragRef}
       style={{ opacity }}
     >
@@ -83,7 +67,6 @@ BurgerIngredient.propTypes = {
     image_large: PropTypes.string.isRequired,
     __v: PropTypes.number,
   }).isRequired,
-  renderModal: PropTypes.func.isRequired,
 };
 
 export default memo(BurgerIngredient);

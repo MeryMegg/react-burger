@@ -1,7 +1,10 @@
 .content {
   display: flex;
+  align-self: center;
+  justify-content: center;
+  flex-grow: 1;
   flex-direction: column;
-  box-sizing: border-box;
+  text-align: center;
   width: 640px;
 }
 

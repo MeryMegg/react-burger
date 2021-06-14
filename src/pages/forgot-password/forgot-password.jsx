@@ -5,12 +5,17 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { forgotPasswordRequest } from '../../utils/api';
+import { Redirect } from 'react-router-dom';
+import { forgotPassword } from '../../services/actions/auth';
+import { useDispatch } from 'react-redux';
 import styles from './forgot-password.module.css';
 
 function ForgotPassword() {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
+
+  const hasToken = localStorage.getItem('refreshToken');
+  const dispatch = useDispatch();
 
   const onIconClick = useCallback(() => {
     setTimeout(() => inputRef.current.focus(), 0);
@@ -19,14 +24,18 @@ function ForgotPassword() {
 
   const submit = (e) => {
     e.preventDefault();
-    forgotPasswordRequest(value)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(forgotPassword(value))
   };
+
+  if (hasToken) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <div className={styles.container}>

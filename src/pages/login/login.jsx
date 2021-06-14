@@ -1,4 +1,5 @@
 import React, { useState, useRef, memo, useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import {
@@ -8,13 +9,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { login } from '../../services/actions/auth';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Login() {
   const [state, setState] = useState({
     login: '',
     password: '',
   });
+
+  const userName = useSelector(store => store.auth.name)
 
   const dispatch = useDispatch();
 
@@ -40,6 +43,18 @@ function Login() {
     e.preventDefault();
     dispatch(login(state));
   };
+
+  const hasToken = localStorage.getItem('refreshToken')
+
+  if (userName || hasToken) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <div className={styles.container}>

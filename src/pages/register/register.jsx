@@ -6,6 +6,7 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../../services/actions/auth';
 import styles from './register.module.css';
@@ -37,6 +38,17 @@ function Register() {
     e.preventDefault();
     dispatch(register(state));
   };
+  const hasToken = localStorage.getItem('refreshToken')
+
+  if (hasToken) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <div className={styles.container}>

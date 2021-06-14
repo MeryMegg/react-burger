@@ -53,7 +53,7 @@ const NewProfile = () => {
         <li>
           <NavLink
             exact
-            to='/'
+            to='/login'
             className={cn(
               styles.link,
               'pt-4',

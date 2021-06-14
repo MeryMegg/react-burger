@@ -1,5 +1,6 @@
 import { ServerConfig } from '../constants/config';
-import { getCookie } from './functions';
+//import { refreshToken } from '../services/actions/auth';
+import { getCookie, setCookie } from './functions';
 
 export const getProductsRequest = () => {
   return fetch(`${ServerConfig.baseUrl}/ingredients`, {
@@ -14,7 +15,7 @@ export const getProductsRequest = () => {
 };
 
 export const getUserRequest = () => {
-  return fetch(`${ServerConfig.baseUrl}/auth/user`, {
+  return fetchWithRefreshToken(`${ServerConfig.baseUrl}/auth/user`, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
@@ -25,7 +26,7 @@ export const getUserRequest = () => {
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
-  }).then((res) => requestHandler(res));
+  })
 };
 
 export const addOrdersRequest = (ingredients) => {
@@ -65,14 +66,14 @@ export const signInRequest = ({ login, password }) => {
   }).then((res) => requestHandler(res));
 };
 
-export const forgotPasswordRequest = (value) => {
+export const forgotPasswordRequest = (email) => {
   return fetch(`${ServerConfig.baseUrl}/password-reset`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
     credentials: 'same-origin',
     headers: ServerConfig.headers,
-    body: JSON.stringify({ email: value }),
+    body: JSON.stringify({ email }),
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
   }).then((res) => requestHandler(res));
@@ -104,19 +105,19 @@ export const signOutRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-export const refreshTokenRequest = () => {
-  return fetch(`${ServerConfig.baseUrl}/auth/token`, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: ServerConfig.headers,
-    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-  }).then((res) => requestHandler(res));
-};
+// export const refreshTokenRequest = () => {
+//   return fetch(`${ServerConfig.baseUrl}/auth/token`, {
+//     method: 'POST',
+//     mode: 'cors',
+//     cache: 'no-cache',
+//     credentials: 'same-origin',
+//     headers: ServerConfig.headers,
+//     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
+//   }).then((res) => requestHandler(res));
+// };
 
 export const updateUserRequest = (data) => {
-  return fetch(`${ServerConfig.baseUrl}/auth/user`, {
+  return fetchWithRefreshToken(`${ServerConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
     mode: 'cors',
     cache: 'no-cache',
@@ -128,11 +129,44 @@ export const updateUserRequest = (data) => {
     body: JSON.stringify(data),
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
+  })
+};
+
+export const refreshTokenRequest = () => {
+  return fetch(`${ServerConfig.baseUrl}/auth/token`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: ServerConfig.headers,
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   }).then((res) => requestHandler(res));
 };
 
+const fetchWithRefreshToken = (url, options) => {
+  return fetch(url, options).then((res) => requestHandler(res))
+    .catch((res) => {
+      return res.json()
+        .then(err => {
+          if (err.message === 'jwt expired') {
+            return refreshTokenRequest()
+              .then(res => {
+                localStorage.setItem('refreshToken', res.refreshToken)
+                const authToken = res.accessToken.split('Bearer ')[1];
+                setCookie('token', authToken);
+                options.headers.Authorization = res.accessToken
+                return fetch(url, options).then((res) => requestHandler(res))
+              })
+          } else {
+            return Promise.reject(err)
+          }
+        })
+    })
+}
+
 const requestHandler = (res) => {
-  if (res.ok) return res.json();
-  if (res.json) return res.json().then((err) => Promise.reject(err));
-  return Promise.reject(res);
+  return res.ok ? res.json() : Promise.reject(res)
+  // if (res.ok) return res.json();
+  // if (res.json) return res.json().then((err) => Promise.reject(err));
+  // return Promise.reject(res);
 };

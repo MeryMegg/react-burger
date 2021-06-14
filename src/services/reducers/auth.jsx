@@ -20,6 +20,10 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILED
+
 } from '../actions/auth';
 
 const initialState = {
@@ -39,8 +43,17 @@ const initialState = {
   getUserRequest: false,
   getUserFailed: false,
 
-  isUserLoaded: true,
-  isSaccess: false,
+  forgotPasswordRequest: false,
+  forgotPasswordFailed: false,
+
+  isforgotPasswordRequest: false,
+  isforgotPasswordSaccess: false,
+
+  resetPasswordRequest: false,
+  resetPasswordFailed: false,
+
+  isTokenUpdated: false,
+  tokenUpdateDate: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -129,41 +142,45 @@ export const authReducer = (state = initialState, action) => {
     case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
-        loginRequest: true,
-        loginFailed: false,
+        forgotPasswordRequest: true,
+        forgotPasswordFailed: false,
+        isforgotPasswordRequest: false,
+        isforgotPasswordSaccess: false,
       };
     }
     case FORGOT_PASSWORD_SUCCESS: {
       return {
         ...state,
-        loginFailed: false,
-        name: action.user.name,
-        email: action.user.email,
-        loginRequest: false,
+        forgotPasswordRequest: false,
+        isforgotPasswordRequest: true,
+        isforgotPasswordSaccess: true
       };
     }
     case FORGOT_PASSWORD_FAILED: {
-      return { ...state, loginFailed: true, loginRequest: false };
+      return {
+        ...state,
+        forgotPasswordFailed: true,
+        forgotPasswordRequest: false,
+        isforgotPasswordSaccess: false,
+        isforgotPasswordRequest: true
+      };
     }
+
     //Смена пароля
     case RESET_PASSWORD_REQUEST: {
       return {
         ...state,
-        loginRequest: true,
-        loginFailed: false,
       };
     }
     case RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
-        loginFailed: false,
-        name: action.user.name,
-        email: action.user.email,
-        loginRequest: false,
       };
     }
     case RESET_PASSWORD_FAILED: {
-      return { ...state, loginFailed: true, loginRequest: false };
+      return {
+        ...state,
+      };
     }
     //Выход из системы
     case LOGOUT_REQUEST: {
@@ -185,6 +202,23 @@ export const authReducer = (state = initialState, action) => {
     }
     case LOGOUT_FAILED: {
       return { ...state, logoutFailed: true, logoutRequest: false };
+    }
+
+    //Обновление токена
+    case REFRESH_TOKEN_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case REFRESH_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        isTokenUpdated: true,
+        tokenUpdateDate: true,
+      };
+    }
+    case REFRESH_TOKEN_FAILED: {
+      return { ...state, isTokenUpdated: true, tokenUpdateDate: false };
     }
 
     default: {

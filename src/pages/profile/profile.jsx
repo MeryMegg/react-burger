@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './profile.module.css';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import OrdersItem from '../../components/orders-item/orders-item';
 import { ordersData } from '../../utils/data';
 import NavProfile from '../../components/nav-profile/nav-profile';
@@ -11,6 +11,7 @@ import { getUser } from '../../services/actions/auth';
 
 function Profile() {
   const dispatch = useDispatch();
+  let location = useLocation();
 
   useEffect(() => {
     dispatch(getUser());
@@ -28,7 +29,10 @@ function Profile() {
             {ordersData.map((el, i) => (
               <li className={cn(styles['list-item'])} key={i}>
                 <Link
-                  to={`/profile/orders/${el.order.number}`}
+                  to={{
+                    pathname: `/profile/orders/${el.order.number}`,
+                    state: { background: location }
+                  }}
                   className={styles['burger-link']}
                 >
                   <OrdersItem

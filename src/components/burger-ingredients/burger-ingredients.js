@@ -22,41 +22,41 @@ function BurgerIngredients() {
   const handleScroll = () => {
     const bunDistance = Math.abs(
       rootRef.current.getBoundingClientRect().top -
-        bunRef.current.getBoundingClientRect().top
+      bunRef.current.getBoundingClientRect().top
     );
     const sauceDistance = Math.abs(
       rootRef.current.getBoundingClientRect().top -
-        sauceRef.current.getBoundingClientRect().top
+      sauceRef.current.getBoundingClientRect().top
     );
     const mainDistance = Math.abs(
       rootRef.current.getBoundingClientRect().top -
-        mainRef.current.getBoundingClientRect().top
+      mainRef.current.getBoundingClientRect().top
     );
     const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
     const currentHeader =
       minDistance === bunDistance
         ? 'bread'
         : minDistance === sauceDistance
-        ? 'sauces'
-        : 'fillings';
+          ? 'sauces'
+          : 'fillings';
     setCurrent((prevState) =>
       currentHeader === prevState.current ? prevState.current : currentHeader
     );
   };
 
-  const renderModal = useCallback(
-    (item) => {
-      dispatch({
-        type: CURRENT_BURGER,
-        item,
-      });
-      dispatch({
-        type: OPEN_MODAL,
-        content: <IngredientDetails />,
-      });
-    },
-    [dispatch]
-  );
+  // const renderModal = useCallback(
+  //   (item) => {
+  //     dispatch({
+  //       type: CURRENT_BURGER,
+  //       item,
+  //     });
+  //     dispatch({
+  //       type: OPEN_MODAL,
+  //       content: <IngredientDetails />,
+  //     });
+  //   },
+  //   [dispatch]
+  // );
 
   useEffect(() => {
     document.querySelector(`#${current}`).scrollIntoView();
@@ -94,21 +94,18 @@ function BurgerIngredients() {
           title='Булки'
           array={bun}
           id='bread'
-          renderModal={renderModal}
           ref={bunRef}
         />
         <Ingredients
           title='Соусы'
           array={sauce}
           id='sauces'
-          renderModal={renderModal}
           ref={sauceRef}
         />
         <Ingredients
           title='Начинки'
           array={main}
           id='fillings'
-          renderModal={renderModal}
           ref={mainRef}
         />
       </section>

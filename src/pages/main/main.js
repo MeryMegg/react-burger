@@ -2,7 +2,6 @@ import React, { useEffect, memo } from 'react';
 import cn from 'classnames';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
-import Modal from '../../components/modal/modal';
 import styles from './main.module.css';
 import { getIngredients } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,9 +11,10 @@ import {
   ADD_INGREDIENTS,
   INCREASE_INGREDIENT,
 } from '../../services/actions/ingredients';
+import Preloader from '../../components/preloader/preloader';
 
 function Main() {
-  const { visible, content } = useSelector((store) => store.modal);
+  //const { visible, content } = useSelector((store) => store.modal);
 
   const { isLoading, hasError, loaded } = useSelector(
     (store) => store.ingredients
@@ -40,7 +40,7 @@ function Main() {
 
   return (
     <main className={cn(styles.main, 'p-10')}>
-      {isLoading && 'Загрузка...'}
+      {isLoading && <Preloader />}
       {hasError && 'Произошла ошибка'}
       {!isLoading && !hasError && loaded && (
         <DndProvider backend={HTML5Backend}>
@@ -50,7 +50,6 @@ function Main() {
           </div>
         </DndProvider>
       )}
-      {visible && <Modal>{content}</Modal>}
     </main>
   );
 }
