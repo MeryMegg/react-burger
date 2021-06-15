@@ -191,7 +191,6 @@ export const authReducer = (state = initialState, action) => {
       };
     }
     case LOGOUT_SUCCESS: {
-      console.log(state.name, state.email);
       return {
         ...state,
         logoutFailed: false,

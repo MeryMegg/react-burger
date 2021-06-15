@@ -10,9 +10,7 @@ export function ProtectedRoute({ children, ...rest }) {
   const isTokenUpdated = useSelector(store => store.auth.isTokenUpdated);
   const tokenUpdateDate = useSelector(store => store.auth.tokenUpdateDate);
   const hasToken = !!localStorage.getItem('refreshToken');
-  console.log('isTokenUpdated', isTokenUpdated)
-  console.log('isTokenUpdatedDate', tokenUpdateDate)
-  console.log('hasToken', hasToken)
+
   useEffect(() => {
     if (!isTokenUpdated && hasToken) {
       dispatch(refreshToken())

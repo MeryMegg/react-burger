@@ -6,7 +6,8 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { resetPassword } from '../../services/actions/auth';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { resetPasswordRequest } from '../../utils/api';
 import styles from './reset-password.module.css';
@@ -16,6 +17,8 @@ function ResetPassword() {
     password: '',
     token: '',
   });
+
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -34,8 +37,7 @@ function ResetPassword() {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(state);
-
+    dispatch(resetPassword(state))
     resetPasswordRequest(state)
       .then((res) => {
         console.log(res);
@@ -44,10 +46,8 @@ function ResetPassword() {
         console.log(err);
       });
   };
-  const hasToken = localStorage.getItem('refreshToken')
+
   const isforgotPasswordSaccess = useSelector(store => store.auth.isforgotPasswordSaccess);
-  console.log('hasToken ', hasToken);
-  console.log('isforgotPasswordSaccess ', isforgotPasswordSaccess);
 
   if (localStorage.getItem('refreshToken')) {
     return (

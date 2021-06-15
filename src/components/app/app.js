@@ -23,8 +23,6 @@ import OrderDetails from '../order-details/order-details';
 function App() {
 	let location = useLocation();
 	const history = useHistory();
-	console.log(history.action);
-	console.log(location.state);
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 	return (
 		<>

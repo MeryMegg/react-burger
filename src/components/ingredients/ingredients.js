@@ -27,17 +27,14 @@ const Ingredients = React.forwardRef(
         <ul className={cn(styles.list, 'ml-4')}>
           {array.map((el) => (
             <li className={styles['list-item']} key={el._id}>
-              <Link
-                to={{
-                  pathname: `/ingredients/${el._id}`,
-                  state: { background: location }
-                }} >
-                <BurgerIngredient
-                  item={el}
-                />
+              <Link to={{
+                pathname: `/ingredients/${el._id}`,
+                state: { background: location }
+              }}
+                className={styles.link}>
+                <BurgerIngredient item={el} />
               </Link>
             </li>
-
           ))}
         </ul>
       </section>

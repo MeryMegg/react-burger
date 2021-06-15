@@ -28,7 +28,7 @@ const BurgerIngredient = ({ item }) => {
   const opacity = isDrag ? 0.3 : 1;
 
   return (
-    <li
+    <div
       className={cn(styles.card)}
       ref={dragRef}
       style={{ opacity }}
@@ -48,7 +48,7 @@ const BurgerIngredient = ({ item }) => {
       >
         {item.name}
       </p>
-    </li>
+    </div>
   );
 };
 

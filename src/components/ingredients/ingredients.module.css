@@ -6,6 +6,11 @@
 }
 
 .list-item {
-  text-decoration: none;
+  
   list-style-type: none;
+}
+
+.link {
+  text-decoration: none;
+  color: #f2f2f3;
 }
