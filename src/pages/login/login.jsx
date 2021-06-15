@@ -35,7 +35,6 @@ function Login() {
 
   const onIconClick = useCallback(() => {
     setTimeout(() => inputRef.current.focus(), 0);
-    console.log(inputRef.current);
     alert('Icon Click Callback');
   }, []);
 

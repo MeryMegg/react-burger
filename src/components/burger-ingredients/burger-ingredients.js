@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+
 import styles from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { CURRENT_BURGER } from '../../services/actions/ingredients';
-import { OPEN_MODAL } from '../../services/actions/modal';
+import { useSelector } from 'react-redux';
+
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bread');
-  const dispatch = useDispatch();
   const { bun, sauce, main } = useSelector(
     (store) => store.ingredients.allIngredients
   );
@@ -43,20 +41,6 @@ function BurgerIngredients() {
       currentHeader === prevState.current ? prevState.current : currentHeader
     );
   };
-
-  // const renderModal = useCallback(
-  //   (item) => {
-  //     dispatch({
-  //       type: CURRENT_BURGER,
-  //       item,
-  //     });
-  //     dispatch({
-  //       type: OPEN_MODAL,
-  //       content: <IngredientDetails />,
-  //     });
-  //   },
-  //   [dispatch]
-  // );
 
   useEffect(() => {
     document.querySelector(`#${current}`).scrollIntoView();

@@ -87,8 +87,14 @@ function FormsProfile() {
       state.password.length !== 0
         ? { ...data, password: state.password }
         : data;
-    console.log({ ...data });
     dispatch(updateUser({ ...data }));
+    setState({
+      ...state,
+      password: '',
+      nameDisabled: true,
+      emailDisabled: true,
+      passwordDisabled: true,
+    });
   };
 
   const handleClick = (e) => {
@@ -98,6 +104,9 @@ function FormsProfile() {
       name: currentUserName,
       email: currentUserEmail,
       password: '',
+      nameDisabled: true,
+      emailDisabled: true,
+      passwordDisabled: true,
     });
   };
 
@@ -146,8 +155,8 @@ function FormsProfile() {
         disabled={state.passwordDisabled}
       />
       {state.name !== currentUserName ||
-      state.email !== currentUserEmail ||
-      state.password.length !== 0 ? (
+        state.email !== currentUserEmail ||
+        state.password.length !== 0 ? (
         <div className={styles.buttons}>
           <Button type='secondary' size='medium' onClick={handleClick}>
             Отмена

@@ -165,7 +165,6 @@ export const forgotPassword = (email) => {
 		});
 		forgotPasswordRequest(email)
 			.then((res) => {
-				console.log(res);
 				dispatch({
 					type: FORGOT_PASSWORD_SUCCESS,
 				});
@@ -190,13 +189,12 @@ export const resetPassword = ({ password, token }) => {
 			.then((res) => {
 				if (res && res.success) {
 					console.log('Смена пароля прошла успешно');
-					// dispatch({
-					// 	type: RESET_PASSWORD_SUCCESS,
-					// });
+					dispatch(push('/login'));
 				} else {
 					dispatch({
 						type: RESET_PASSWORD_FAILED,
 					});
+
 				}
 			})
 			.catch((err) => {
@@ -245,7 +243,6 @@ export const refreshToken = () => {
 		});
 		refreshTokenRequest().then((res) => {
 			if (res && res.success) {
-				console.log(res)
 				localStorage.setItem('refreshToken', res.refreshToken);
 				const authToken = res.accessToken.split('Bearer ')[1];
 				setCookie('token', authToken);
