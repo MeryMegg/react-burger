@@ -48,7 +48,7 @@ function BurgerConstructor({ onDropHandler }) {
       const ingredientsId = otherIngredients.map((el) => el._id);
       dispatch(createOrder([bun._id, ...ingredientsId]));
       history.push({
-        pathname: '/order',
+        pathname: '/',
         state: {
           background: location
         }

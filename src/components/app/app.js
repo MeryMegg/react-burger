@@ -69,7 +69,7 @@ function App() {
 					<Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
 					<ProtectedRoute path='/profile/orders/:id' children={<Modal><Order /></Modal>} />
 					<Route path='/feed/:id' children={<Modal><Order /></Modal>} />
-					<ProtectedRoute path='/order' children={<Modal><OrderDetails /></Modal>} />
+					<ProtectedRoute path='/' children={<Modal><OrderDetails /></Modal>} />
 				</>
 				)}
 		</>
