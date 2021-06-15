@@ -37,6 +37,9 @@ const initialState = {
   loginRequest: false,
   loginFailed: false,
 
+  updateUserRequest: false,
+  updateUserFailed: false,
+
   logoutRequest: false,
   logoutFailed: false,
 
@@ -102,41 +105,41 @@ export const authReducer = (state = initialState, action) => {
     case GET_USER_REQUEST: {
       return {
         ...state,
-        loginRequest: true,
-        loginFailed: false,
+        getUserRequest: true,
+        getUserFailed: false,
       };
     }
     case GET_USER_SUCCESS: {
       return {
         ...state,
-        loginFailed: false,
+        getUserFailed: false,
         name: action.user.name,
         email: action.user.email,
-        loginRequest: false,
+        getUserRequest: false,
       };
     }
     case GET_USER_FAILED: {
-      return { ...state, loginFailed: true, loginRequest: false };
+      return { ...state, getUserFailed: true, getUserRequest: false };
     }
     //Изменение данных пользователя
     case UPDATE_USER_REQUEST: {
       return {
         ...state,
-        loginRequest: true,
-        loginFailed: false,
+        updateUserRequest: true,
+        updateUserFailed: false,
       };
     }
     case UPDATE_USER_SUCCESS: {
       return {
         ...state,
-        loginFailed: false,
+        updateUserFailed: false,
         name: action.user.name,
         email: action.user.email,
-        loginRequest: false,
+        updateUserRequest: false,
       };
     }
     case UPDATE_USER_FAILED: {
-      return { ...state, loginFailed: true, loginRequest: false };
+      return { ...state, updateUserFailed: true, updateUserRequest: false };
     }
     //Запрос на смену пароля
     case FORGOT_PASSWORD_REQUEST: {

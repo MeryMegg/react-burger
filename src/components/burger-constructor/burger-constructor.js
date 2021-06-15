@@ -14,6 +14,7 @@ import {
   DELETE_INGREDIENT,
   DECREASE_INGREDIENT,
 } from '../../services/actions/ingredients';
+import Preloader from '../preloader/preloader';
 import { useDrop } from 'react-dnd';
 import BurgerItem from '../burger-item/burger-item';
 import { push } from 'connected-react-router';
@@ -24,6 +25,7 @@ function BurgerConstructor({ onDropHandler }) {
   const { bun, otherIngredients } = useSelector(
     (store) => store.ingredients.burgerIngredients
   );
+  const { orderRequest } = useSelector((store) => store.ingredients)
 
   const location = useLocation();
   const history = useHistory();
@@ -73,6 +75,10 @@ function BurgerConstructor({ onDropHandler }) {
     },
     [dispatch]
   );
+
+  if (orderRequest) {
+    return (<Preloader />)
+  }
 
   return (
     <section className={cn(styles.container, 'pl-4')}>

@@ -3,6 +3,7 @@ import cn from 'classnames';
 import styles from './order-details.module.css';
 import checkIcon from '../../images/check.svg';
 import { useSelector } from 'react-redux';
+import Preloader from '../preloader/preloader';
 
 function OrderDetails() {
   const { orderRequest, orderFailed, currentOrder } = useSelector(
@@ -11,7 +12,7 @@ function OrderDetails() {
 
   return (
     <div className={cn(styles.order, 'p-15')}>
-      {orderRequest && 'Загрузка...'}
+      {orderRequest && <Preloader />}
       {orderFailed && 'Произошла ошибка'}
       {!orderRequest && !orderFailed && (
         <>

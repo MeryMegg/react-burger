@@ -6,16 +6,22 @@ import OrdersItem from '../../components/orders-item/orders-item';
 import { ordersData } from '../../utils/data';
 import NavProfile from '../../components/nav-profile/nav-profile';
 import FormsProfile from '../../components/forms-profile/forms-profile';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../services/actions/auth';
+import Preloader from '../../components/preloader/preloader';
 
 function Profile() {
   const dispatch = useDispatch();
   let location = useLocation();
+  const { getUserRequest } = useSelector(store => store.auth)
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
+
+  if (getUserRequest) {
+    return (<Preloader />)
+  }
 
   return (
     <div className={cn(styles.main, 'pt-10', 'pl-10', 'pr-10', 'mt-10')}>

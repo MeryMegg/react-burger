@@ -3,36 +3,57 @@ import cn from 'classnames';
 import styles from './ingredient-details.module.css';
 import { getProductsRequest } from '../../utils/api';
 import { useParams } from "react-router-dom";
+import Preloader from '../preloader/preloader';
 
 function IngredientDetails() {
-  const [state, setCurrentBurger] = useState({
+  const [state, setState] = useState({
     image: '',
     name: '',
     calories: '',
     proteins: '',
     fat: '',
     carbohydrates: '',
+    isLoading: false
   }
   )
 
   let { id } = useParams();
-  console.log(id);
+
   useEffect(() => {
-    getProductsRequest().then(res => {
-      console.log(res);
+    setState((state) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    });
+    getProductsRequest().then((res) => {
       const currentBurger = res.data.find((el) => el._id === id)
-      setCurrentBurger({
+      setState({
         image: currentBurger.image,
         name: currentBurger.name,
         calories: currentBurger.calories,
         proteins: currentBurger.proteins,
         fat: currentBurger.fat,
         carbohydrates: currentBurger.carbohydrates,
+        isLoading: false,
+      })
+    }).catch((err) => {
+      console.log(err)
+      setState((state) => {
+        return {
+          ...state,
+          isLoading: false,
+        }
       })
     })
+
   }, [id]);
 
   const { image, name, calories, proteins, fat, carbohydrates } = state;
+
+  if (state.isLoading) {
+    return (<Preloader />)
+  }
 
   return (
     <div className={cn(styles.content)}>
@@ -128,5 +149,6 @@ function IngredientDetails() {
     </div>
   );
 }
+
 
 export default memo(IngredientDetails);

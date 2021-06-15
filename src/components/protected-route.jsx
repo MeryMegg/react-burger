@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { refreshToken } from '../services/actions/auth'
 import { useSelector, useDispatch } from 'react-redux';
+import Preloader from './preloader/preloader';
 
 
 export function ProtectedRoute({ children, ...rest }) {
@@ -18,7 +19,7 @@ export function ProtectedRoute({ children, ...rest }) {
   }, [dispatch, hasToken, isTokenUpdated]);
 
   if (hasToken && !isTokenUpdated) {
-    return <p>Ищет зпрос данных</p>;
+    return <Preloader />;
   }
 
   return (

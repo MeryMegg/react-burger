@@ -5,17 +5,11 @@ import cn from 'classnames';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
-import { getProductsRequest } from '../../utils/api';
 import { useHistory } from "react-router-dom";
+import Preloader from '../preloader/preloader';
 
 function Modal({ children }) {
   let history = useHistory();
-
-
-  useEffect(() => {
-    getProductsRequest().then(res =>
-      console.log(res))
-  }, []);
 
   const closeEsc = (evn) => {
     if (evn.keyCode === 27) close();

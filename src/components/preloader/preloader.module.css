@@ -1,7 +1,12 @@
 .mk-spinner-wrap{
   min-height:100px;
   width:100%;
-  position:relative
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  flex-grow: 1;
+  flex-direction: column;
+  text-align: center;
 }
 @-webkit-keyframes a{
   0%,to{

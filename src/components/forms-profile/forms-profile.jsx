@@ -7,10 +7,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from '../../services/actions/auth';
+import Preloader from '../preloader/preloader';
 
 function FormsProfile() {
   const currentUserName = useSelector((store) => store.auth.name);
   const currentUserEmail = useSelector((store) => store.auth.email);
+  const { updateUserRequest } = useSelector((store) => store.auth)
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -109,6 +111,10 @@ function FormsProfile() {
       passwordDisabled: true,
     });
   };
+
+  if (updateUserRequest) {
+    return (<Preloader />)
+  }
 
   return (
     <form onSubmit={submit} className={cn(styles.form)}>
