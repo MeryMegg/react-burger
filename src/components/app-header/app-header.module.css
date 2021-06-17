@@ -1,35 +1,35 @@
 .header {
-	width: 100%;
-	position: relative;
-	background-color: #1C1C21;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  background-color: #1c1c21;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .link {
-	text-decoration: none;
-	color: #8585AD;	
-	display: flex;
-	text-align: center;
-	align-items: center;
+  text-decoration: none;
+  color: #8585ad;
+  display: flex;
+  text-align: center;
+  align-items: center;
 }
 
 .link:last-child {
-	justify-self: flex-end;
-	margin-right: 0;
+  justify-self: flex-end;
+  margin-right: 0;
 }
 
 .link_active {
-	color: #F2F2F3;
+  color: #f2f2f3;
 }
 
 .logo {
-	justify-self: center;
+  justify-self: center;
 }
 
 .menu {
-	display: flex;
-	justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
