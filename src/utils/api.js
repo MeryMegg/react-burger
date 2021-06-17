@@ -166,7 +166,4 @@ const fetchWithRefreshToken = (url, options) => {
 
 const requestHandler = (res) => {
   return res.ok ? res.json() : Promise.reject(res)
-  // if (res.ok) return res.json();
-  // if (res.json) return res.json().then((err) => Promise.reject(err));
-  // return Promise.reject(res);
 };

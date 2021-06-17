@@ -20,15 +20,18 @@ export const getCookie = (name) => {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' +
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-        '=([^;]*)'
+      name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+      '=([^;]*)'
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
 export const setCookie = (name, value, props) => {
-  props = props || {};
+  props = {
+    path: '/',
+    ...props,
+  };
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
     const d = new Date();
