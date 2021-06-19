@@ -8,7 +8,6 @@ export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
 export const DECREASE_INGREDIENT = 'DECREASE_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
-export const CURRENT_BURGER = 'CURRENT_BURGER';
 export const UPDATE_CONSTRUCTOR = 'UPDATE_CONSTRUCTOR';
 
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
@@ -23,6 +22,7 @@ export const getIngredients = () => {
     getProductsRequest()
       .then((res) => {
         const ingredientsObj = filterArray(res.data);
+        console.log(ingredientsObj);
         if (res && res.success) {
           dispatch({
             type: GET_PRODUCTS_SUCCESS,
@@ -51,6 +51,7 @@ export const createOrder = (ingredientsId) => {
     addOrdersRequest(ingredientsId)
       .then((res) => {
         if (res && res.success) {
+          console.log(res);
           dispatch({
             type: CREATE_ORDER_SUCCESS,
             order: res,

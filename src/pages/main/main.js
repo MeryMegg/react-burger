@@ -1,5 +1,6 @@
 import React, { useEffect, memo } from 'react';
 import cn from 'classnames';
+import { v4 as uuidv4 } from 'uuid';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import styles from './main.module.css';
@@ -27,9 +28,10 @@ function Main() {
   }, [dispatch]);
 
   const handleDrop = (item) => {
+    const newItem = { ...item, productId: uuidv4() };
     dispatch({
       type: ADD_INGREDIENTS,
-      item,
+      item: newItem
     });
     dispatch({
       type: INCREASE_INGREDIENT,

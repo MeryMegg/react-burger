@@ -1,11 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
 import {
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_FAILED,
   ADD_INGREDIENTS,
   DELETE_INGREDIENT,
-  CURRENT_BURGER,
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
   UPDATE_CONSTRUCTOR,
@@ -25,7 +23,6 @@ const initialState = {
     counts: {},
   },
   currentOrder: null,
-  currentBurger: null,
   orderRequest: false,
   orderFailed: false,
 };
@@ -59,6 +56,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case CREATE_ORDER_SUCCESS: {
+      console.log(action.order);
       return {
         ...state,
         orderFailed: false,
@@ -80,14 +78,13 @@ export const ingredientsReducer = (state = initialState, action) => {
           },
         };
       }
-      const newItem = { ...action.item, productId: uuidv4() };
       return {
         ...state,
         burgerIngredients: {
           ...state.burgerIngredients,
           otherIngredients: [
             ...state.burgerIngredients.otherIngredients,
-            newItem,
+            action.item,
           ],
         },
       };
@@ -101,12 +98,6 @@ export const ingredientsReducer = (state = initialState, action) => {
             ...state.burgerIngredients.otherIngredients,
           ].filter((el) => el.productId !== action.id),
         },
-      };
-    }
-    case CURRENT_BURGER: {
-      return {
-        ...state,
-        currentBurger: action.item,
       };
     }
     case INCREASE_INGREDIENT: {
@@ -141,12 +132,14 @@ export const ingredientsReducer = (state = initialState, action) => {
       } else return state;
     }
     case UPDATE_CONSTRUCTOR: {
+      console.log(state)
       const otherIngredients = [...state.burgerIngredients.otherIngredients];
       otherIngredients.splice(
         action.toIndex,
         0,
         otherIngredients.splice(action.fromIndex, 1)[0]
       );
+      console.log(otherIngredients);
       return {
         ...state,
         burgerIngredients: {
