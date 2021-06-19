@@ -85,9 +85,10 @@ function BurgerConstructor({ onDropHandler }) {
       <div
         className={cn(styles['burger-container'], styles[classModificator])}
         ref={dropTarget}
+        data-cy='drop-target'
       >
         {bun && (
-          <div className={'mr-8'}>
+          <div className={'mr-8'} data-cy="up-bun">
             <ConstructorElement
               type='top'
               isLocked={true}
@@ -98,7 +99,7 @@ function BurgerConstructor({ onDropHandler }) {
           </div>
         )}
 
-        <ul className={cn(styles.list, 'pr-4')}>
+        <ul className={cn(styles.list, 'pr-4')} data-cy="other-ingredients-container">
           {otherIngredients.map((el, i) => {
             const deleteIngredient = () => {
               dispatch({
@@ -123,7 +124,7 @@ function BurgerConstructor({ onDropHandler }) {
           })}
         </ul>
         {bun && (
-          <div className={'mr-8'}>
+          <div className={'mr-8'} data-cy="down-bun">
             <ConstructorElement
               type='bottom'
               isLocked={true}

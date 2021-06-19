@@ -32,6 +32,7 @@ const BurgerIngredient = ({ item }) => {
       className={cn(styles.card)}
       ref={dragRef}
       style={{ opacity }}
+      data-cy='ingredient'
     >
       <img
         className={cn(styles.image, 'mb-1')}
