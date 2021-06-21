@@ -21,7 +21,7 @@ import styles from './app.module.css';
 import OrderDetails from '../order-details/order-details';
 
 function App() {
-	let location = useLocation();
+	const location = useLocation();
 	const history = useHistory();
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 	return (

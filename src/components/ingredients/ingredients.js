@@ -9,7 +9,7 @@ import styles from './ingredients.module.css';
 
 const Ingredients = React.forwardRef(
   ({ title, array, id }, ref) => {
-    let location = useLocation();
+    const location = useLocation();
     return (
       <section className={'mb-10'}>
         <h2
