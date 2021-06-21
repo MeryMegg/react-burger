@@ -257,7 +257,6 @@ export const refreshToken = () => {
 		}).catch((err) => {
 			deleteCookie('token');
 			localStorage.removeItem('refreshToken');
-			console.log('ошибка здесь')
 			dispatch({
 				type: REFRESH_TOKEN_FAILED,
 			});

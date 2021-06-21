@@ -27,7 +27,7 @@ function Main() {
     if (!loaded) {
       dispatch(getIngredients());
     }
-  }, [dispatch]);
+  }, [dispatch, loaded]);
 
   const handleDrop = (item) => {
     const newItem = { ...item, productId: uuidv4() };

@@ -146,6 +146,10 @@ const fetchWithRefreshToken = (url, options) => {
                 return fetch(url, options).then((res) => requestHandler(res))
               })
           } else {
+            deleteCookie('token');
+            localStorage.removeItem('refreshToken');
+            // eslint-disable-next-line
+            location.reload()
             return Promise.reject(err)
           }
         })
