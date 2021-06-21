@@ -24,7 +24,9 @@ function Main() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getIngredients());
+    if (!loaded) {
+      dispatch(getIngredients());
+    }
   }, [dispatch]);
 
   const handleDrop = (item) => {

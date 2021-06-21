@@ -1,6 +1,5 @@
 import { ServerConfig } from '../constants/config';
-//import { refreshToken } from '../services/actions/auth';
-import { getCookie, setCookie } from './functions';
+import { getCookie, setCookie, deleteCookie } from './functions';
 
 export const getProductsRequest = () => {
   return fetch(`${ServerConfig.baseUrl}/ingredients`, {
@@ -104,17 +103,6 @@ export const signOutRequest = () => {
     referrerPolicy: 'no-referrer',
   }).then((res) => requestHandler(res));
 };
-
-// export const refreshTokenRequest = () => {
-//   return fetch(`${ServerConfig.baseUrl}/auth/token`, {
-//     method: 'POST',
-//     mode: 'cors',
-//     cache: 'no-cache',
-//     credentials: 'same-origin',
-//     headers: ServerConfig.headers,
-//     body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-//   }).then((res) => requestHandler(res));
-// };
 
 export const updateUserRequest = (data) => {
   return fetchWithRefreshToken(`${ServerConfig.baseUrl}/auth/user`, {

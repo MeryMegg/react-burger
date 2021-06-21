@@ -56,7 +56,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case CREATE_ORDER_SUCCESS: {
-      console.log(action.order);
       return {
         ...state,
         orderFailed: false,

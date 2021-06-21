@@ -22,7 +22,6 @@ export const getIngredients = () => {
     getProductsRequest()
       .then((res) => {
         const ingredientsObj = filterArray(res.data);
-        console.log(ingredientsObj);
         if (res && res.success) {
           dispatch({
             type: GET_PRODUCTS_SUCCESS,
@@ -51,7 +50,6 @@ export const createOrder = (ingredientsId) => {
     addOrdersRequest(ingredientsId)
       .then((res) => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: CREATE_ORDER_SUCCESS,
             order: res,
