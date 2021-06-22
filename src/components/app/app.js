@@ -21,7 +21,7 @@ import styles from './app.module.css';
 import OrderDetails from '../order-details/order-details';
 
 function App() {
-	let location = useLocation();
+	const location = useLocation();
 	const history = useHistory();
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 	return (
@@ -66,7 +66,7 @@ function App() {
 			</Switch>
 			{background &&
 				(<>
-					<ProtectedRoute path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
+					<Route path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
 					<Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
 					<ProtectedRoute path='/profile/orders/:id' children={<Modal><Order /></Modal>} />
 					<Route path='/feed/:id' children={<Modal><Order /></Modal>} />

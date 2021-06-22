@@ -254,8 +254,15 @@ export const refreshToken = () => {
 					type: REFRESH_TOKEN_FAILED,
 				});
 			}
-		})
+		}).catch((err) => {
+			deleteCookie('token');
+			localStorage.removeItem('refreshToken');
+			dispatch({
+				type: REFRESH_TOKEN_FAILED,
+			});
+		});
 	};
-}
+};
+
 
 
