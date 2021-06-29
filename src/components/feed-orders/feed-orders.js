@@ -1,12 +1,20 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import OrdersItem from '../orders-item/orders-item';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
 import styles from './feed-orders.module.css';
 
 function FeedOrders() {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { loaded } = useSelector(store => store.ingredients)
+  useEffect(() => {
+    if (!loaded) {
+      dispatch(getIngredients());
+    }
+  }, [dispatch, loaded]);
   const { orders } = useSelector(store => store.ws.messages)
   return (
     <section>

@@ -1,20 +1,12 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './orders-item.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { conversionDateForCard } from '../../utils/functions';
 import PropTypes from 'prop-types';
 
 function OrdersItem({ number, name, ingredients, createdAt, status }) {
-  const dispatch = useDispatch();
-  const { loaded } = useSelector(store => store.ingredients)
-  useEffect(() => {
-    if (!loaded) {
-      dispatch(getIngredients());
-    }
-  }, [dispatch, loaded]);
 
   const { allIngredients } = useSelector(store => store.ingredients)
   const stringWithDay = conversionDateForCard(createdAt);
@@ -29,8 +21,8 @@ function OrdersItem({ number, name, ingredients, createdAt, status }) {
     status === 'done'
       ? { text: 'Выполнен', textColor: 'green' }
       : status === 'pending'
-        ? { text: 'Отменен', textColor: 'yellow' }
-        : { text: 'Готовится', textColor: 'white' };
+        ? { text: 'Готовится', textColor: 'yellow' }
+        : { text: 'Создан', textColor: 'white' };
 
   return (
     <div className={cn(styles['orders-item'], 'p-6')}>
