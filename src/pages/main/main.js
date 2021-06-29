@@ -15,7 +15,6 @@ import {
 import Preloader from '../../components/preloader/preloader';
 
 function Main() {
-  //const { visible, content } = useSelector((store) => store.modal);
 
   const { isLoading, hasError, loaded } = useSelector(
     (store) => store.ingredients

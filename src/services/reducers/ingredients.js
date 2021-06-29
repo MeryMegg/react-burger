@@ -16,7 +16,7 @@ const initialState = {
   isLoading: false,
   hasError: false,
   loaded: false,
-  allIngredients: {},
+  allIngredients: [],
   burgerIngredients: {
     bun: null,
     otherIngredients: [],
@@ -40,6 +40,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         hasError: false,
+        allIngredientsArr: action.itemsArr,
         allIngredients: action.items,
         isLoading: false,
         loaded: true,

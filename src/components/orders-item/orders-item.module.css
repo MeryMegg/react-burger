@@ -32,17 +32,21 @@
   justify-content: center;
 }
 
+.image {
+  width: 170%;  
+  height: 100%;
+}
+
 .list {
   list-style-type: none;
   padding-left: 0;
   display: flex;
+  position: relative;
 }
 
 .list-item {
   margin-right: -20px;
-  position: relative;
-  /* background-image: linear-gradient(rgba(19,19,22,0.9),rgba(19,19,22,0.9));   */
-  /* border-radius: 50%; */
+  position: relative; 
 }
 
 .overlay {
@@ -55,12 +59,11 @@
   justify-content: center;
   position: absolute;
   top: 2px;
-  right: 2px;
-  z-index: 3;
+  right: -15px;    
 }
 
-.status_color_red {
-  color: #e52b1a;
+.status_color_yellow {
+  color: #deb110;
 }
 
 .status_color_white {

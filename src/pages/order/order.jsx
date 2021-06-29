@@ -1,30 +1,53 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
 import { useParams, Redirect } from 'react-router-dom';
 import PriceItem from '../../ui/price-item/price-item';
-import { ordersData } from '../../utils/data';
-
+import { useSelector } from 'react-redux';
 import bun01 from '../../images/bun-01.png';
 import cheese from '../../images/cheese.png';
 import core from '../../images/core.png';
 import meat03 from '../../images/meat-03.png';
 import sauce03 from '../../images/sauce-03.png';
 import mineralRings from '../../images/mineral-rings.png';
+import { useDispatch } from 'react-redux';
+import { WS_CONNECTION_START } from '../../services/actions/ws-actions';
+import Preloader from '../../components/preloader/preloader';
 
 function Order() {
+  const dispatch = useDispatch();
+  useEffect(
+    () => {
+      dispatch({ type: WS_CONNECTION_START });
+    },
+    [dispatch]
+  );
+
   const { id } = useParams();
-  const order = ordersData.filter((el) => el.order.number === Number(id));
-  if (order.length === 0) return <Redirect to='/' />;
-  const name = order[0].name;
+  const { orders } = useSelector(store => store.ws.messages)
+  //const { wsConnected } = useSelector(store => store.ws)
+  const filterOrders = (arr, id) => {
+    return arr?.filter((el) => el.number === Number(id))[0]
+  }
+  let order = {}
+  order = filterOrders(orders, id) || null;
+
+  console.log(order)
+  const name = order?.name
+  // if (wsConnected && !order) return <Redirect to='/' />;
   const status =
-    order[0].order.status === 'completed'
+    order?.status === 'done'
       ? { text: 'Выполнен', textColor: 'green' }
-      : order[0].order.status === 'canceled'
-        ? { text: 'Отменен', textColor: 'red' }
+      : order?.status === 'pending'
+        ? { text: 'Отменен', textColor: 'yellow' }
         : { text: 'Готовится', textColor: 'white' };
 
+  if (!order) {
+    return <Preloader />;
+  }
+
   return (
+
     <div className={styles.container}>
       <span className={cn('text text_type_digits-default')}>#{id}</span>
       <h1
@@ -35,7 +58,7 @@ function Order() {
           styles.title
         )}
       >
-        {name}
+        {name || ''}
       </h1>
       <p
         className={cn(
@@ -49,7 +72,7 @@ function Order() {
       </p>
       <p className={cn('text text_type_main-medium', 'mb-6', styles.title)}>
         Состав:
-        </p>
+      </p>
       <ul className={cn(styles.list, 'mb-10')}>
         <li className={cn(styles['list-item'], 'mr-6')}>
           <div className={cn(styles.icon, 'mr-4')}>
@@ -63,7 +86,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             2 x{' '}
           </span>
@@ -81,7 +104,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             1 x{' '}
           </span>
@@ -99,7 +122,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             1 x{' '}
           </span>
@@ -117,7 +140,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             3 x{' '}
           </span>
@@ -135,7 +158,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             1 x{' '}
           </span>
@@ -153,7 +176,7 @@ function Order() {
             )}
           >
             Флюоресцентная булка R2-D3
-            </p>
+          </p>
           <span className={cn('mr-1', 'text text_type_digits-default')}>
             1 x{' '}
           </span>
@@ -165,7 +188,7 @@ function Order() {
           className={cn('text text_type_main-default text_color_inactive')}
         >
           Вчера, 13:50 i-GMT+3
-          </span>
+        </span>
         <PriceItem price={540} />
       </div>
     </div>
