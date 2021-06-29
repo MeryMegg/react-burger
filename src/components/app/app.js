@@ -15,6 +15,7 @@ import {
 	Feed,
 	Order,
 	Profile,
+	UserOrder
 } from '../../pages';
 import { ProtectedRoute } from '../protected-route';
 import styles from './app.module.css';
@@ -50,7 +51,7 @@ function App() {
 					<Order />
 				</Route>
 				<ProtectedRoute path='/profile/orders/:id' exact={true}>
-					<Order />
+					<UserOrder />
 				</ProtectedRoute>
 				<ProtectedRoute path='/profile'>
 					<Profile />
@@ -68,7 +69,7 @@ function App() {
 				(<>
 					<Route path='/' exact={true} children={<Modal><OrderDetails /></Modal>} />
 					<Route path='/ingredients/:id' children={<Modal><IngredientDetails /></Modal>} />
-					<ProtectedRoute path='/profile/orders/:id' children={<Modal><Order /></Modal>} />
+					<ProtectedRoute path='/profile/orders/:id' children={<Modal><UserOrder /></Modal>} />
 					<Route path='/feed/:id' children={<Modal><Order /></Modal>} />
 
 				</>

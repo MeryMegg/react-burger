@@ -6,11 +6,7 @@ import styles from './orders-table.module.css';
 
 function OrdersTable() {
   const { total, totalToday, orders } = useSelector(store => store.ws.messages)
-  console.log(orders)
-
   const statusArray = filterOrdersByStatus(orders)
-
-
   return (
     <section className={cn(styles.container, 'pl-4')}>
       <div className={styles.table}>

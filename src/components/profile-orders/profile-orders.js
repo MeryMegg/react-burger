@@ -4,8 +4,7 @@ import styles from './profile-orders.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import OrdersItem from '../../components/orders-item/orders-item';
 import { useDispatch, useSelector } from 'react-redux';
-import Preloader from '../../components/preloader/preloader';
-import { WS_CONNECTION_START_AUTH } from '../../services/actions/ws-actions';
+import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions';
 
 function ProfileOrders() {
 	const dispatch = useDispatch();
@@ -14,12 +13,12 @@ function ProfileOrders() {
 	useEffect(
 		() => {
 			dispatch({ type: WS_CONNECTION_START_AUTH });
+			return () => dispatch({ type: WS_CONNECTION_CLOSED_AUTH })
 		},
 		[dispatch]
 	);
 
-	const { orders } = useSelector(store => store.wsAuth.messages)
-	console.log(orders);
+	const { orders } = useSelector(store => store.wsAuth.messages);
 	return (
 		<ul className={cn(styles.list, 'mb-20')}>
 			{orders?.map((el, i) => (
