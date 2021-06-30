@@ -62,6 +62,11 @@ export const ingredientsReducer = (state = initialState, action) => {
         orderFailed: false,
         currentOrder: action.order,
         orderRequest: false,
+        burgerIngredients: {
+          bun: null,
+          otherIngredients: [],
+          counts: {},
+        },
       };
     }
     case CREATE_ORDER_FAILED: {
