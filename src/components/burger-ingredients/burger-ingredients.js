@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, memo } from 'react';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
+import { filterArray } from '../../utils/functions';
 
 import styles from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
@@ -9,9 +10,11 @@ import { useSelector } from 'react-redux';
 
 function BurgerIngredients() {
   const [current, setCurrent] = useState('bread');
-  const { bun, sauce, main } = useSelector(
-    (store) => store.ingredients.allIngredients
+  const { allIngredients } = useSelector(
+    (store) => store.ingredients
   );
+
+  const { bun, main, sauce } = filterArray(allIngredients);
   const rootRef = useRef(null);
   const bunRef = useRef(null);
   const sauceRef = useRef(null);

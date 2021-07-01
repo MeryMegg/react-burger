@@ -1,5 +1,5 @@
 import { ingredientsReducer } from './ingredients';
-import { allIngredientsData } from '../../utils/data';
+import { data } from '../../utils/data';
 import {
 	GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILED,
 	CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED,
@@ -11,7 +11,7 @@ const initialState = {
 	isLoading: false,
 	hasError: false,
 	loaded: false,
-	allIngredients: {},
+	allIngredients: [],
 	burgerIngredients: {
 		bun: null,
 		otherIngredients: [],
@@ -33,8 +33,7 @@ describe('ingredients reducer', () => {
 				type: GET_PRODUCTS_REQUEST
 			})
 		).toEqual(expect.objectContaining({
-			allIngredients: {},
-
+			allIngredients: [],
 			isLoading: true,
 			hasError: false,
 			loaded: false,
@@ -45,10 +44,10 @@ describe('ingredients reducer', () => {
 		expect(
 			ingredientsReducer(initialState, {
 				type: GET_PRODUCTS_SUCCESS,
-				items: allIngredientsData
+				items: data
 			})
 		).toEqual(expect.objectContaining({
-			allIngredients: allIngredientsData,
+			allIngredients: data,
 
 			isLoading: false,
 			hasError: false,
@@ -62,7 +61,7 @@ describe('ingredients reducer', () => {
 				type: GET_PRODUCTS_FAILED,
 			})
 		).toEqual(expect.objectContaining({
-			allIngredients: {},
+			allIngredients: [],
 
 			isLoading: false,
 			hasError: true,
@@ -154,7 +153,7 @@ describe('ingredients reducer', () => {
 			isLoading: false,
 			hasError: false,
 			loaded: false,
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: {
 					calories: 643,
@@ -354,7 +353,7 @@ describe('ingredients reducer', () => {
 			isLoading: false,
 			hasError: false,
 			loaded: false,
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: {
 					calories: 643,
@@ -484,7 +483,7 @@ describe('ingredients reducer', () => {
 
 	it('should handle UPDATE_CONSTRUCTOR', () => {
 		const state = {
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: {
 					calories: 643,
@@ -546,7 +545,7 @@ describe('ingredients reducer', () => {
 				fromIndex: 1,
 			})
 		).toEqual({
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: {
 					calories: 643,
@@ -605,7 +604,7 @@ describe('ingredients reducer', () => {
 
 	it('should handle INCREASE_INGREDIENT', () => {
 		const state = {
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: null,
 				otherIngredients: [],
@@ -627,7 +626,7 @@ describe('ingredients reducer', () => {
 				typeItem: "main",
 			})
 		).toEqual({
-			allIngredients: {},
+			allIngredients: [],
 			burgerIngredients: {
 				bun: null,
 				otherIngredients: [],

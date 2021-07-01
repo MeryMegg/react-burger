@@ -1,5 +1,4 @@
 import { getProductsRequest, addOrdersRequest } from '../../utils/api';
-import { filterArray } from '../../utils/functions';
 export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
 export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
 export const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED';
@@ -21,11 +20,10 @@ export const getIngredients = () => {
     });
     getProductsRequest()
       .then((res) => {
-        const ingredientsObj = filterArray(res.data);
         if (res && res.success) {
           dispatch({
             type: GET_PRODUCTS_SUCCESS,
-            items: ingredientsObj,
+            items: res.data,
           });
         } else {
           dispatch({

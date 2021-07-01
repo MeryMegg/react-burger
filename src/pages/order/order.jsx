@@ -1,28 +1,67 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
 import { useParams, Redirect } from 'react-router-dom';
 import PriceItem from '../../ui/price-item/price-item';
-import { ordersData } from '../../utils/data';
-
-import bun01 from '../../images/bun-01.png';
-import cheese from '../../images/cheese.png';
-import core from '../../images/core.png';
-import meat03 from '../../images/meat-03.png';
-import sauce03 from '../../images/sauce-03.png';
-import mineralRings from '../../images/mineral-rings.png';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/ws-actions';
+import Preloader from '../../components/preloader/preloader';
+import { conversionDateForCard } from '../../utils/functions';
+import { getIngredients } from '../../services/actions/ingredients';
 
 function Order() {
+  const dispatch = useDispatch();
+  useEffect(
+    () => {
+      dispatch({ type: WS_CONNECTION_START });
+      return () => dispatch({ type: WS_CONNECTION_CLOSED });
+    },
+    [dispatch]
+  );
+
+  const { loaded } = useSelector(store => store.ingredients)
+  useEffect(() => {
+    if (!loaded) {
+      dispatch(getIngredients());
+    }
+  }, [dispatch, loaded]);
+
+  const { allIngredients } = useSelector(store => store.ingredients)
+
+
+
   const { id } = useParams();
-  const order = ordersData.filter((el) => el.order.number === Number(id));
-  if (order.length === 0) return <Redirect to='/' />;
-  const name = order[0].name;
+  const { orders } = useSelector(store => store.ws.messages)
+  const { wsConnected } = useSelector(store => store.ws)
+  const filterOrders = (arr, id) => {
+    return arr?.filter((el) => el.number === Number(id))[0]
+  }
+  const order = filterOrders(orders, id);
+  const stringWithDay = conversionDateForCard(order?.createdAt);
+  const burgerIngredients = (order?.ingredients.map(el => el = (allIngredients.filter(item => item._id === el))))?.flat()
+  const arrUniqItem = Array.from(new Set(order?.ingredients))
+  const bI = burgerIngredients?.reduce((acc, curr) => {
+    const id = curr._id
+    acc.item[id] = curr;
+    acc.count[id] = (acc.count[id] || 0) + 1
+    return acc
+  }
+    , { item: {}, count: {} })
+
+  const burgerPrice = burgerIngredients?.reduce((acc, curr) => acc += curr.price, 0)
+  const name = order?.name
+  if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
   const status =
-    order[0].order.status === 'completed'
+    order?.status === 'done'
       ? { text: 'Выполнен', textColor: 'green' }
-      : order[0].order.status === 'canceled'
-        ? { text: 'Отменен', textColor: 'red' }
+      : order?.status === 'pending'
+        ? { text: 'Отменен', textColor: 'yellow' }
         : { text: 'Готовится', textColor: 'white' };
+
+  if (!order) {
+    return <Preloader />;
+  }
 
   return (
     <div className={styles.container}>
@@ -49,124 +88,36 @@ function Order() {
       </p>
       <p className={cn('text text_type_main-medium', 'mb-6', styles.title)}>
         Состав:
-        </p>
+      </p>
       <ul className={cn(styles.list, 'mb-10')}>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={bun01} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
+        {arrUniqItem.map(el => {
+          return <li className={cn(styles['list-item'], 'mr-6')} key={bI.item[el]?._id}>
+            <div className={cn(styles.icon, 'mr-4')}>
+              <img src={bI.item[el]?.image_mobile} alt='Вкусная булка' className={cn(styles.image)} />
+            </div>
+            <p
+              className={cn(
+                styles.ingredient,
+                'mr-4',
+                'text text_type_main-default'
+              )}
+            >
+              {bI.item[el]?.name}
             </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            2 x{' '}
-          </span>
-          <PriceItem price={20} />
-        </li>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={core} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
-            </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            1 x{' '}
-          </span>
-          <PriceItem price={300} />
-        </li>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={meat03} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
-            </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            1 x{' '}
-          </span>
-          <PriceItem price={80} />
-        </li>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={sauce03} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
-            </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            3 x{' '}
-          </span>
-          <PriceItem price={70} />
-        </li>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={cheese} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
-            </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            1 x{' '}
-          </span>
-          <PriceItem price={200} />
-        </li>
-        <li className={cn(styles['list-item'], 'mr-6')}>
-          <div className={cn(styles.icon, 'mr-4')}>
-            <img src={mineralRings} alt='Вкусная булка' />
-          </div>
-          <p
-            className={cn(
-              styles.ingredient,
-              'mr-4',
-              'text text_type_main-default'
-            )}
-          >
-            Флюоресцентная булка R2-D3
-            </p>
-          <span className={cn('mr-1', 'text text_type_digits-default')}>
-            1 x{' '}
-          </span>
-          <PriceItem price={200} />
-        </li>
+            <span className={cn('mr-1', 'text text_type_digits-default')}>
+              {bI.count[el]} x{' '}
+            </span>
+            <PriceItem price={bI.item[el]?.price} />
+          </li>
+        })}
       </ul>
       <div className={styles.info}>
         <span
           className={cn('text text_type_main-default text_color_inactive')}
         >
-          Вчера, 13:50 i-GMT+3
-          </span>
-        <PriceItem price={540} />
+          {stringWithDay}
+        </span>
+        <PriceItem price={burgerPrice} />
       </div>
     </div>
   );

@@ -1,8 +1,13 @@
 import React, { memo } from 'react';
 import cn from 'classnames';
+import { useSelector } from 'react-redux';
+import { filterOrdersByStatus } from '../../utils/functions';
 import styles from './orders-table.module.css';
 
 function OrdersTable() {
+  const { total, totalToday, orders } = useSelector(store => store.ws.messages)
+  const statusArray = filterOrdersByStatus(orders)
+  const doneArray = statusArray?.done.slice(0, 30)
   return (
     <section className={cn(styles.container, 'pl-4')}>
       <div className={styles.table}>
@@ -15,11 +20,7 @@ function OrdersTable() {
               'text text_type_digits-default'
             )}
           >
-            <li className={'mb-2'}>034533</li>
-            <li className={'mb-2'}>034532</li>
-            <li className={'mb-2'}>034530</li>
-            <li className={'mb-2'}>034527</li>
-            <li className={'mb-2'}>034525</li>
+            {doneArray?.map((el) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
           </ul>
         </div>
         <div>
@@ -27,9 +28,10 @@ function OrdersTable() {
             В работе:
           </h2>
           <ul className={cn(styles.list, 'text text_type_digits-default')}>
-            <li className={'mb-2'}>034538</li>
-            <li className={'mb-2'}>034541</li>
-            <li className={'mb-2'}>034542</li>
+            {statusArray?.pending.map((el) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
+            {/* <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>19</li>
+            <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>20</li>
+            <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>21</li> */}
           </ul>
         </div>
       </div>
@@ -38,7 +40,7 @@ function OrdersTable() {
           Выполнено за все время:
         </h2>
         <span className={cn('text text_type_digits-large', styles.count)}>
-          28 752
+          {total || 0}
         </span>
       </div>
       <div>
@@ -46,7 +48,7 @@ function OrdersTable() {
           Выполнено за сегодня:
         </h2>
         <span className={cn('text text_type_digits-large', styles.count)}>
-          138
+          {totalToday || 0}
         </span>
       </div>
     </section>
