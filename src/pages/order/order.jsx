@@ -1,23 +1,26 @@
 import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './order.module.css';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, useRouteMatch } from 'react-router-dom';
 import PriceItem from '../../ui/price-item/price-item';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/ws-actions';
+import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
 import Preloader from '../../components/preloader/preloader';
-import { conversionDateForCard } from '../../utils/functions';
+import { conversionDateForCard, getStatus, filterOrders, getPrice, getBurgerIngredients, getBurgerIngredientsObjWithCount } from '../../utils/functions';
 import { getIngredients } from '../../services/actions/ingredients';
+
 
 function Order() {
   const dispatch = useDispatch();
+  const isProfile = !!useRouteMatch("/profile");
   useEffect(
     () => {
-      dispatch({ type: WS_CONNECTION_START });
-      return () => dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(isProfile ? { type: WS_CONNECTION_START_AUTH } : { type: WS_CONNECTION_START });
+      return () => dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
     },
-    [dispatch]
+    [dispatch, isProfile]
   );
 
   const { loaded } = useSelector(store => store.ingredients)
@@ -32,32 +35,20 @@ function Order() {
 
 
   const { id } = useParams();
-  const { orders } = useSelector(store => store.ws.messages)
-  const { wsConnected } = useSelector(store => store.ws)
-  const filterOrders = (arr, id) => {
-    return arr?.filter((el) => el.number === Number(id))[0]
-  }
+  const { orders } = useSelector(store => isProfile ? store.wsAuth.messages : store.ws.messages)
+  const { wsConnected } = useSelector(store => isProfile ? store.wsAuth : store.ws)
   const order = filterOrders(orders, id);
   const stringWithDay = conversionDateForCard(order?.createdAt);
-  const burgerIngredients = (order?.ingredients.map(el => el = (allIngredients.filter(item => item._id === el))))?.flat()
+  const burgerIngredients = getBurgerIngredients(order?.ingredients, allIngredients)
   const arrUniqItem = Array.from(new Set(order?.ingredients))
-  const bI = burgerIngredients?.reduce((acc, curr) => {
-    const id = curr._id
-    acc.item[id] = curr;
-    acc.count[id] = (acc.count[id] || 0) + 1
-    return acc
-  }
-    , { item: {}, count: {} })
-
-  const burgerPrice = burgerIngredients?.reduce((acc, curr) => acc += curr.price, 0)
+  const bI = getBurgerIngredientsObjWithCount(burgerIngredients)
+  const burgerPrice = getPrice(burgerIngredients)
   const name = order?.name
+  const status = order?.status;
+  const st = getStatus(status)
+
   if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
-  const status =
-    order?.status === 'done'
-      ? { text: 'Выполнен', textColor: 'green' }
-      : order?.status === 'pending'
-        ? { text: 'Отменен', textColor: 'yellow' }
-        : { text: 'Готовится', textColor: 'white' };
+
 
   if (!order) {
     return <Preloader />;
@@ -81,17 +72,17 @@ function Order() {
           'text text_type_main-default',
           'mb-15',
           styles.status,
-          styles[`status_color_${status.textColor}`]
+          styles[`status_color_${st.textColor}`]
         )}
       >
-        {status.text}
+        {st.text}
       </p>
       <p className={cn('text text_type_main-medium', 'mb-6', styles.title)}>
         Состав:
       </p>
       <ul className={cn(styles.list, 'mb-10')}>
-        {arrUniqItem.map(el => {
-          return <li className={cn(styles['list-item'], 'mr-6')} key={bI.item[el]?._id}>
+        {arrUniqItem.map((el, i) => {
+          return <li className={cn(styles['list-item'], 'mr-6')} key={i}>
             <div className={cn(styles.icon, 'mr-4')}>
               <img src={bI.item[el]?.image_mobile} alt='Вкусная булка' className={cn(styles.image)} />
             </div>

@@ -88,3 +88,32 @@ export const filterOrdersByStatus = (arr) => {
     return acc;
   }, { done: [], pending: [] })
 }
+
+//сформировать статус заказа
+export const getStatus = status =>
+  status === 'done'
+    ? { text: 'Выполнен', textColor: 'green' }
+    : status === 'pending'
+      ? { text: 'Отменен', textColor: 'yellow' }
+      : { text: 'Готовится', textColor: 'white' };
+
+//найти текущий заказ
+export const filterOrders = (arr, id) => {
+  return arr?.filter((el) => el.number === Number(id))[0]
+}
+
+//получить стоимость бургера
+export const getPrice = (arr) => arr?.reduce((acc, curr) => acc += curr.price, 0)
+
+//получить ингредиенты бургера
+export const getBurgerIngredients = (arr1, arr2) => (arr1?.map(el => el = (arr2.filter(item => item._id === el))))?.flat()
+
+//получить объект со ингредиентами и их количеством
+export const getBurgerIngredientsObjWithCount = (arr) => arr?.reduce((acc, curr) => {
+  const id = curr._id
+  acc.item[id] = curr;
+  acc.count[id] = (acc.count[id] || 0) + 1
+  return acc
+}
+  , { item: {}, count: {} })
+

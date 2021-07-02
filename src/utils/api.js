@@ -28,8 +28,24 @@ export const getUserRequest = () => {
   })
 };
 
+// export const addOrdersRequest = (ingredients) => {
+//   return fetch(`${ServerConfig.baseUrl}/orders`, {
+//     method: 'POST',
+//     mode: 'cors',
+//     cache: 'no-cache',
+//     credentials: 'same-origin',
+//     headers: {
+//       ...ServerConfig.headers,
+//       Authorization: 'Bearer ' + getCookie('token'),
+//     },
+//     body: JSON.stringify({ ingredients }),
+//     redirect: 'follow',
+//     referrerPolicy: 'no-referrer',
+//   }).then((res) => requestHandler(res));
+// };
+
 export const addOrdersRequest = (ingredients) => {
-  return fetch(`${ServerConfig.baseUrl}/orders`, {
+  return fetchWithRefreshToken(`${ServerConfig.baseUrl}/orders`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -41,7 +57,7 @@ export const addOrdersRequest = (ingredients) => {
     body: JSON.stringify({ ingredients }),
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
-  }).then((res) => requestHandler(res));
+  })
 };
 
 export const signUpRequest = ({ email, password, name }) => {

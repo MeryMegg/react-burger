@@ -5,24 +5,20 @@ import styles from './orders-item.module.css';
 import { useSelector } from 'react-redux';
 import { conversionDateForCard } from '../../utils/functions';
 import PropTypes from 'prop-types';
+import { getStatus } from '../../utils/functions';
 
 function OrdersItem({ number, name, ingredients, createdAt, status }) {
 
   const { allIngredients } = useSelector(store => store.ingredients)
   const stringWithDay = conversionDateForCard(createdAt);
-  const burgerIngredients = (ingredients.map(el => el = (allIngredients.filter(item => item._id === el)))).flat()
+  const burgerIngredients = (ingredients.map(el => el = (allIngredients.find(item => item._id === el))))
   const burgerItem = burgerIngredients.slice(0, 6)
   const count = burgerIngredients.length;
   let zI = 6;
   const numberIngredients = count - 6
   const burgerPrice = burgerIngredients.reduce((acc, curr) => acc += curr.price, 0)
 
-  const st =
-    status === 'done'
-      ? { text: 'Выполнен', textColor: 'green' }
-      : status === 'pending'
-        ? { text: 'Готовится', textColor: 'yellow' }
-        : { text: 'Создан', textColor: 'white' };
+  const st = getStatus(status)
 
   return (
     <div className={cn(styles['orders-item'], 'p-6')}>
