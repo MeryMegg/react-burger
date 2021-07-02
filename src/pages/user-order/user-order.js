@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
 import Preloader from '../../components/preloader/preloader';
-import { conversionDateForCard } from '../../utils/functions';
+import { conversionDateForCard, getStatus } from '../../utils/functions';
 import { getIngredients } from '../../services/actions/ingredients';
+
 
 function UserOrder() {
 	const dispatch = useDispatch();
@@ -52,12 +53,7 @@ function UserOrder() {
 	const burgerPrice = burgerIngredients?.reduce((acc, curr) => acc += curr.price, 0)
 	const name = order?.name
 	if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
-	const status =
-		order?.status === 'done'
-			? { text: 'Выполнен', textColor: 'green' }
-			: order?.status === 'pending'
-				? { text: 'Отменен', textColor: 'yellow' }
-				: { text: 'Готовится', textColor: 'white' };
+	const status = getStatus(order?.status)
 
 	if (!order) {
 		return <Preloader />;
