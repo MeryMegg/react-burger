@@ -5,11 +5,10 @@ import {
   Link, useLocation,
 } from "react-router-dom";
 import { TIngredient } from '../../types';
+import { TIngredientRef } from './types';
 import styles from './ingredients.module.css';
 
-type TIngredientRef = {
-  title: string, array: Array<TIngredient>, id: string
-}
+
 
 const Ingredients = React.forwardRef<HTMLHeadingElement, TIngredientRef>(
   ({ title, array, id }, ref) => {

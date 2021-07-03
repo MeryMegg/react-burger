@@ -1,9 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './profile.module.css';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
-import OrdersItem from '../../components/orders-item/orders-item';
-import { ordersData } from '../../utils/data';
+import { Switch, Route } from 'react-router-dom';
 import NavProfile from '../../components/nav-profile/nav-profile';
 import FormsProfile from '../../components/forms-profile/forms-profile';
 import ProfileOrders from '../../components/profile-orders/profile-orders';
@@ -13,8 +11,7 @@ import Preloader from '../../components/preloader/preloader';
 
 function Profile() {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const { getUserRequest } = useSelector(store => store.auth)
+  const { getUserRequest } = useSelector((store: any) => store.auth)
 
   useEffect(() => {
     dispatch(getUser());
@@ -33,25 +30,6 @@ function Profile() {
         </Route>
         <Route path='/profile/orders' exact={true}>
           <ProfileOrders />
-          {/* <ul className={cn(styles.list, 'mb-20')}>
-            {ordersData.map((el, i) => (
-              <li className={cn(styles['list-item'])} key={i}>
-                <Link
-                  to={{
-                    pathname: `/profile/orders/${el.order.number}`,
-                    state: { background: location }
-                  }}
-                  className={styles['burger-link']}
-                >
-                  <OrdersItem
-                    number={el.order.number}
-                    name={el.name}
-                    status={el.order.status}
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul> */}
         </Route>
         <Route>
           <div className={styles.container}>

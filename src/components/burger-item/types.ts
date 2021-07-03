@@ -9,3 +9,8 @@ export type TProps = {
 		hoverIndex: number)
 		=> void;
 }
+
+export type TDragItem = {
+	index: number
+	id: string
+}

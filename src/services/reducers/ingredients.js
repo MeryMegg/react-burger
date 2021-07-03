@@ -137,7 +137,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       } else return state;
     }
     case UPDATE_CONSTRUCTOR: {
-      console.log(state)
       const otherIngredients = [...state.burgerIngredients.otherIngredients];
       otherIngredients.splice(
         action.toIndex,

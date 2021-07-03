@@ -9,8 +9,6 @@ const OrdersTable = () => {
   const { total, totalToday, orders } = useSelector((store: any) => store.ws.messages)
   const statusArrays = filterOrdersByStatus(orders)
   const doneArray = statusArrays?.done.slice(0, 30);
-  console.log(statusArrays);
-
 
   return (
     <section className={cn(styles.container, 'pl-4')}>

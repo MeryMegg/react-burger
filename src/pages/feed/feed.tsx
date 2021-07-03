@@ -12,7 +12,10 @@ function Feed() {
   useEffect(
     () => {
       dispatch({ type: WS_CONNECTION_START });
-      return () => dispatch({ type: WS_CONNECTION_CLOSED })
+      return () => {
+        dispatch({ type: WS_CONNECTION_CLOSED })
+        return;
+      }
     },
     [dispatch]
   );

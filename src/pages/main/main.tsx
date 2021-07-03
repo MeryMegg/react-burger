@@ -7,6 +7,7 @@ import styles from './main.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TIngredient } from '../../types';
 import {
   ADD_INGREDIENTS,
   INCREASE_INGREDIENT,
@@ -15,11 +16,11 @@ import Preloader from '../../components/preloader/preloader';
 
 function Main() {
   const { isLoading, hasError, loaded } = useSelector(
-    (store) => store.ingredients
+    (store: any) => store.ingredients
   );
 
   const dispatch = useDispatch();
-  const handleDrop = (item) => {
+  const handleDrop = (item: TIngredient) => {
     const newItem = { ...item, productId: uuidv4() };
     dispatch({
       type: ADD_INGREDIENTS,

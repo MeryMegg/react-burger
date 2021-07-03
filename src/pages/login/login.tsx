@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo, useCallback } from 'react';
+import React, { useState, memo, SyntheticEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
@@ -13,18 +13,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Login() {
   const [state, setState] = useState({
-    login: '',
+    email: '',
     password: '',
   });
 
-  const userName = useSelector(store => store.auth.name)
+  const userName = useSelector((store: any) => store.auth.name)
 
   const dispatch = useDispatch();
 
-  const inputRef = useRef(null);
-
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
     setState({
@@ -33,12 +31,7 @@ function Login() {
     });
   };
 
-  const onIconClick = useCallback(() => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert('Icon Click Callback');
-  }, []);
-
-  const submit = (e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(login(state));
   };
@@ -63,13 +56,11 @@ function Login() {
           type={'text'}
           placeholder={'E-mail'}
           onChange={handleInputChange}
-          value={state.login}
-          name={'login'}
+          value={state.email}
+          name={'email'}
           error={false}
-          ref={inputRef}
           errorText={'Ошибка'}
           size={'default'}
-          onIconClick={onIconClick}
         />
         <PasswordInput
           value={state.password}

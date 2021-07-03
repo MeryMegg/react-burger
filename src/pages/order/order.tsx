@@ -16,14 +16,17 @@ function Order() {
   useEffect(
     () => {
       dispatch(isProfile ? { type: WS_CONNECTION_START_AUTH } : { type: WS_CONNECTION_START });
-      return () => dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
+      return () => {
+        dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
+        return;
+      }
     },
     [dispatch, isProfile]
   );
-  const { allIngredients } = useSelector(store => store.ingredients)
-  const { id } = useParams();
-  const { orders } = useSelector(store => isProfile ? store.wsAuth.messages : store.ws.messages)
-  const { wsConnected } = useSelector(store => isProfile ? store.wsAuth : store.ws)
+  const { allIngredients } = useSelector((store: any) => store.ingredients)
+  const { id } = useParams<{ id: string }>();
+  const { orders } = useSelector((store: any) => isProfile ? store.wsAuth.messages : store.ws.messages)
+  const { wsConnected } = useSelector((store: any) => isProfile ? store.wsAuth : store.ws)
   const order = filterOrders(orders, id);
   const stringWithDay = conversionDateForCard(order?.createdAt);
   const burgerIngredients = getBurgerIngredients(order?.ingredients, allIngredients)
@@ -32,7 +35,7 @@ function Order() {
   const burgerPrice = getPrice(burgerIngredients)
   const name = order?.name
   const status = order?.status;
-  const st = getStatus(status);
+  const st = status ? getStatus(status) : null;
   if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
 
 
@@ -58,10 +61,10 @@ function Order() {
           'text text_type_main-default',
           'mb-15',
           styles.status,
-          styles[`status_color_${st.textColor}`]
+          styles[`status_color_${st?.textColor}`]
         )}
       >
-        {st.text}
+        {st?.text}
       </p>
       <p className={cn('text text_type_main-medium', 'mb-6', styles.title)}>
         Состав:

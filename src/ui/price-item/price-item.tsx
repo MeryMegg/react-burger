@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import cn from 'classnames';
 import styles from './price-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TProps } from './types';
 
-function PriceItem({ price, classMarg }) {
+
+const PriceItem: FC<TProps> = ({ price, classMarg }) => {
   return (
     <span className={cn(styles['element-price'], 'text', [classMarg])}>
       {price}
@@ -12,10 +13,5 @@ function PriceItem({ price, classMarg }) {
     </span>
   );
 }
-
-PriceItem.propTypes = {
-  price: PropTypes.number,
-  classMarg: PropTypes.string,
-};
 
 export default PriceItem;

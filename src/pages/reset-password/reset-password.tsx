@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback } from 'react';
+import React, { useState, memo, SyntheticEvent } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import {
@@ -20,8 +20,8 @@ function ResetPassword() {
 
   const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
     setState({
@@ -29,13 +29,8 @@ function ResetPassword() {
       [name]: value,
     });
   };
-  const inputRef = React.useRef(null);
-  const onIconClick = useCallback(() => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert('Icon Click Callback');
-  }, []);
 
-  const submit = (e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(resetPassword(state))
     resetPasswordRequest(state)
@@ -47,7 +42,7 @@ function ResetPassword() {
       });
   };
 
-  const isforgotPasswordSaccess = useSelector(store => store.auth.isforgotPasswordSaccess);
+  const isforgotPasswordSaccess = useSelector((store: any) => store.auth.isforgotPasswordSaccess);
 
   if (localStorage.getItem('refreshToken')) {
     return (
@@ -87,8 +82,6 @@ function ResetPassword() {
           value={state.token}
           name={'token'}
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
           errorText={'Ошибка'}
           size={'default'}
         />

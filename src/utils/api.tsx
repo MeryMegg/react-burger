@@ -1,5 +1,6 @@
 import { ServerConfig } from '../constants/config';
 import { getCookie, setCookie, deleteCookie } from './functions';
+import { TUserData, TResetPassword, TUpdateUserData } from '../types';
 
 export const getProductsRequest = () => {
   return fetch(`${ServerConfig.baseUrl}/ingredients`, {
@@ -28,23 +29,7 @@ export const getUserRequest = () => {
   })
 };
 
-// export const addOrdersRequest = (ingredients) => {
-//   return fetch(`${ServerConfig.baseUrl}/orders`, {
-//     method: 'POST',
-//     mode: 'cors',
-//     cache: 'no-cache',
-//     credentials: 'same-origin',
-//     headers: {
-//       ...ServerConfig.headers,
-//       Authorization: 'Bearer ' + getCookie('token'),
-//     },
-//     body: JSON.stringify({ ingredients }),
-//     redirect: 'follow',
-//     referrerPolicy: 'no-referrer',
-//   }).then((res) => requestHandler(res));
-// };
-
-export const addOrdersRequest = (ingredients) => {
+export const addOrdersRequest = (ingredients: Array<string>) => {
   return fetchWithRefreshToken(`${ServerConfig.baseUrl}/orders`, {
     method: 'POST',
     mode: 'cors',
@@ -60,7 +45,7 @@ export const addOrdersRequest = (ingredients) => {
   })
 };
 
-export const signUpRequest = ({ email, password, name }) => {
+export const signUpRequest = ({ email, password, name }: TUserData) => {
   return fetch(`${ServerConfig.baseUrl}/auth/register`, {
     method: 'POST',
     mode: 'cors',
@@ -73,18 +58,18 @@ export const signUpRequest = ({ email, password, name }) => {
   }).then((res) => requestHandler(res));
 };
 
-export const signInRequest = ({ login, password }) => {
+export const signInRequest = ({ email, password }: TUserData) => {
   return fetch(`${ServerConfig.baseUrl}/auth/login`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
     credentials: 'same-origin',
     headers: ServerConfig.headers,
-    body: JSON.stringify({ email: login, password }),
+    body: JSON.stringify({ email, password }),
   }).then((res) => requestHandler(res));
 };
 
-export const forgotPasswordRequest = (email) => {
+export const forgotPasswordRequest = (email: string) => {
   return fetch(`${ServerConfig.baseUrl}/password-reset`, {
     method: 'POST',
     mode: 'cors',
@@ -97,7 +82,9 @@ export const forgotPasswordRequest = (email) => {
   }).then((res) => requestHandler(res));
 };
 
-export const resetPasswordRequest = ({ password, token }) => {
+
+
+export const resetPasswordRequest = ({ password, token }: TResetPassword) => {
   return fetch(`${ServerConfig.baseUrl}/password-reset/reset`, {
     method: 'POST',
     mode: 'cors',
@@ -123,7 +110,7 @@ export const signOutRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-export const updateUserRequest = (data) => {
+export const updateUserRequest = (data: TUpdateUserData) => {
   return fetchWithRefreshToken(`${ServerConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
     mode: 'cors',
@@ -150,11 +137,24 @@ export const refreshTokenRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-const fetchWithRefreshToken = (url, options) => {
+
+// type TOptions = {
+//   method: string;
+//   mode: string;
+//   cache?: string;
+//   credentials: string;
+//   headers?: Headers;
+//   body?: string;
+//   redirect: string;
+//   referrerPolicy: string;
+// }
+
+const fetchWithRefreshToken = (url: string, options: any) => {
   return fetch(url, options).then((res) => requestHandler(res))
     .catch((res) => {
       return res.json()
-        .then(err => {
+        .then((err: any) => {
+          console.log(err)
           if (err.message === 'jwt expired') {
             return refreshTokenRequest()
               .then(res => {
@@ -175,6 +175,6 @@ const fetchWithRefreshToken = (url, options) => {
     })
 }
 
-const requestHandler = (res) => {
+const requestHandler = (res: Response) => {
   return res.ok ? res.json() : Promise.reject(res)
 };

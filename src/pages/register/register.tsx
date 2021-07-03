@@ -1,4 +1,4 @@
-import React, { useState, memo, useCallback } from 'react';
+import React, { useState, memo, useCallback, SyntheticEvent } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import {
@@ -20,8 +20,8 @@ function Register() {
 
   const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
     setState({
@@ -34,7 +34,7 @@ function Register() {
     alert('Icon Click Callback');
   }, []);
 
-  const submit = (e) => {
+  const submit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(register(state));
   };

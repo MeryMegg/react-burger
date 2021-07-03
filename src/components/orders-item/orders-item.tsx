@@ -10,9 +10,7 @@ import { TProps } from './types';
 import { TIngredient } from '../../types';
 
 
-
 const OrdersItem: FC<TProps> = ({ number, name, ingredients, createdAt, status }) => {
-
   const { allIngredients } = useSelector((store: any) => store.ingredients);
   const stringWithDay = conversionDateForCard(createdAt);
   const burgerIngredients = getBurgerIngredients(ingredients, allIngredients);
@@ -21,7 +19,7 @@ const OrdersItem: FC<TProps> = ({ number, name, ingredients, createdAt, status }
   let zI = NUNBER_OF_ELEMENTS_TO_BE_DRAWN;
   const numberIngredients = count - NUNBER_OF_ELEMENTS_TO_BE_DRAWN;
   const burgerPrice = getPrice(burgerIngredients);
-  const st = getStatus(status);
+  const st = status ? getStatus(status) : null;
 
 
   return (
@@ -38,10 +36,10 @@ const OrdersItem: FC<TProps> = ({ number, name, ingredients, createdAt, status }
           <span
             className={cn(
               'text text_type_main-default',
-              styles[`status_color_${st.textColor}`]
+              styles[`status_color_${st?.textColor}`]
             )}
           >
-            {st.text}
+            {st?.text}
           </span>
         ) : null}
       </div>

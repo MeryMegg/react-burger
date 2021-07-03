@@ -1,19 +1,15 @@
 import React, { memo, FC } from 'react';
-//import PropTypes from 'prop-types';
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';
 import { useRef } from 'react';
-import { TProps } from './types';
+import { TProps, TDragItem } from './types';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core'
 
-interface DragItem {
-  index: number
-  id: string
-}
+
 
 const BurgerItem: FC<TProps> = ({ item, index, deleteIngredient, moveItem }) => {
   const id = item._id;
@@ -25,7 +21,7 @@ const BurgerItem: FC<TProps> = ({ item, index, deleteIngredient, moveItem }) => 
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(el: DragItem, monitor: DropTargetMonitor) {
+    hover(el: TDragItem, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
       }
@@ -52,7 +48,6 @@ const BurgerItem: FC<TProps> = ({ item, index, deleteIngredient, moveItem }) => 
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      console.log(hoverIndex)
       moveItem(dragIndex, hoverIndex);
 
       el.index = hoverIndex;

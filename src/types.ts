@@ -22,3 +22,39 @@ export type TOrder = {
 	updatedAt: string;
 	_id: string;
 }
+
+export type TUserData = {
+	email: string;
+	name?: string;
+	password: string
+}
+
+export type TResetPassword = {
+	password: string;
+	token: string
+}
+
+type TInputName = 'name' | 'email' | 'password';
+
+export type TUpdateUserData = {
+	[fw in TInputName]: string;
+}
+
+export type TIngredientWithProductId = TIngredient & { productId: string }
+
+// export type TBurgerIngredients = {
+// 	bun: null | TIngredient;
+// 	otherIngredients: Array<TIngredient>;
+// 	counts: TCountsIngredients
+// }
+
+// export type TStoreIngredients = {
+// 	isLoading: boolean;
+// 	hasError: boolean;
+// 	loaded: boolean;
+// 	allIngredients: Array<TIngredient>;
+// 	burgerIngredients: TBurgerIngredients;
+// 	currentOrder: null | TIngredient;
+// 	orderRequest: boolean;
+// 	orderFailed: boolean
+// };

@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useRef, memo, FC } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
 import { filterArray } from '../../utils/functions';
-
 import styles from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
 
-interface IState {
-  current: string;
-}
-
-const BurgerIngredients: FC<IState> = () => {
-  const [current, setCurrent] = useState('bread');
+const BurgerIngredients = () => {
+  const [current, setCurrent] = useState<string>('bread');
   const { allIngredients } = useSelector(
     (store: any) => store.ingredients
   );
@@ -44,11 +39,7 @@ const BurgerIngredients: FC<IState> = () => {
           : minDistance === sauceDistance
             ? 'sauces'
             : 'fillings';
-      setCurrent((prevState: any) => {
-        //console.log(typeof)
-        return currentHeader === prevState?.current ? prevState?.current : currentHeader
-      }
-      );
+      setCurrent((prevState) => currentHeader === prevState ? prevState : currentHeader);
     }
   };
 
