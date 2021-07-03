@@ -8,8 +8,6 @@ import { useDispatch } from 'react-redux';
 import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
 import Preloader from '../../components/preloader/preloader';
 import { conversionDateForCard, getStatus } from '../../utils/functions';
-import { getIngredients } from '../../services/actions/ingredients';
-
 
 function UserOrder() {
 	const dispatch = useDispatch();
@@ -21,17 +19,7 @@ function UserOrder() {
 		[dispatch]
 	);
 
-	const { loaded } = useSelector(store => store.ingredients)
-	useEffect(() => {
-		if (!loaded) {
-			dispatch(getIngredients());
-		}
-	}, [dispatch, loaded]);
-
 	const { allIngredients } = useSelector(store => store.ingredients)
-
-
-
 	const { id } = useParams();
 	const { orders } = useSelector(store => store.wsAuth.messages)
 	const { wsConnected } = useSelector(store => store.ws)

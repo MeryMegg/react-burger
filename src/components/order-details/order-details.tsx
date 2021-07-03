@@ -5,9 +5,9 @@ import checkIcon from '../../images/check.svg';
 import { useSelector } from 'react-redux';
 import Preloader from '../preloader/preloader';
 
-function OrderDetails() {
+const OrderDetails = () => {
   const { orderRequest, orderFailed, currentOrder } = useSelector(
-    (store) => store.ingredients
+    (store: any) => store.ingredients
   );
 
   return (

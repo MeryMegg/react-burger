@@ -1,16 +1,23 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo, FC } from 'react';
+//import PropTypes from 'prop-types';
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-item.module.css';
 import { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import { TProps } from './types';
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
+import { XYCoord } from 'dnd-core'
 
-function BurgerItem({ item, index, deleteIngredient, moveItem }) {
+interface DragItem {
+  index: number
+  id: string
+}
+
+const BurgerItem: FC<TProps> = ({ item, index, deleteIngredient, moveItem }) => {
   const id = item._id;
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const [, drop] = useDrop({
     accept: 'item',
     collect(monitor) {
@@ -18,7 +25,7 @@ function BurgerItem({ item, index, deleteIngredient, moveItem }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(el, monitor) {
+    hover(el: DragItem, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
       }
@@ -36,7 +43,7 @@ function BurgerItem({ item, index, deleteIngredient, moveItem }) {
 
       const clientOffset = monitor.getClientOffset();
 
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -45,7 +52,7 @@ function BurgerItem({ item, index, deleteIngredient, moveItem }) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-
+      console.log(hoverIndex)
       moveItem(dragIndex, hoverIndex);
 
       el.index = hoverIndex;
@@ -76,26 +83,5 @@ function BurgerItem({ item, index, deleteIngredient, moveItem }) {
     </li>
   );
 }
-
-BurgerItem.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    productId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-  deleteIngredient: PropTypes.func.isRequired,
-  moveItem: PropTypes.func.isRequired,
-};
 
 export default memo(BurgerItem);

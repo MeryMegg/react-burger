@@ -1,5 +1,4 @@
-import React, { useCallback, memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback, memo, FC } from 'react';
 import cn from 'classnames';
 import {
   ConstructorElement,
@@ -20,13 +19,16 @@ import BurgerItem from '../burger-item/burger-item';
 import { push } from 'connected-react-router';
 import { useLocation, useHistory } from 'react-router-dom';
 import { UPDATE_CONSTRUCTOR } from '../../services/actions/ingredients';
+import { TProps, TIngredientWithProductId } from './types'
+import { TIngredient } from '../../types'
 
-function BurgerConstructor({ onDropHandler }) {
+
+
+const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
   const { bun, otherIngredients } = useSelector(
-    (store) => store.ingredients.burgerIngredients
+    (store: any) => store.ingredients.burgerIngredients
   );
-  const { orderRequest } = useSelector((store) => store.ingredients)
-
+  const { orderRequest } = useSelector((store: any) => store.ingredients);
   const location = useLocation();
   const history = useHistory();
   const hasToken = localStorage.getItem('refreshToken')
@@ -34,8 +36,8 @@ function BurgerConstructor({ onDropHandler }) {
 
   const [{ canDrop, isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(itemId) {
-      onDropHandler(itemId);
+    drop(item: TIngredient) {
+      onDropHandler(item);
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -45,7 +47,7 @@ function BurgerConstructor({ onDropHandler }) {
 
   const handleClick = () => {
     if (hasToken) {
-      const ingredientsId = otherIngredients.map((el) => el._id);
+      const ingredientsId = otherIngredients.map((el: TIngredientWithProductId) => el._id);
       dispatch(createOrder([bun._id, ...ingredientsId]));
       history.push({
         pathname: '/',
@@ -100,7 +102,7 @@ function BurgerConstructor({ onDropHandler }) {
         )}
 
         <ul className={cn(styles.list, 'pr-4')} data-cy="other-ingredients-container">
-          {otherIngredients.map((el, i) => {
+          {otherIngredients.map((el: TIngredientWithProductId, i: number) => {
             const deleteIngredient = () => {
               dispatch({
                 type: DELETE_INGREDIENT,
@@ -141,7 +143,6 @@ function BurgerConstructor({ onDropHandler }) {
           <PriceItem
             price={calculationCost(bun, otherIngredients)}
             classMarg='mr-10'
-            classText='text_type_digits-medium'
           />
         ) : null}
         {bun && (
@@ -153,9 +154,5 @@ function BurgerConstructor({ onDropHandler }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onDropHandler: PropTypes.func.isRequired,
-};
 
 export default memo(BurgerConstructor);

@@ -9,8 +9,6 @@ import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/action
 import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
 import Preloader from '../../components/preloader/preloader';
 import { conversionDateForCard, getStatus, filterOrders, getPrice, getBurgerIngredients, getBurgerIngredientsObjWithCount } from '../../utils/functions';
-import { getIngredients } from '../../services/actions/ingredients';
-
 
 function Order() {
   const dispatch = useDispatch();
@@ -22,18 +20,7 @@ function Order() {
     },
     [dispatch, isProfile]
   );
-
-  const { loaded } = useSelector(store => store.ingredients)
-  useEffect(() => {
-    if (!loaded) {
-      dispatch(getIngredients());
-    }
-  }, [dispatch, loaded]);
-
   const { allIngredients } = useSelector(store => store.ingredients)
-
-
-
   const { id } = useParams();
   const { orders } = useSelector(store => isProfile ? store.wsAuth.messages : store.ws.messages)
   const { wsConnected } = useSelector(store => isProfile ? store.wsAuth : store.ws)
@@ -45,8 +32,7 @@ function Order() {
   const burgerPrice = getPrice(burgerIngredients)
   const name = order?.name
   const status = order?.status;
-  const st = getStatus(status)
-
+  const st = getStatus(status);
   if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
 
 

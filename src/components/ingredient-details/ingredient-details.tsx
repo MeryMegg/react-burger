@@ -4,8 +4,9 @@ import styles from './ingredient-details.module.css';
 import { getProductsRequest } from '../../utils/api';
 import { useParams } from "react-router-dom";
 import Preloader from '../preloader/preloader';
+import { TIngredient } from '../../types';
 
-function IngredientDetails() {
+const IngredientDetails = () => {
   const [state, setState] = useState({
     image: '',
     name: '',
@@ -17,7 +18,7 @@ function IngredientDetails() {
   }
   )
 
-  let { id } = useParams();
+  let { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     setState((state) => {
@@ -27,7 +28,8 @@ function IngredientDetails() {
       };
     });
     getProductsRequest().then((res) => {
-      const currentBurger = res.data.find((el) => el._id === id)
+
+      const currentBurger = res.data.find((el: TIngredient) => el._id === id)
       setState({
         image: currentBurger.image,
         name: currentBurger.name,

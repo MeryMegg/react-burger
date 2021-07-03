@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useRef, memo, FC } from 'react';
 import cn from 'classnames';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
@@ -7,46 +7,53 @@ import { filterArray } from '../../utils/functions';
 import styles from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
 
+interface IState {
+  current: string;
+}
 
-function BurgerIngredients() {
+const BurgerIngredients: FC<IState> = () => {
   const [current, setCurrent] = useState('bread');
   const { allIngredients } = useSelector(
-    (store) => store.ingredients
+    (store: any) => store.ingredients
   );
 
   const { bun, main, sauce } = filterArray(allIngredients);
-  const rootRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const rootRef = useRef<HTMLElement>(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
   const handleScroll = () => {
-    const bunDistance = Math.abs(
-      rootRef.current.getBoundingClientRect().top -
-      bunRef.current.getBoundingClientRect().top
-    );
-    const sauceDistance = Math.abs(
-      rootRef.current.getBoundingClientRect().top -
-      sauceRef.current.getBoundingClientRect().top
-    );
-    const mainDistance = Math.abs(
-      rootRef.current.getBoundingClientRect().top -
-      mainRef.current.getBoundingClientRect().top
-    );
-    const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
-    const currentHeader =
-      minDistance === bunDistance
-        ? 'bread'
-        : minDistance === sauceDistance
-          ? 'sauces'
-          : 'fillings';
-    setCurrent((prevState) =>
-      currentHeader === prevState.current ? prevState.current : currentHeader
-    );
+    if (rootRef && bunRef && sauceRef && mainRef && rootRef.current && bunRef.current && sauceRef.current && mainRef.current) {
+      const bunDistance = Math.abs(
+        rootRef.current.getBoundingClientRect().top -
+        bunRef.current.getBoundingClientRect().top
+      );
+      const sauceDistance = Math.abs(
+        rootRef?.current.getBoundingClientRect().top -
+        sauceRef?.current.getBoundingClientRect().top
+      );
+      const mainDistance = Math.abs(
+        rootRef?.current.getBoundingClientRect().top -
+        mainRef?.current.getBoundingClientRect().top
+      );
+      const minDistance = Math.min(bunDistance, sauceDistance, mainDistance);
+      const currentHeader =
+        minDistance === bunDistance
+          ? 'bread'
+          : minDistance === sauceDistance
+            ? 'sauces'
+            : 'fillings';
+      setCurrent((prevState: any) => {
+        //console.log(typeof)
+        return currentHeader === prevState?.current ? prevState?.current : currentHeader
+      }
+      );
+    }
   };
 
   useEffect(() => {
-    document.querySelector(`#${current}`).scrollIntoView();
+    document.querySelector(`#${current}`)?.scrollIntoView();
   }, [current]);
 
   return (

@@ -31,6 +31,7 @@
     "web-vitals": "^1.1.1"
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
     "cypress": "^7.5.0",
     "eslint-config-prettier": "^7.2.0",

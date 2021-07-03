@@ -144,7 +144,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         0,
         otherIngredients.splice(action.fromIndex, 1)[0]
       );
-      console.log(otherIngredients);
       return {
         ...state,
         burgerIngredients: {

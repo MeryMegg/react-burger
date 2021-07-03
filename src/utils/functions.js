@@ -106,7 +106,7 @@ export const filterOrders = (arr, id) => {
 export const getPrice = (arr) => arr?.reduce((acc, curr) => acc += curr.price, 0)
 
 //получить ингредиенты бургера
-export const getBurgerIngredients = (arr1, arr2) => (arr1?.map(el => el = (arr2.filter(item => item._id === el))))?.flat()
+export const getBurgerIngredients = (arrIdBurgerIngredients, arrAllIngredients) => (arrIdBurgerIngredients?.map(el => el = (arrAllIngredients.filter(item => item._id === el))))?.flat()
 
 //получить объект со ингредиентами и их количеством
 export const getBurgerIngredientsObjWithCount = (arr) => arr?.reduce((acc, curr) => {

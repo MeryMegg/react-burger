@@ -3,11 +3,15 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { filterOrdersByStatus } from '../../utils/functions';
 import styles from './orders-table.module.css';
+import { TOrder } from '../../types';
 
-function OrdersTable() {
-  const { total, totalToday, orders } = useSelector(store => store.ws.messages)
-  const statusArray = filterOrdersByStatus(orders)
-  const doneArray = statusArray?.done.slice(0, 30)
+const OrdersTable = () => {
+  const { total, totalToday, orders } = useSelector((store: any) => store.ws.messages)
+  const statusArrays = filterOrdersByStatus(orders)
+  const doneArray = statusArrays?.done.slice(0, 30);
+  console.log(statusArrays);
+
+
   return (
     <section className={cn(styles.container, 'pl-4')}>
       <div className={styles.table}>
@@ -20,7 +24,7 @@ function OrdersTable() {
               'text text_type_digits-default'
             )}
           >
-            {doneArray?.map((el) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
+            {doneArray?.map((el: TOrder) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
           </ul>
         </div>
         <div>
@@ -28,10 +32,7 @@ function OrdersTable() {
             В работе:
           </h2>
           <ul className={cn(styles.list, 'text text_type_digits-default')}>
-            {statusArray?.pending.map((el) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
-            {/* <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>19</li>
-            <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>20</li>
-            <li className={cn(styles['list-item'], 'mb-2', 'mr-8')}>21</li> */}
+            {statusArrays?.pending.map((el: TOrder) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
           </ul>
         </div>
       </div>

@@ -1,24 +1,28 @@
-import React, { memo } from 'react';
+import React, { memo, FC } from 'react';
 import cn from 'classnames';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './orders-item.module.css';
 import { useSelector } from 'react-redux';
-import { conversionDateForCard } from '../../utils/functions';
-import PropTypes from 'prop-types';
+import { conversionDateForCard, getPrice, getBurgerIngredients } from '../../utils/functions';
 import { getStatus } from '../../utils/functions';
+import { NUNBER_OF_ELEMENTS_TO_BE_DRAWN } from '../../constants/constants';
+import { TProps } from './types';
+import { TIngredient } from '../../types';
 
-function OrdersItem({ number, name, ingredients, createdAt, status }) {
 
-  const { allIngredients } = useSelector(store => store.ingredients)
+
+const OrdersItem: FC<TProps> = ({ number, name, ingredients, createdAt, status }) => {
+
+  const { allIngredients } = useSelector((store: any) => store.ingredients);
   const stringWithDay = conversionDateForCard(createdAt);
-  const burgerIngredients = (ingredients.map(el => el = (allIngredients.find(item => item._id === el))))
-  const burgerItem = burgerIngredients.slice(0, 6)
+  const burgerIngredients = getBurgerIngredients(ingredients, allIngredients);
+  const burgerItem = burgerIngredients.slice(0, NUNBER_OF_ELEMENTS_TO_BE_DRAWN);
   const count = burgerIngredients.length;
-  let zI = 6;
-  const numberIngredients = count - 6
-  const burgerPrice = burgerIngredients.reduce((acc, curr) => acc += curr.price, 0)
+  let zI = NUNBER_OF_ELEMENTS_TO_BE_DRAWN;
+  const numberIngredients = count - NUNBER_OF_ELEMENTS_TO_BE_DRAWN;
+  const burgerPrice = getPrice(burgerIngredients);
+  const st = getStatus(status);
 
-  const st = getStatus(status)
 
   return (
     <div className={cn(styles['orders-item'], 'p-6')}>
@@ -43,7 +47,7 @@ function OrdersItem({ number, name, ingredients, createdAt, status }) {
       </div>
       <div className={cn(styles['orders-info'])}>
         <ul className={cn(styles.list)}>
-          {burgerItem.map((el, i) => {
+          {burgerItem.map((el: TIngredient, i: number) => {
             zI -= 1
             return (
               <li className={styles['list-item']} key={i} style={{ zIndex: zI }}>
@@ -62,13 +66,4 @@ function OrdersItem({ number, name, ingredients, createdAt, status }) {
     </div >
   );
 }
-
-OrdersItem.propTypes = {
-  number: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  ingredients: PropTypes.array.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  status: PropTypes.string,
-};
-
 export default memo(OrdersItem);

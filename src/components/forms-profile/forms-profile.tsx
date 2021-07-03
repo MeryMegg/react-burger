@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from 'react';
+import React, { useState, memo, useEffect, SyntheticEvent, useRef } from 'react';
 import cn from 'classnames';
 import styles from './forms-profile.module.css';
 import {
@@ -9,10 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from '../../services/actions/auth';
 import Preloader from '../preloader/preloader';
 
-function FormsProfile() {
-  const currentUserName = useSelector((store) => store.auth.name);
-  const currentUserEmail = useSelector((store) => store.auth.email);
-  const { updateUserRequest } = useSelector((store) => store.auth)
+const FormsProfile = () => {
+  const currentUserName = useSelector((store: any) => store.auth.name);
+  const currentUserEmail = useSelector((store: any) => store.auth.email);
+  const { updateUserRequest } = useSelector((store: any) => store.auth)
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -34,8 +34,8 @@ function FormsProfile() {
     });
   }, [currentUserName, currentUserEmail]);
 
-  const handleInputChange = (event) => {
-    const target = event.target;
+  const handleInputChange = (event: SyntheticEvent<HTMLInputElement>): void => {
+    const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
     setState({
@@ -43,17 +43,19 @@ function FormsProfile() {
       [name]: value,
     });
   };
-  const nameInputRef = React.useRef(null);
-  const emailInputRef = React.useRef(null);
-  const passwordInputRef = React.useRef(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
   const activeNameInput = () => {
     setState({
       ...state,
       nameDisabled: state.nameDisabled ? false : true,
     });
-    nameInputRef.current.disabled = false;
-    setTimeout(() => nameInputRef.current.focus(), 0);
+    if (nameInputRef && nameInputRef.current) {
+      nameInputRef.current.disabled = false;
+    }
+    setTimeout(() => nameInputRef && nameInputRef.current && nameInputRef.current.focus(), 0);
   };
 
   const activeEmailInput = () => {
@@ -61,8 +63,10 @@ function FormsProfile() {
       ...state,
       emailDisabled: state.emailDisabled ? false : true,
     });
-    emailInputRef.current.disabled = false;
-    setTimeout(() => emailInputRef.current.focus(), 0);
+    if (emailInputRef && emailInputRef.current) {
+      emailInputRef.current.disabled = false;
+    }
+    setTimeout(() => emailInputRef && emailInputRef.current && emailInputRef.current.focus(), 0);
   };
 
   const activePasswordInput = () => {
@@ -70,16 +74,17 @@ function FormsProfile() {
       ...state,
       passwordDisabled: state.passwordDisabled ? false : true,
     });
-    passwordInputRef.current.disabled = false;
-    setTimeout(() => passwordInputRef.current.focus(), 0);
+    if (passwordInputRef && passwordInputRef.current) {
+      passwordInputRef.current.disabled = false;
+    }
+    setTimeout(() => passwordInputRef && passwordInputRef.current && passwordInputRef.current.focus(), 0);
   };
 
   const iconNameInput = state.nameDisabled ? 'EditIcon' : 'CloseIcon';
   const emailNameInput = state.emailDisabled ? 'EditIcon' : 'CloseIcon';
   const passwordNameInput = state.passwordDisabled ? 'EditIcon' : 'CloseIcon';
 
-  const submit = (e) => {
-    e.preventDefault();
+  const onFormSubmit = () => {
     let data = {};
     data =
       state.name !== currentUserName ? { ...data, name: state.name } : data;
@@ -99,8 +104,7 @@ function FormsProfile() {
     });
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     setState({
       ...state,
       name: currentUserName,
@@ -117,7 +121,7 @@ function FormsProfile() {
   }
 
   return (
-    <form onSubmit={submit} className={cn(styles.form)}>
+    <form onSubmit={(e) => e.preventDefault()} className={cn(styles.form)}>
       <Input
         type={'text'}
         placeholder={'Имя'}
@@ -167,7 +171,7 @@ function FormsProfile() {
           <Button type='secondary' size='medium' onClick={handleClick}>
             Отмена
           </Button>
-          <Button type='primary' size='medium'>
+          <Button type='primary' size='medium' onClick={onFormSubmit}>
             Сохранить
           </Button>
         </div>

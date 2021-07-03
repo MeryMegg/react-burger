@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { refreshToken } from '../services/actions/auth'
 import { useSelector, useDispatch } from 'react-redux';
 import Preloader from './preloader/preloader';
 
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC<{
+  path: string;
+  exact?: boolean;
+}> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
 
-  const isTokenUpdated = useSelector(store => store.auth.isTokenUpdated);
-  const tokenUpdateDate = useSelector(store => store.auth.tokenUpdateDate);
+  const isTokenUpdated = useSelector((store: any) => store.auth.isTokenUpdated);
+  const tokenUpdateDate = useSelector((store: any) => store.auth.tokenUpdateDate);
   const hasToken = !!localStorage.getItem('refreshToken');
 
   useEffect(() => {

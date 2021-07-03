@@ -2,9 +2,10 @@ import React, { memo, useEffect } from 'react';
 import cn from 'classnames';
 import styles from './profile-orders.module.css';
 import { Link, useLocation } from 'react-router-dom';
-import OrdersItem from '../../components/orders-item/orders-item';
+import OrdersItem from '../orders-item/orders-item';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
+import { TOrder } from '../../types';
 
 function ProfileOrders() {
 	const dispatch = useDispatch();
@@ -13,15 +14,18 @@ function ProfileOrders() {
 	useEffect(
 		() => {
 			dispatch({ type: WS_CONNECTION_START_AUTH });
-			return () => dispatch({ type: WS_CONNECTION_CLOSED_AUTH })
+			return () => {
+				dispatch({ type: WS_CONNECTION_CLOSED_AUTH })
+				return;
+			}
 		},
 		[dispatch]
 	);
 
-	const { orders } = useSelector(store => store.wsAuth.messages);
+	const { orders } = useSelector((store: any) => store.wsAuth.messages);
 	return (
 		<ul className={cn(styles.list, 'mb-20')}>
-			{orders?.map((el, i) => (
+			{orders?.map((el: TOrder, i: number) => (
 				<li className={cn(styles['list-item'])} key={i}>
 					<Link
 						to={{

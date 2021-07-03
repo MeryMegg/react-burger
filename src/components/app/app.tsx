@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Switch, Route, useHistory,
 	useLocation,
 } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
-import Modal from '../../components/modal/modal';
+import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import {
 	Main,
@@ -18,12 +18,24 @@ import {
 } from '../../pages';
 import { ProtectedRoute } from '../protected-route';
 import styles from './app.module.css';
+import { getIngredients } from '../../services/actions/ingredients';
+import { useDispatch, useSelector } from 'react-redux';
 import OrderDetails from '../order-details/order-details';
 
-function App() {
-	const location = useLocation();
+const App = () => {
+	const location: any = useLocation();
 	const history = useHistory();
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
+	const dispatch = useDispatch();
+	const { loaded } = useSelector(
+		(store: any) => store.ingredients
+	);
+	useEffect(() => {
+		if (!loaded) {
+			dispatch(getIngredients());
+		}
+	}, [dispatch, loaded]);
+
 	return (
 		<>
 			<AppHeader />

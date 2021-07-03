@@ -1,13 +1,14 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo, FC } from 'react';
 import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-ingredient.module.css';
 import { useSelector } from 'react-redux';
+import { COUNT_BUN } from '../../constants/constants';
 import { useDrag } from 'react-dnd';
+import { TIngredient } from '../../types';
 
-const BurgerIngredient = ({ item }) => {
+const BurgerIngredient: FC<TIngredient> = (item) => {
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item,
@@ -17,12 +18,12 @@ const BurgerIngredient = ({ item }) => {
   });
 
   const { counts, bun } = useSelector(
-    (store) => store.ingredients.burgerIngredients
+    (store: any) => store.ingredients.burgerIngredients
   );
   const isBun = item.type === 'bun';
   const count =
     isBun && bun && bun._id === item._id
-      ? 2
+      ? COUNT_BUN
       : counts[item._id] && counts[item._id];
 
   const opacity = isDrag ? 0.3 : 1;
@@ -51,23 +52,6 @@ const BurgerIngredient = ({ item }) => {
       </p>
     </div>
   );
-};
-
-BurgerIngredient.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-  }).isRequired,
 };
 
 export default memo(BurgerIngredient);
