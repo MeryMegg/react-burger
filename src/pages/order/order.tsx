@@ -5,38 +5,35 @@ import { useParams, Redirect, useRouteMatch } from 'react-router-dom';
 import PriceItem from '../../ui/price-item/price-item';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../../services/actions/ws-actions';
-import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSED_AUTH } from '../../services/actions/ws-actions-auth';
+import { getOrder, getUserOrder } from '../../services/actions/ingredients';
 import Preloader from '../../components/preloader/preloader';
-import { conversionDateForCard, getStatus, filterOrders, getPrice, getBurgerIngredients, getBurgerIngredientsObjWithCount } from '../../utils/functions';
+import { conversionDateForCard, getStatus, getPrice, getBurgerIngredients, getBurgerIngredientsObjWithCount } from '../../utils/functions';
 
 function Order() {
   const dispatch = useDispatch();
   const isProfile = !!useRouteMatch("/profile");
+  const { id } = useParams<{ id: string }>();
   useEffect(
     () => {
-      dispatch(isProfile ? { type: WS_CONNECTION_START_AUTH } : { type: WS_CONNECTION_START });
-      return () => {
-        dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
-        return;
-      }
+      dispatch(isProfile
+        ? getUserOrder(id)
+        : getOrder(id)
+      )
     },
-    [dispatch, isProfile]
+    [dispatch, isProfile, id]
   );
   const { allIngredients } = useSelector((store: any) => store.ingredients)
-  const { id } = useParams<{ id: string }>();
-  const { orders } = useSelector((store: any) => isProfile ? store.wsAuth.messages : store.ws.messages)
-  const { wsConnected } = useSelector((store: any) => isProfile ? store.wsAuth : store.ws)
-  const order = filterOrders(orders, id);
+  const order = useSelector((store: any) => store.ingredients.currentOrder)
+  const { orderLoaded } = useSelector((store: any) => store.ingredients)
   const stringWithDay = conversionDateForCard(order?.createdAt);
   const burgerIngredients = getBurgerIngredients(order?.ingredients, allIngredients)
-  const arrUniqItem = Array.from(new Set(order?.ingredients))
+  const arrUniqItem: Array<string> = Array.from(new Set(order?.ingredients))
   const bI = getBurgerIngredientsObjWithCount(burgerIngredients)
   const burgerPrice = getPrice(burgerIngredients)
   const name = order?.name
   const status = order?.status;
   const st = status ? getStatus(status) : null;
-  if (wsConnected && orders?.length && !order) return <Redirect to='/' />;
+  if (orderLoaded && !order) return <Redirect to='/' />;
 
 
   if (!order) {
@@ -70,7 +67,7 @@ function Order() {
         Состав:
       </p>
       <ul className={cn(styles.list, 'mb-10')}>
-        {arrUniqItem.map((el, i) => {
+        {arrUniqItem.map((el: string, i: number) => {
           return <li className={cn(styles['list-item'], 'mr-6')} key={i}>
             <div className={cn(styles.icon, 'mr-4')}>
               <img src={bI.item[el]?.image_mobile} alt='Вкусная булка' className={cn(styles.image)} />

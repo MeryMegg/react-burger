@@ -14,6 +14,33 @@ export const getProductsRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
+export const getOrderRequest = (number: number) => {
+  return fetch(`${ServerConfig.baseUrl}/orders/${number}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: ServerConfig.headers,
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  }).then((res) => requestHandler(res));
+};
+
+export const getUserOrderRequest = (number: number) => {
+  return fetch(`${ServerConfig.baseUrl}/orders/${number}`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      ...ServerConfig.headers,
+      Authorization: 'Bearer ' + getCookie('token'),
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+  }).then((res) => requestHandler(res));
+};
+
 export const getUserRequest = () => {
   return fetchWithRefreshToken(`${ServerConfig.baseUrl}/auth/user`, {
     method: 'GET',
