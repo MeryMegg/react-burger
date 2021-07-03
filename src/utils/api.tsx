@@ -149,7 +149,7 @@ export const refreshTokenRequest = () => {
 //   referrerPolicy: string;
 // }
 
-const fetchWithRefreshToken = (url: string, options: any) => {
+const fetchWithRefreshToken = (url: string, options: RequestInit) => {
   return fetch(url, options).then((res) => requestHandler(res))
     .catch((res) => {
       return res.json()
@@ -161,7 +161,7 @@ const fetchWithRefreshToken = (url: string, options: any) => {
                 localStorage.setItem('refreshToken', res.refreshToken)
                 const authToken = res.accessToken.split('Bearer ')[1];
                 setCookie('token', authToken);
-                options.headers.Authorization = res.accessToken
+                (options.headers as { [key: string]: string }).Authorization = res.accessToken
                 return fetch(url, options).then((res) => requestHandler(res))
               })
           } else {
