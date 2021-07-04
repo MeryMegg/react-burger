@@ -164,17 +164,10 @@ export const refreshTokenRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-
-// type TOptions = {
-//   method: string;
-//   mode: string;
-//   cache?: string;
-//   credentials: string;
-//   headers?: Headers;
-//   body?: string;
-//   redirect: string;
-//   referrerPolicy: string;
-// }
+type TError = {
+  success: boolean;
+  massage?: string | undefined
+}
 
 const fetchWithRefreshToken = (url: string, options: RequestInit) => {
   return fetch(url, options).then((res) => requestHandler(res))
@@ -182,7 +175,7 @@ const fetchWithRefreshToken = (url: string, options: RequestInit) => {
       return res.json()
         .then((err: any) => {
           console.log(err)
-          if (err.message === 'jwt expired') {
+          if (err?.message === 'jwt expired') {
             return refreshTokenRequest()
               .then(res => {
                 localStorage.setItem('refreshToken', res.refreshToken)
