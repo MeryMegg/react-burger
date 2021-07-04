@@ -12,7 +12,7 @@ const Modal: FC = ({ children }) => {
   const history = useHistory();
 
   const closeEsc = (evn: KeyboardEvent) => {
-    if (evn.keyCode === 27) close();
+    if (evn.code === 'Escape') close();
   };
 
   const close = () => {

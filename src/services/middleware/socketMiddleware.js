@@ -3,11 +3,11 @@ import { getCookie } from '../../utils/functions';
 export const socketMiddleware = (wsUrl, wsActions, auth) => {
 	return store => {
 		let socket = null;
-
+		let connected = false;
 		return next => action => {
 			const { dispatch } = store;
 			const { type, payload } = action;
-			const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+			const { wsInit, wsClose, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
 			const token = auth ? getCookie('token') : null;
 			if (type === wsInit) {
 				socket = token
@@ -15,6 +15,7 @@ export const socketMiddleware = (wsUrl, wsActions, auth) => {
 					: new WebSocket(`${wsUrl}`);
 			}
 			if (socket) {
+				connected = true;
 				socket.onopen = event => {
 					dispatch({ type: onOpen, payload: event });
 				};
@@ -32,11 +33,17 @@ export const socketMiddleware = (wsUrl, wsActions, auth) => {
 
 				socket.onclose = event => {
 					dispatch({ type: onClose, payload: event });
+					if (!connected) {
+						setTimeout(dispatch(wsInit), 1000)
+					}
 				};
 
-				// if (wsClose && type === wsClose && socket)
+				if (wsClose && type === wsClose && socket) {
+					socket.close();
+					connected = false;
+				}
 
-				if (type === wsSendMessage) {
+				if (wsSendMessage && type === wsSendMessage && socket) {
 					const message = token ? { ...payload, token } : { ...payload };
 					socket.send(JSON.stringify(message));
 				}

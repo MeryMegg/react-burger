@@ -84,7 +84,8 @@ const FormsProfile = () => {
   const emailNameInput = state.emailDisabled ? 'EditIcon' : 'CloseIcon';
   const passwordNameInput = state.passwordDisabled ? 'EditIcon' : 'CloseIcon';
 
-  const onFormSubmit = () => {
+  const submit = (e: SyntheticEvent) => {
+    e.preventDefault();
     let data = {};
     data =
       state.name !== currentUserName ? { ...data, name: state.name } : data;
@@ -104,7 +105,8 @@ const FormsProfile = () => {
     });
   };
 
-  const handleClick = () => {
+  const handleClick = (e: SyntheticEvent) => {
+    e.preventDefault();
     setState({
       ...state,
       name: currentUserName,
@@ -121,7 +123,7 @@ const FormsProfile = () => {
   }
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className={cn(styles.form)}>
+    <form onSubmit={submit} className={cn(styles.form)}>
       <Input
         type={'text'}
         placeholder={'Имя'}
@@ -168,10 +170,10 @@ const FormsProfile = () => {
         state.email !== currentUserEmail ||
         state.password.length !== 0 ? (
         <div className={styles.buttons}>
-          <Button type='secondary' size='medium' onClick={handleClick}>
+          <span className={styles.button} onClick={handleClick}>
             Отмена
-          </Button>
-          <Button type='primary' size='medium' onClick={onFormSubmit}>
+          </span>
+          <Button type='primary' size='medium'>
             Сохранить
           </Button>
         </div>
