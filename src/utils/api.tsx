@@ -27,7 +27,7 @@ export const getOrderRequest = (number: number) => {
 };
 
 export const getUserOrderRequest = (number: number) => {
-  return fetch(`${ServerConfig.baseUrl}/orders/${number}`, {
+  return fetchWithRefreshToken(`${ServerConfig.baseUrl}/orders/${number}`, {
     method: 'GET',
     mode: 'cors',
     cache: 'no-cache',
@@ -38,7 +38,7 @@ export const getUserOrderRequest = (number: number) => {
     },
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
-  }).then((res) => requestHandler(res));
+  })
 };
 
 export const getUserRequest = () => {
