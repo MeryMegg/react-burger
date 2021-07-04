@@ -39,7 +39,7 @@ export const socketMiddleware = (wsUrl, wsActions, auth) => {
 				};
 
 				if (wsClose && type === wsClose && socket) {
-					socket.close();
+					socket.onclose();
 					connected = false;
 				}
 
