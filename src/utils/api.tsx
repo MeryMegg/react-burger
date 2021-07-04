@@ -1,6 +1,6 @@
 import { ServerConfig } from '../constants/config';
 import { getCookie, setCookie, deleteCookie } from './functions';
-import { TUserData, TResetPassword, TUpdateUserData } from '../types';
+import { TUserData, TResetPassword, TUpdateUserData, TError } from '../types';
 
 export const getProductsRequest = () => {
   return fetch(`${ServerConfig.baseUrl}/ingredients`, {
@@ -164,16 +164,11 @@ export const refreshTokenRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-type TError = {
-  success: boolean;
-  massage?: string | undefined
-}
-
 const fetchWithRefreshToken = (url: string, options: RequestInit) => {
   return fetch(url, options).then((res) => requestHandler(res))
-    .catch((res) => {
+    .catch((res: Response) => {
       return res.json()
-        .then((err: any) => {
+        .then((err: TError) => {
           console.log(err)
           if (err?.message === 'jwt expired') {
             return refreshTokenRequest()

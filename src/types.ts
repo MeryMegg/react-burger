@@ -42,6 +42,11 @@ export type TUpdateUserData = {
 
 export type TIngredientWithProductId = TIngredient & { productId: string }
 
+export type TError = {
+	success: boolean;
+	message?: string
+}
+
 // export type TBurgerIngredients = {
 // 	bun: null | TIngredient;
 // 	otherIngredients: Array<TIngredient>;

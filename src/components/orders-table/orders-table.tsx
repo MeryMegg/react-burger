@@ -22,7 +22,7 @@ const OrdersTable = () => {
               'text text_type_digits-default'
             )}
           >
-            {doneArray?.map((el: TOrder) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
+            {doneArray?.map((el: TOrder) => (<li key={el._id} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
           </ul>
         </div>
         <div>
@@ -30,7 +30,7 @@ const OrdersTable = () => {
             В работе:
           </h2>
           <ul className={cn(styles.list, 'text text_type_digits-default')}>
-            {statusArrays?.pending.map((el: TOrder) => (<li key={el.number} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
+            {statusArrays?.pending.map((el: TOrder) => (<li key={el._id} className={cn(styles['list-item'], 'mb-2', 'mr-8')}>{el.number}</li>))}
           </ul>
         </div>
       </div>
