@@ -10,7 +10,7 @@ import {
 } from '../../utils/api';
 import { deleteCookie, setCookie } from '../../utils/functions';
 import { push } from 'connected-react-router';
-import { TUser, TResetPassword } from '../../types';
+import { TUser } from '../../types';
 import {
 	REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED,
 	LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED,
@@ -158,7 +158,7 @@ export type TAuthActions =
 	| IRefreshTokenFailedAction;
 
 //Регистрация
-export const register = (state: any) => {
+export const register: AppThunk = (state: any) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: REGISTER_REQUEST,
@@ -191,7 +191,7 @@ export const register = (state: any) => {
 };
 
 //Вход в систему
-export const login = (state: any) => {
+export const login: AppThunk = (state: any) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: LOGIN_REQUEST,
@@ -223,7 +223,7 @@ export const login = (state: any) => {
 };
 
 //Запрос данных пользователя
-export const getUser = () => {
+export const getUser: AppThunk = () => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: GET_USER_REQUEST,
@@ -248,7 +248,7 @@ export const getUser = () => {
 };
 
 //Обновление данных пользователя
-export const updateUser = (data: any) => {
+export const updateUser: AppThunk = (data: any) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: UPDATE_USER_REQUEST,
@@ -273,7 +273,7 @@ export const updateUser = (data: any) => {
 };
 
 //Запрос на смену пароля
-export const forgotPassword = (email: string) => {
+export const forgotPassword: AppThunk = (email: string) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: FORGOT_PASSWORD_REQUEST,
@@ -295,7 +295,7 @@ export const forgotPassword = (email: string) => {
 };
 
 //Изменение пароля
-export const resetPassword = ({ password, token }: any) => {
+export const resetPassword: AppThunk = ({ password, token }: any) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: RESET_PASSWORD_REQUEST,
@@ -325,7 +325,7 @@ export const resetPassword = ({ password, token }: any) => {
 };
 
 //Выход из системы
-export const logout = () => {
+export const logout: AppThunk = () => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: LOGOUT_REQUEST,
@@ -354,7 +354,7 @@ export const logout = () => {
 };
 
 //Обновление токена
-export const refreshToken = () => {
+export const refreshToken: AppThunk = () => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: REFRESH_TOKEN_REQUEST,

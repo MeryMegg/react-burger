@@ -116,7 +116,7 @@ export type TIngredientsActions =
   | IGetUserOrderOrderFailedAction;
 
 
-export const getIngredients = () => {
+export const getIngredients: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_PRODUCTS_REQUEST,
@@ -143,7 +143,7 @@ export const getIngredients = () => {
   };
 };
 
-export const getOrder = (id: string) => {
+export const getOrder: AppThunk = (id: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
@@ -170,7 +170,7 @@ export const getOrder = (id: string) => {
   };
 };
 
-export const getUserOrder = (id: string) => {
+export const getUserOrder: AppThunk = (id: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_ORDER_REQUEST,
@@ -197,7 +197,7 @@ export const getUserOrder = (id: string) => {
   };
 };
 
-export const createOrder = (ingredientsId: Array<string>) => {
+export const createOrder: AppThunk = (ingredientsId: Array<string>) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: CREATE_ORDER_REQUEST,

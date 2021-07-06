@@ -8,7 +8,7 @@ import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-constructor.module.css';
 import { calculationCost } from '../../utils/functions';
 import { createOrder } from '../../services/actions/ingredients';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import {
   DELETE_INGREDIENT,
   DECREASE_INGREDIENT,
@@ -28,7 +28,7 @@ const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
   const { bun, otherIngredients } = useSelector(
     (store: any) => store.ingredients.burgerIngredients
   );
-  const { orderRequest } = useSelector((store: any) => store.ingredients);
+  const { orderRequest } = useSelector((store) => store.ingredients);
   const location = useLocation();
   const history = useHistory();
   const hasToken = localStorage.getItem('refreshToken')
@@ -48,7 +48,8 @@ const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
   const handleClick = () => {
     if (hasToken) {
       const ingredientsId = otherIngredients.map((el: TIngredientWithProductId) => el._id);
-      dispatch(createOrder([bun._id, ...ingredientsId]));
+      const bunId: string = bun ? bun._id : ''
+      dispatch(createOrder([bunId, ...ingredientsId]));
       history.push({
         pathname: '/',
         state: {

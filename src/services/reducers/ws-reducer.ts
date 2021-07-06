@@ -5,8 +5,15 @@ import {
 	WS_GET_MESSAGE
 } from '../constants/ws-actions';
 import { TWSActionsActions } from '../actions/ws-actions';
+import { TOrder } from '../../types';
 
-const initialState = {
+type TWsReduserState = {
+	wsConnected: Boolean,
+	error: any,
+	messages: Array<TOrder>
+}
+
+const initialState: TWsReduserState = {
 	wsConnected: false,
 	error: null,
 	messages: []

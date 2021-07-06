@@ -4,12 +4,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
 import { filterArray } from '../../utils/functions';
 import styles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bread');
   const { allIngredients } = useSelector(
-    (store: any) => store.ingredients
+    (store) => store.ingredients
   );
 
   const { bun, main, sauce } = filterArray(allIngredients);

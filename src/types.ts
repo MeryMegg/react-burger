@@ -86,3 +86,18 @@ export type TBurgerIngredients = {
 	counts: TCountsIngredients
 }
 
+export type TWSAction = {
+	wsInit: string,
+	wsClose: string,
+	wsSendMessage: string,
+	onOpen: string,
+	onClose: string,
+	onError: string,
+	onMessage: string
+}
+
+export type TLocationTemplate = {
+	background?: any;
+}
+
+

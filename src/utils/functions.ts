@@ -12,7 +12,7 @@ export const filterArray = (arr: Array<TIngredient>) => {
 };
 
 //вычисляем стоимость заказа для главной страницы
-export const calculationCost = (bun: TIngredientWithProductId, arrOtherIngredients: Array<TIngredientWithProductId>) => {
+export const calculationCost = (bun: TIngredientWithProductId | null, arrOtherIngredients: Array<TIngredientWithProductId>) => {
   const bunPrice = bun ? bun.price : 0;
   return (
     bunPrice * 2 +

@@ -17,21 +17,22 @@ import {
   GET_USER_ORDER_SUCCESS,
   GET_USER_ORDER_FAILED,
 } from '../constants/ingredietns';
-import { TIngredient, TBurgerIngredients, TIngredientWithProductId } from '../../types'
+import { TIngredient, TBurgerIngredients, TIngredientWithProductId, TOrder, TOrderInfo } from '../../types'
 import { TIngredientsActions } from '../actions/ingredients';
 
 export type TIngredientsState = {
   isLoading: boolean;
   hasError: boolean;
   loaded: boolean;
-  allIngredients: ReadonlyArray<TIngredient>;
+  allIngredients: Array<TIngredient>;
   burgerIngredients: TBurgerIngredients;
-  currentOrder: null | TIngredient;
+  currentOrder: null | TOrder | TOrderInfo;
   orderRequest: boolean;
   orderFailed: boolean
+  orderLoaded: boolean
 };
 
-const initialState = {
+const initialState: TIngredientsState = {
   isLoading: false,
   hasError: false,
   loaded: false,

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceItem from '../../ui/price-item/price-item';
 import styles from './burger-ingredient.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { COUNT_BUN } from '../../constants/constants';
 import { useDrag } from 'react-dnd';
 import { TIngredient } from '../../types';

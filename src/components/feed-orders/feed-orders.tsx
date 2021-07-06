@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import OrdersItem from '../orders-item/orders-item';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import styles from './feed-orders.module.css';
 import { TOrder } from '../../types';
 
