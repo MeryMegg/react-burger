@@ -16,7 +16,20 @@ import {
   GET_USER_ORDER_REQUEST,
   GET_USER_ORDER_SUCCESS,
   GET_USER_ORDER_FAILED,
-} from '../actions/ingredients';
+} from '../constants/ingredietns';
+import { TIngredient, TBurgerIngredients, TIngredientWithProductId } from '../../types'
+import { TIngredientsActions } from '../actions/ingredients';
+
+export type TIngredientsState = {
+  isLoading: boolean;
+  hasError: boolean;
+  loaded: boolean;
+  allIngredients: ReadonlyArray<TIngredient>;
+  burgerIngredients: TBurgerIngredients;
+  currentOrder: null | TIngredient;
+  orderRequest: boolean;
+  orderFailed: boolean
+};
 
 const initialState = {
   isLoading: false,
@@ -34,7 +47,7 @@ const initialState = {
   orderLoaded: false
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_PRODUCTS_REQUEST: {
       return {
@@ -47,7 +60,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         hasError: false,
-        allIngredientsArr: action.itemsArr,
         allIngredients: action.items,
         isLoading: false,
         loaded: true,
@@ -89,7 +101,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case GET_ORDER_SUCCESS: {
-      const data = action.order ? action.order : null
       return {
         ...state,
         orderFailed: false,
@@ -153,7 +164,7 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state.burgerIngredients,
           otherIngredients: [
             ...state.burgerIngredients.otherIngredients,
-          ].filter((el) => el.productId !== action.id),
+          ].filter((el: TIngredientWithProductId) => el.productId !== action.id),
         },
       };
     }

@@ -14,7 +14,7 @@ export const getProductsRequest = () => {
   }).then((res) => requestHandler(res));
 };
 
-export const getOrderRequest = (number: number) => {
+export const getOrderRequest = (number: string) => {
   return fetch(`${ServerConfig.baseUrl}/orders/${number}`, {
     method: 'GET',
     mode: 'cors',
@@ -26,7 +26,7 @@ export const getOrderRequest = (number: number) => {
   }).then((res) => requestHandler(res));
 };
 
-export const getUserOrderRequest = (number: number) => {
+export const getUserOrderRequest = (number: string) => {
   return fetchWithRefreshToken(`${ServerConfig.baseUrl}/orders/${number}`, {
     method: 'GET',
     mode: 'cors',

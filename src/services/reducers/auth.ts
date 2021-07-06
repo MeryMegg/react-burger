@@ -7,9 +7,43 @@ import {
   RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED,
   LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILED,
   REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED
-} from '../actions/auth';
+} from '../constants/auth';
+import { TAuthActions } from '../actions/auth';
 
-const initialState = {
+export type TAuthState = {
+  name: string,
+  email: string,
+  password: string,
+
+  registerRequest: boolean,
+  registerFailed: boolean,
+
+  loginRequest: boolean,
+  loginFailed: boolean,
+
+  updateUserRequest: boolean,
+  updateUserFailed: boolean,
+
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+
+  forgotPasswordRequest: boolean,
+  forgotPasswordFailed: boolean,
+
+  isforgotPasswordRequest: boolean,
+  isforgotPasswordSaccess: boolean,
+
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+
+  isTokenUpdated: boolean,
+  tokenUpdateDate: boolean,
+}
+
+const initialState: TAuthState = {
   name: '',
   email: '',
   password: '',
@@ -39,10 +73,10 @@ const initialState = {
   resetPasswordFailed: false,
 
   isTokenUpdated: false,
-  tokenUpdateDate: null,
+  tokenUpdateDate: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     //Регистрация
     case REGISTER_REQUEST: {

@@ -4,7 +4,7 @@ import styles from './profile-orders.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import OrdersItem from '../orders-item/orders-item';
 import { useDispatch, useSelector } from 'react-redux';
-import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSE_AUTH } from '../../services/actions/ws-actions-auth';
+import { WS_CONNECTION_START_AUTH, WS_CONNECTION_CLOSE_AUTH } from '../../services/constants/ws-actions-auth';
 import { TOrder } from '../../types';
 
 function ProfileOrders() {

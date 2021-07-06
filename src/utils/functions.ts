@@ -73,10 +73,10 @@ const getDaysForCard = (days: number) => (
 
 //сформировать тату создания заказа для карточки
 export const conversionDateForCard = (date: string) => {
-  const dayCreated: any = new Date(date);
-  const today: any = new Date();
+  const dayCreated: Date = new Date(date);
+  const today: Date = new Date();
   today.setHours(0, 0, 0, 0);
-  const diffTime = Math.ceil((today - dayCreated) / (60 * 60 * 24 * 1000));
+  const diffTime: number = Math.ceil((today.getTime() - dayCreated.getTime()) / (60 * 60 * 24 * 1000));
   const hours = dayCreated.getHours() > 9 ? dayCreated.getHours() : `0${dayCreated.getHours()}`
   const min = dayCreated.getMinutes() > 9 ? dayCreated.getMinutes() : `0${dayCreated.getMinutes()}`
 

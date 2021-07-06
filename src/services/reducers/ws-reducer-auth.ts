@@ -3,15 +3,25 @@ import {
 	WS_CONNECTION_ERROR_AUTH,
 	WS_CONNECTION_CLOSED_AUTH,
 	WS_GET_MESSAGE_AUTH
-} from '../actions/ws-actions-auth';
+} from '../constants/ws-actions-auth';
+import { TWSActionsAuthActions } from '../actions/ws-actions-auth';
+import { TOrder } from '../../types';
 
-const initialState = {
+type TWsReduserAuthState = {
+	wsConnected: Boolean,
+	error: any,
+	messages: Array<TOrder>
+}
+
+
+
+const initialState: TWsReduserAuthState = {
 	wsConnected: false,
 	error: null,
 	messages: []
 };
 
-export const wsReducerAuth = (state = initialState, action) => {
+export const wsReducerAuth = (state = initialState, action: TWSActionsAuthActions) => {
 	switch (action.type) {
 		case WS_CONNECTION_SUCCESS_AUTH:
 			return {

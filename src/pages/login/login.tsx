@@ -21,7 +21,7 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  const handleInputChange = (event: SyntheticEvent) => {
+  const handleInputChange = (event: SyntheticEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;

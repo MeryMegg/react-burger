@@ -11,7 +11,7 @@ import { TIngredient } from '../../types';
 import {
   ADD_INGREDIENTS,
   INCREASE_INGREDIENT,
-} from '../../services/actions/ingredients';
+} from '../../services/constants/ingredietns';
 import Preloader from '../../components/preloader/preloader';
 
 function Main() {

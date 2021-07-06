@@ -3,7 +3,8 @@ import {
 	WS_CONNECTION_ERROR,
 	WS_CONNECTION_CLOSED,
 	WS_GET_MESSAGE
-} from '../actions/ws-actions';
+} from '../constants/ws-actions';
+import { TWSActionsActions } from '../actions/ws-actions';
 
 const initialState = {
 	wsConnected: false,
@@ -11,7 +12,7 @@ const initialState = {
 	messages: []
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWSActionsActions) => {
 	switch (action.type) {
 		case WS_CONNECTION_SUCCESS:
 			return {

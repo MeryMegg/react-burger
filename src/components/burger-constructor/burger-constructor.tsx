@@ -12,13 +12,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   DELETE_INGREDIENT,
   DECREASE_INGREDIENT,
-} from '../../services/actions/ingredients';
+  UPDATE_CONSTRUCTOR
+} from '../../services/constants/ingredietns';
 import Preloader from '../preloader/preloader';
 import { useDrop } from 'react-dnd';
 import BurgerItem from '../burger-item/burger-item';
 import { push } from 'connected-react-router';
 import { useLocation, useHistory } from 'react-router-dom';
-import { UPDATE_CONSTRUCTOR } from '../../services/actions/ingredients';
 import { TProps, TIngredientWithProductId } from './types'
 import { TIngredient } from '../../types'
 
