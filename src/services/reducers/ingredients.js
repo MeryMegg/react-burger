@@ -10,6 +10,12 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILED,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILED,
+  GET_USER_ORDER_REQUEST,
+  GET_USER_ORDER_SUCCESS,
+  GET_USER_ORDER_FAILED,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -25,6 +31,7 @@ const initialState = {
   currentOrder: null,
   orderRequest: false,
   orderFailed: false,
+  orderLoaded: false
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -72,6 +79,51 @@ export const ingredientsReducer = (state = initialState, action) => {
     case CREATE_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
+
+    case GET_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+        orderFailed: false,
+        orderLoaded: false
+      };
+    }
+    case GET_ORDER_SUCCESS: {
+      const data = action.order ? action.order : null
+      return {
+        ...state,
+        orderFailed: false,
+        currentOrder: action.order,
+        orderRequest: false,
+        orderLoaded: true
+      };
+    }
+    case GET_ORDER_FAILED: {
+      return { ...state, orderFailed: true, orderRequest: false };
+    }
+
+    case GET_USER_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+        orderFailed: false,
+        orderLoaded: false
+      };
+    }
+    case GET_USER_ORDER_SUCCESS: {
+      const data = action.order ? action.order : null
+      return {
+        ...state,
+        orderFailed: false,
+        currentOrder: data,
+        orderRequest: false,
+        orderLoaded: true
+      };
+    }
+    case GET_USER_ORDER_FAILED: {
+      return { ...state, orderFailed: true, orderRequest: false };
+    }
+
     case ADD_INGREDIENTS: {
       const { type } = action.item;
       if (type === 'bun') {
@@ -137,14 +189,12 @@ export const ingredientsReducer = (state = initialState, action) => {
       } else return state;
     }
     case UPDATE_CONSTRUCTOR: {
-      console.log(state)
       const otherIngredients = [...state.burgerIngredients.otherIngredients];
       otherIngredients.splice(
         action.toIndex,
         0,
         otherIngredients.splice(action.fromIndex, 1)[0]
       );
-      console.log(otherIngredients);
       return {
         ...state,
         burgerIngredients: {

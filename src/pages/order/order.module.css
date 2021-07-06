@@ -53,8 +53,7 @@
   flex-grow: 1;
 }
 
-.status {
-  /* //color: #00CCCC; */
+.status { 
   text-align: start;
 }
 
