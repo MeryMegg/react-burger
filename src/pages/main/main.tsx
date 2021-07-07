@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import styles from './main.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TIngredient } from '../../types';
@@ -16,7 +16,7 @@ import Preloader from '../../components/preloader/preloader';
 
 function Main() {
   const { isLoading, hasError, loaded } = useSelector(
-    (store: any) => store.ingredients
+    (store) => store.ingredients
   );
 
   const dispatch = useDispatch();

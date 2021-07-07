@@ -7,7 +7,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks';
 import { register } from '../../services/actions/auth';
 import styles from './register.module.css';
 

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styles from './feed.module.css';
 import FeedOrders from '../../components/feed-orders/feed-orders';
 import OrdersTable from '../../components/orders-table/orders-table';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/constants/ws-actions';
 
 
@@ -14,7 +14,6 @@ function Feed() {
       dispatch({ type: WS_CONNECTION_START });
       return () => {
         dispatch({ type: WS_CONNECTION_CLOSE })
-        return;
       }
     },
     [dispatch]

@@ -18,7 +18,7 @@ const BurgerIngredient: FC<TIngredient> = (item) => {
   });
 
   const { counts, bun } = useSelector(
-    (store: any) => store.ingredients.burgerIngredients
+    (store) => store.ingredients.burgerIngredients
   );
   const isBun = item.type === 'bun';
   const count =

@@ -1,4 +1,5 @@
-import { TOrder } from '../../types';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { TOrders } from '../../types';
 import {
 	WS_CONNECTION_START_AUTH,
 	WS_CONNECTION_CLOSE_AUTH,
@@ -34,22 +35,22 @@ export interface IWsSendMessageAuthAction {
 
 export interface IWsConnectionSuccessAuthAction {
 	readonly type: typeof WS_CONNECTION_SUCCESS_AUTH;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsConnectionErrorAuthAction {
 	readonly type: typeof WS_CONNECTION_ERROR_AUTH;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsConnectionClosedAuthAction {
 	readonly type: typeof WS_CONNECTION_CLOSED_AUTH;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsGetMessageAuthAction {
 	readonly type: typeof WS_GET_MESSAGE_AUTH;
-	payload: ReadonlyArray<TOrder>
+	payload: TOrders
 }
 
 export type TWSActionsAuthActions =

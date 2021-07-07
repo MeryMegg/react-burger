@@ -9,7 +9,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { login } from '../../services/actions/auth';
 import styles from './login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 
 function Login() {
   const [state, setState] = useState({
@@ -17,7 +17,7 @@ function Login() {
     password: '',
   });
 
-  const userName = useSelector((store: any) => store.auth.name)
+  const userName = useSelector((store) => store.auth.name)
 
   const dispatch = useDispatch();
 

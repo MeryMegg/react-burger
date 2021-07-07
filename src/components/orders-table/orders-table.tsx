@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { filterOrdersByStatus } from '../../utils/functions';
 import styles from './orders-table.module.css';
 import { TOrder } from '../../types';
 
 const OrdersTable = () => {
-  const { total, totalToday, orders } = useSelector((store: any) => store.ws.messages)
+  const { total, totalToday, orders } = useSelector((store) => store.ws)
   const statusArrays = filterOrdersByStatus(orders)
   const doneArray = statusArrays?.done.slice(0, 30);
 

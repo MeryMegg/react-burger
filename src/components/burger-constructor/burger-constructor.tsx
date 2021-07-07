@@ -26,7 +26,7 @@ import { TIngredient } from '../../types'
 
 const BurgerConstructor: FC<TProps> = ({ onDropHandler }) => {
   const { bun, otherIngredients } = useSelector(
-    (store: any) => store.ingredients.burgerIngredients
+    (store) => store.ingredients.burgerIngredients
   );
   const { orderRequest } = useSelector((store) => store.ingredients);
   const location = useLocation();

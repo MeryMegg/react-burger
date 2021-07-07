@@ -5,10 +5,16 @@ import OrdersItem from '../orders-item/orders-item';
 import { useSelector } from '../../hooks';
 import styles from './feed-orders.module.css';
 import { TOrder } from '../../types';
+import Preloader from '../preloader/preloader';
 
 function FeedOrders() {
   const location = useLocation();
-  const { orders } = useSelector((store: any) => store.ws.messages)
+  const { orders } = useSelector((store) => store.ws)
+
+  if (!orders) {
+    return <Preloader />
+  }
+
   return (
     <section>
       <h1 className={cn('text', 'text_type_main-large', 'mb-5')}>

@@ -10,7 +10,7 @@ import {
 } from '../../utils/api';
 import { deleteCookie, setCookie } from '../../utils/functions';
 import { push } from 'connected-react-router';
-import { TUser } from '../../types';
+import { TUpdateUserData, TUser, TUserData } from '../../types';
 import {
 	REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED,
 	LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED,
@@ -158,7 +158,7 @@ export type TAuthActions =
 	| IRefreshTokenFailedAction;
 
 //Регистрация
-export const register: AppThunk = (state: any) => {
+export const register: AppThunk = (state: TUserData) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: REGISTER_REQUEST,
@@ -191,7 +191,7 @@ export const register: AppThunk = (state: any) => {
 };
 
 //Вход в систему
-export const login: AppThunk = (state: any) => {
+export const login: AppThunk = (state) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: LOGIN_REQUEST,
@@ -248,7 +248,7 @@ export const getUser: AppThunk = () => {
 };
 
 //Обновление данных пользователя
-export const updateUser: AppThunk = (data: any) => {
+export const updateUser: AppThunk = (data) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: UPDATE_USER_REQUEST,
@@ -273,7 +273,7 @@ export const updateUser: AppThunk = (data: any) => {
 };
 
 //Запрос на смену пароля
-export const forgotPassword: AppThunk = (email: string) => {
+export const forgotPassword: AppThunk = (email) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: FORGOT_PASSWORD_REQUEST,
@@ -295,7 +295,7 @@ export const forgotPassword: AppThunk = (email: string) => {
 };
 
 //Изменение пароля
-export const resetPassword: AppThunk = ({ password, token }: any) => {
+export const resetPassword: AppThunk = ({ password, token }) => {
 	return function (dispatch: AppDispatch) {
 		dispatch({
 			type: RESET_PASSWORD_REQUEST,

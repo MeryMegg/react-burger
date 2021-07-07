@@ -6,22 +6,25 @@ import {
 } from '../constants/ws-actions-auth';
 import { TWSActionsAuthActions } from '../actions/ws-actions-auth';
 import { TOrder } from '../../types';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 type TWsReduserAuthState = {
-	wsConnected: Boolean,
-	error: any,
-	messages: Array<TOrder>
+	wsConnected: Boolean;
+	error: PayloadAction | null;
+	orders: Array<TOrder>;
+	total: number | null,
+	totalToday: number | null
 }
-
-
 
 const initialState: TWsReduserAuthState = {
 	wsConnected: false,
 	error: null,
-	messages: []
+	orders: [],
+	total: null,
+	totalToday: null
 };
 
-export const wsReducerAuth = (state = initialState, action: TWSActionsAuthActions) => {
+export const wsReducerAuth = (state = initialState, action: TWSActionsAuthActions): TWsReduserAuthState => {
 	switch (action.type) {
 		case WS_CONNECTION_SUCCESS_AUTH:
 			return {
@@ -45,7 +48,9 @@ export const wsReducerAuth = (state = initialState, action: TWSActionsAuthAction
 		case WS_GET_MESSAGE_AUTH:
 			return {
 				...state,
-				messages: action.payload
+				orders: action.payload.orders,
+				total: action.payload.total,
+				totalToday: action.payload.totalToday
 			};
 		// case WS_USER_STATUS_UPDATE:
 		// 	return {

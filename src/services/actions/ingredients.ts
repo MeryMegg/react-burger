@@ -18,7 +18,7 @@ export interface IGetProdictsRequestAction {
 
 export interface IGetProdictsSuccessAction {
   readonly type: typeof GET_PRODUCTS_SUCCESS;
-  readonly items: ReadonlyArray<TIngredient>;
+  readonly items: Array<TIngredient>;
 }
 
 export interface IGetProdictsFailedAction {

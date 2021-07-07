@@ -25,6 +25,7 @@ import { TLocationTemplate } from '../../types';
 
 const App = () => {
 	const location = useLocation<TLocationTemplate>();
+	console.log(location)
 	const history = useHistory();
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 	const dispatch = useDispatch();

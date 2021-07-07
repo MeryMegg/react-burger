@@ -7,9 +7,9 @@ import { TIngredient } from '../../types';
 import { useSelector } from '../../hooks';
 
 const IngredientDetails = () => {
-  const { allIngredients } = useSelector((store: any) => store.ingredients)
+  const { allIngredients } = useSelector((store) => store.ingredients)
   let { id } = useParams<{ id: string }>();
-  const currentBurger: TIngredient = allIngredients.length ? allIngredients?.find((el: TIngredient) => el._id === id) : null
+  const currentBurger = allIngredients.length ? allIngredients?.find((el: TIngredient) => el._id === id) : null
 
   if (!currentBurger) {
     return (<Preloader />)

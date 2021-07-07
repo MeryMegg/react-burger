@@ -1,9 +1,9 @@
-import { TIngredient, TIngredientWithProductId, TOrder } from "../types";
+import { TIngredient, TIngredientWithProductId, TOrder, TSetCookieProps } from "../types";
 
 //получаем объект с разбитием по ингредиентам
 export const filterArray = (arr: Array<TIngredient>) => {
   return arr.reduce(
-    (acc: any, curr: any) => ({
+    (acc: { [name: string]: Array<TIngredient> }, curr) => ({
       ...acc,
       [curr.type]: [...(acc[curr.type] || []), curr],
     }),
@@ -16,7 +16,7 @@ export const calculationCost = (bun: TIngredientWithProductId | null, arrOtherIn
   const bunPrice = bun ? bun.price : 0;
   return (
     bunPrice * 2 +
-    arrOtherIngredients.reduce((acc: any, curr: any) => (acc += curr.price), 0)
+    arrOtherIngredients.reduce((acc, curr) => (acc += curr.price), 0)
   );
 };
 
@@ -33,19 +33,19 @@ export const getCookie = (name: string) => {
 };
 
 //установить куки
-export const setCookie = (name: string, value: string | number | boolean, props: any = {}) => {
+export const setCookie = (name: string, value: string | number | boolean, props?: TSetCookieProps) => {
   props = {
     path: '/',
     ...props,
   };
   let exp = props.expires;
+  const d = new Date();
   if (typeof exp == 'number' && exp) {
-    const d = new Date();
     d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
+    exp = props.expires = Number(d);
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+  if (exp && d.toUTCString) {
+    props.expires = d.toUTCString();
   }
   value = encodeURIComponent(value);
   let updatedCookie = name + '=' + value;
@@ -85,7 +85,7 @@ export const conversionDateForCard = (date: string) => {
 
 //сортировка заказов по статусу
 export const filterOrdersByStatus = (arr: Array<TOrder>) => {
-  return arr?.reduce((acc: any, curr: any) => {
+  return arr?.reduce((acc: { [name: string]: Array<TOrder> }, curr) => {
     curr.status === 'done' ? acc['done'] = [...acc['done'], curr] : acc['pending'] = [...acc['pending'], curr]
     return acc;
   }, { done: [], pending: [] })

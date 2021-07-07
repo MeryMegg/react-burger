@@ -1,4 +1,5 @@
-import { TOrder } from '../../types';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { TOrders } from '../../types';
 import {
 	WS_CONNECTION_START,
 	WS_CONNECTION_CLOSE,
@@ -35,22 +36,22 @@ export interface IWsSendMessageAction {
 
 export interface IWsConnectionSuccessAction {
 	readonly type: typeof WS_CONNECTION_SUCCESS;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsConnectionErrorAction {
 	readonly type: typeof WS_CONNECTION_ERROR;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsConnectionClosedAction {
 	readonly type: typeof WS_CONNECTION_CLOSED;
-	payload: any
+	payload: PayloadAction
 }
 
 export interface IWsGetMessageAction {
 	readonly type: typeof WS_GET_MESSAGE;
-	payload: ReadonlyArray<TOrder>
+	payload: TOrders
 }
 
 export type TWSActionsActions =

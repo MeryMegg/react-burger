@@ -26,7 +26,8 @@ export type TIngredientsState = {
   loaded: boolean;
   allIngredients: Array<TIngredient>;
   burgerIngredients: TBurgerIngredients;
-  currentOrder: null | TOrder | TOrderInfo;
+  currentOrder: null | TOrder;
+  createOrder: null | TOrderInfo;
   orderRequest: boolean;
   orderFailed: boolean
   orderLoaded: boolean
@@ -43,12 +44,13 @@ const initialState: TIngredientsState = {
     counts: {},
   },
   currentOrder: null,
+  createOrder: null,
   orderRequest: false,
   orderFailed: false,
   orderLoaded: false
 };
 
-export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
   switch (action.type) {
     case GET_PRODUCTS_REQUEST: {
       return {
@@ -80,7 +82,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
       return {
         ...state,
         orderFailed: false,
-        currentOrder: action.order,
+        createOrder: action.order,
         orderRequest: false,
         burgerIngredients: {
           bun: null,

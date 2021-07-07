@@ -7,7 +7,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword } from '../../services/actions/auth';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import { Redirect } from 'react-router-dom';
 import { resetPasswordRequest } from '../../utils/api';
 import styles from './reset-password.module.css';
@@ -42,7 +42,7 @@ function ResetPassword() {
       });
   };
 
-  const isforgotPasswordSaccess = useSelector((store: any) => store.auth.isforgotPasswordSaccess);
+  const isforgotPasswordSaccess = useSelector((store) => store.auth.isforgotPasswordSaccess);
 
   if (localStorage.getItem('refreshToken')) {
     return (

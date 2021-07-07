@@ -76,7 +76,7 @@ const initialState: TAuthState = {
   tokenUpdateDate: false,
 };
 
-export const authReducer = (state = initialState, action: TAuthActions) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
   switch (action.type) {
     //Регистрация
     case REGISTER_REQUEST: {
