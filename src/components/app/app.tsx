@@ -19,16 +19,18 @@ import {
 import { ProtectedRoute } from '../protected-route';
 import styles from './app.module.css';
 import { getIngredients } from '../../services/actions/ingredients';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks';
 import OrderDetails from '../order-details/order-details';
+import { TLocationTemplate } from '../../types';
 
 const App = () => {
-	const location: any = useLocation();
+	const location = useLocation<TLocationTemplate>();
+	console.log(location)
 	const history = useHistory();
 	let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 	const dispatch = useDispatch();
 	const { loaded } = useSelector(
-		(store: any) => store.ingredients
+		(store) => store.ingredients
 	);
 	useEffect(() => {
 		if (!loaded) {
