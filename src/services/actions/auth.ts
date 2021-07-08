@@ -10,7 +10,7 @@ import {
 } from '../../utils/api';
 import { deleteCookie, setCookie } from '../../utils/functions';
 import { push } from 'connected-react-router';
-import { TUpdateUserData, TUser, TUserData } from '../../types';
+import { TUser, TUserData } from '../../types';
 import {
 	REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILED,
 	LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILED,
