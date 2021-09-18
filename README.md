@@ -1,5 +1,5 @@
 # Maria Skosyrskaya
-##### ссылка на gh pages: ++ **[Stellar Burgers](https://merymegg.github.io/react-burger/) ** ++
+##### ссылка на gh pages:  **[Stellar Burgers](https://merymegg.github.io/react-burger/) ** 
 
 **Автор:** Скосырская Мария
 
@@ -30,7 +30,7 @@
 - Redux
 - Jest
 - Cypress
-- библиотека UI-компонентов ++ **[Яндекс.Практикум.Реакт](https://github.com/yandex-praktikum/react-developer-burger-ui-components) ** ++
+- библиотека UI-компонентов **[Яндекс.Практикум.Реакт](https://github.com/yandex-praktikum/react-developer-burger-ui-components) ** 
 - npm
 - Node.js
 - Git
@@ -54,7 +54,7 @@
 # установка зависимостей
 $ npm install
 
-# запуск сервера с "горячей" перезагрузкой на localhost:3000
+# запуск сервера на localhost:3000
 $ npm run start
 
 # сборка в продакшн
