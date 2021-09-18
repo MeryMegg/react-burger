@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# Maria Skosyrskaya
+##### ссылка на gh pages: ++ **[Stellar Burgers](https://merymegg.github.io/react-burger/) ** ++
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Автор:** Скосырская Мария
 
-## Available Scripts
+## О проекте:
+Проект выполнен в рамках курса "React-разработчик" от ЯндексПрактикума.
+Сервис **Stellar Burgers**: интерактивное приложение бургерной, позволяющее зарегистрированным пользователям оформить онлайн-заказ самостоятельно собрав бургер по своему вкусу. Так же в приложении можно отслеживать готовность заказа, а так же посмотреть все свои заказы. В приложении предусмотрена аутентифицировать пользователей. База данных по пользователям и заказам храниться на сервере.
 
-In the project directory, you can run:
+## Цели данного этапа:
+- изучение React, Redux
 
-### `npm start`
+Версия: 0.0.1
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Задачи данного этапа:
+- написать пользовательское приложение с использованием React, Redux и TyoeScript
+- реализовать аутентифицировать пользователей
+- реализовать механизм Drag and Drop
+- настроить защищенный роутинг
+- реализовать тестирование бизнес-логики (редьюсеров стора) при помощи unit-тестов средствами встроенной в CRA библиотеки Jest
+- реализовать тестирование UX компонентов (DnD) при помощи Cypress
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Стек технологий:
 
-### `npm test`
+- ES6
+- HTML5
+- CSS3
+- TypeScript
+- React
+- Redux
+- Jest
+- Cypress
+- библиотека UI-компонентов ++ **[Яндекс.Практикум.Реакт](https://github.com/yandex-praktikum/react-developer-burger-ui-components) ** ++
+- npm
+- Node.js
+- Git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Пакеты и плагины которые используются в сборках:
 
-### `npm run build`
+- [Node.js](https://nodejs.org/en/)
+- [CRA](https://www.npmjs.com/package/create-react-app)
+- [Serve](https://www.npmjs.com/package/serve)
+- [React-redux](https://www.npmjs.com/package/react-redux)
+- [React-dnd](https://www.npmjs.com/package/react-dnd)
+- [Cypress](https://www.npmjs.com/package/cypress)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Инструкция по запуску проекта
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Скачать или склонировать репозиторий
 
-### `npm run eject`
+```bash
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# установка зависимостей
+$ npm install
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# запуск сервера с "горячей" перезагрузкой на localhost:3000
+$ npm run start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# сборка в продакшн
+$ npm run build
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# запуск сервера localhost:3000 из папки build
+$ npm run build
 
-## Learn More
+# запуск тестирования приложения
+$ npm run test
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
