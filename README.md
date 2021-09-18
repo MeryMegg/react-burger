@@ -1,4 +1,4 @@
-# Maria Skosyrskaya
+# Stellar Burgers
 ##### ссылка на gh pages:  **[Stellar Burgers](https://merymegg.github.io/react-burger/) ** 
 
 **Автор:** Скосырская Мария
